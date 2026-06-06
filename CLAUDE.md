@@ -61,6 +61,14 @@ Hook scripts are in `hooks/`. Add/remove hooks by editing `.claude/settings.json
 | `/refactor <target>` | Identify code smells and refactor safely |
 | `/explain <file or function>` | Plain-language explanation of complex code |
 | `/test-gen <file>` | Generate tests following project conventions |
+| `/file-ops <task>` | Search, transform, batch rename, scaffold files |
+| `/prototype <description>` | Build a working prototype fast — no over-engineering |
+| `/mcp-build <description>` | Scaffold and implement an MCP server with tools |
+
+### QA & Testing
+| Command | Description |
+|---|---|
+| `/qa [feature or PR#]` | Structured QA pass: acceptance, edge cases, regression |
 
 ### Deploy & Release
 | Command | Description |
@@ -75,3 +83,5 @@ Hook scripts are in `hooks/`. Add/remove hooks by editing `.claude/settings.json
 | `/workflow-bugfix <bug>` | Parallel root-cause + impact analysis, then fix |
 | `/workflow-review-deep [PR#]` | One agent per file for thorough parallel review |
 | `/workflow-release-prep [version]` | Parallel changelog + health check + dep audit |
+| `/workflow-qa [feature or PR#]` | 3 parallel agents: functional, edge cases, regression |
+| `/workflow-prototype <description>` | Parallel stack research + interface design, then build |

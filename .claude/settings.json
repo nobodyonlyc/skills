@@ -6,7 +6,10 @@
       "Bash(cat *)",
       "Bash(ls *)",
       "Bash(find *)",
-      "Bash(grep *)"
+      "Bash(grep *)",
+      "mcp__headroom__headroom_compress",
+      "mcp__headroom__headroom_retrieve",
+      "mcp__headroom__headroom_stats"
     ],
     "defaultMode": "dontAsk"
   },
