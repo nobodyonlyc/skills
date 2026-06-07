@@ -1,0 +1,1 @@
+../skills/workflow-prototype/SKILL.md
