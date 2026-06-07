@@ -1,0 +1,1 @@
+../skills/workflow-bootstrap/SKILL.md
