@@ -1,0 +1,50 @@
+# === General System Files ===
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# === Node.js / Frontend ===
+node_modules/
+/dist
+/build
+.npm
+.eslintcache
+.next/
+out/
+.nuxt/
+.output/
+.svelte-kit/
+.yarn/cache/
+.yarn/install-state.gz
+
+# === Rust / Cargo ===
+/target
+Cargo.lock
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# === IDEs ===
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
