@@ -5,59 +5,59 @@ description: Orchestrate a multi-agent workflow to plan, implement, test, and ve
 
 Feature request: $ARGUMENTS
 
-This is a multi-agent feature development workflow. Run the following agents IN PARALLEL:
-
-**Agent 1 — Requirements analyst**: 
-* Read the codebase structure, existing patterns, and related code. Use the [skill explain/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/explain/SKILL.md) skill to query core components.
-* If database changes are needed, coordinate with the [skill db-designer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/db-designer/SKILL.md) skill.
-* Produce: (1) list of files that will need to change, (2) list of questions that must be answered before implementation, (3) risks or constraints to be aware of.
-
-**Agent 2 — Test strategist**: 
-* Find existing tests, identify the test framework and conventions.
-* Plan required tests using the [skill test-gen/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/test-gen/SKILL.md) guidelines.
-* Produce: a test plan describing what test cases are needed (happy path, edge cases) and how to structure them.
+This is a multi-agent feature development workflow. Run the following steps to coordinate analysts, developers, and testers.
 
 ---
 
-## Execution Sequence
+## Step 1: Parallel Analysis & Planning (Subagents)
+Use the `invoke_subagent` tool to run the following tasks **IN PARALLEL**:
+* **Subagent A — Requirements Analyst**:
+  * **Role**: Technical Analyst
+  * **Task**: Read the codebase structure, existing patterns, and related code using the [skill explain/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/explain/SKILL.md) skill. Coordinate with [skill db-designer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/db-designer/SKILL.md) if DB changes are needed.
+  * **Output**: Produce (1) list of files to change, (2) questions to answer, (3) risks/constraints.
+* **Subagent B — Test Strategist**:
+  * **Role**: Test Planner
+  * **Task**: Find existing tests and identify frameworks. Plan required tests using the [skill test-gen/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/test-gen/SKILL.md) guidelines.
+  * **Output**: Produce a test plan outlining required test cases (happy path, edge cases).
 
-### Step 1: Alignment & Implementation Plan
-1. Present Agent 1 and 2 findings to the user and resolve any open questions.
-2. Draft a precise implementation plan (which files change, in what order, what each change does).
-3. Get user approval on the plan.
+Once both subagents complete, present their findings to the user, align on open questions, draft the implementation plan, and get user approval.
 
-### Step 2: Code, Test & Review Refinement Loop (Iterative Cycle)
-Implement and verify the feature iteratively. Repeat the following steps until all tests and review criteria pass cleanly:
+---
+
+## Step 2: Code, Test & Review Refinement Loop (Iterative Cycle)
 
 ```mermaid
 graph TD
-    Code["2.1. Code / Modify (fe-dev, be-dev, batch-dev, cli-tool, db-designer)"] --> Test{"2.2. Execute Tests (test-gen)"}
+    Code["2.1. Code / Modify (Parallel FE & BE Subagents)"] --> Test{"2.2. Execute Tests (Subagent C: test-gen)"}
     Test -->|Fail| Code
-    Test -->|Pass| Review{"2.3. Code Review (code-review)"}
+    Test -->|Pass| Review{"2.3. Code Review (Subagent D: code-review)"}
     Review -->|Lỗi / Cần sửa| Code
     Review -->|Sạch / Đạt chuẩn| Verify["2.4. Verify & Commit (harness verify)"]
 ```
 
-#### 2.1. Code / Modify
-Write or modify the source code according to the SPEC and architectural constraints. Delegate to:
-* **UI/Frontend**: Use [skill fe-developer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/fe-developer/SKILL.md).
-* **Server API/Web Server**: Use [skill be-developer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/be-developer/SKILL.md).
-* **Batch Jobs/ETL**: Use [skill batch-developer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/batch-developer/SKILL.md).
-* **CLI Command Tools**: Use [skill cli-tool-developer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/cli-tool-developer/SKILL.md).
-* **Database / Migrations**: Use [skill db-designer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/db-designer/SKILL.md).
+#### 2.1. Code / Modify (Parallel Execution for Medium/Large Projects)
+For features spanning multiple components (e.g., Full-stack UI & API), invoke **PARALLEL Subagents** to write the code:
+* **Subagent 1 (Backend Developer)**:
+  * **Role**: Backend Developer
+  * **Task**: Implement database changes via [skill db-designer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/db-designer/SKILL.md) and server logic via [skill be-developer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/be-developer/SKILL.md).
+* **Subagent 2 (Frontend Developer)**:
+  * **Role**: Frontend Developer
+  * **Task**: Build the user interface and components using [skill fe-developer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/fe-developer/SKILL.md), mocking the API endpoints if the Backend is not yet completed.
 
-#### 2.2. Test Execution
-Generate and run unit/integration tests using the [skill test-gen/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/test-gen/SKILL.md) skill.
-* **If any test fails**: Analyze the traceback, locate the bug, and **go back to step 2.1 (Code)** to apply the fix. Repeat until all tests pass.
+*(Note: For simple single-component tasks, a single agent may write the code using [skill cli-tool-developer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/cli-tool-developer/SKILL.md) or [skill batch-developer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/batch-developer/SKILL.md)).*
 
-#### 2.3. Code Review
-Analyze the git diff using the [skill code-review/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/code-review/SKILL.md) skill.
-* **If review finds issues** (logic errors, security vulnerabilities, formatting issues): **Go back to step 2.1 (Code)** to remediate the code, and then **re-run tests (step 2.2)**.
+#### 2.2. Test Execution (Subagent C)
+Invoke **Subagent C (Test Writer)** to write and run unit/integration tests using the [skill test-gen/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/test-gen/SKILL.md) skill.
+* **If any test fails**: Direct the developers (Subagent 1 or 2) to fix the code and go back to step 2.1.
+
+#### 2.3. Code Review (Subagent D)
+Invoke **Subagent D (Code Reviewer)** to analyze git diffs using the [skill code-review/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/code-review/SKILL.md) skill.
+* **If review fails**: Direct developers to correct the code and re-test.
 
 ---
 
-### Step 3: Verification & Checkpoint (Definition of Done)
-Once the loop completes successfully (all tests pass and code review is clean):
+## Step 3: Verification & Checkpoint (Definition of Done)
+Once the loop completes successfully:
 1. Run the project verification suite via the [skill qa/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/qa/SKILL.md) skill.
 2. Execute the Harness verify check:
    ```bash

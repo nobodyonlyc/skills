@@ -10,27 +10,35 @@ This is a multi-agent orchestration workflow to initialize a target project from
 ## Execution Sequence
 
 ### Step 1: Requirements Analysis & Tech Discovery
-Execute the [architecture-agent](file:///home/zrik/workspace/projs/harness/.agents/skills/architecture-agent/SKILL.md) skill to interview the user.
+Execute the [skill architecture-agent/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/architecture-agent/SKILL.md) skill to interview the user.
 * **Objective**: Evaluate project size and user persona (Dev vs. Non-Tech).
 * **Task**: Perform the contextual interview (deep technical questions for Devs, friendly suggestions for Non-Techs) to determine languages, databases, hosting, and architecture.
 * **Output**: Generate `docs/SYSTEM_ARCHITECTURE.md`.
 
-### Step 2: Formulate Backlog (User Stories)
-Execute the [us-backlog-generator](file:///home/zrik/workspace/projs/harness/.agents/skills/us-backlog-generator/SKILL.md) skill.
-* **Objective**: Translate the generated system architecture spec into actionable developer task backlog stories.
-* **Task**: Read `docs/SYSTEM_ARCHITECTURE.md` and parse the system components into structured stories.
-* **Output**: Populate the Harness database and write them to `.harness/features.json` using the `./harness add` command.
+### Step 2: Parallel Scaffold & Backlog Generation (Subagents)
+Once `docs/SYSTEM_ARCHITECTURE.md` is ready, run the following tasks **IN PARALLEL** using the `invoke_subagent` tool:
 
-### Step 3: Scaffold Codebase Skeleton
-Execute the [project-skeleton-generator](file:///home/zrik/workspace/projs/harness/.agents/skills/project-skeleton-generator/SKILL.md) skill.
-* **Objective**: Automatically create directory structures, configuration files, and baseline tests.
-* **Task**: Read `docs/SYSTEM_ARCHITECTURE.md` to identify components and technologies. Apply matching workspace templates (from `project-skeleton-generator/resources/folder_structures.md`).
-* **Output**: Generate workspace configuration (e.g. `docker-compose.yml`, `.gitignore`, `.env.example`) and subdirectories for each component.
-
-### Step 4: Verification Gate
-Run the environment startup script:
-```bash
-./init.sh
+```mermaid
+graph TD
+    Spec["1. Generate SYSTEM_ARCHITECTURE.md"] --> Parallel{"Parallel Execution"}
+    Parallel --> SubA["Subagent A: us-backlog-generator"]
+    Parallel --> SubB["Subagent B: project-skeleton-generator"]
+    SubA --> Merge["Merge & Verify"]
+    SubB --> Merge
 ```
-* **Verify**: Confirm that the workspace is fully compiled and all newly generated baseline smoke tests pass out of the box.
-* **Handoff**: Execute `./harness status` to print the backlog, leaving the project ready for feature development!
+
+* **Subagent A (Backlog Generator)**:
+  * **Role**: Requirements Backlog Agent
+  * **Task**: Execute the [skill us-backlog-generator/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/us-backlog-generator/SKILL.md) skill to read `docs/SYSTEM_ARCHITECTURE.md` and populate the Harness database with user stories/features via `./harness add`.
+* **Subagent B (Skeleton Scaffold)**:
+  * **Role**: Repository Architect Agent
+  * **Task**: Execute the [skill project-skeleton-generator/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/project-skeleton-generator/SKILL.md) skill to read `docs/SYSTEM_ARCHITECTURE.md` and create matching directory structures, configuration files (`docker-compose.yml`, `.gitignore`, `.env.example`), and baseline smoke tests.
+
+### Step 3: Verification & Initial Handoff
+Once both subagents report completion:
+1. Run the environment startup script:
+   ```bash
+   ./init.sh
+   ```
+2. Confirm that the workspace compiles cleanly and all baseline tests pass.
+3. Execute `./harness status` to print the backlog, leaving the project ready for coding!
