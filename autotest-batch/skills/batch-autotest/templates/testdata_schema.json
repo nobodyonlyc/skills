@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BatchTestDataSchema",
+  "description": "JSON Schema for Batch AutoTest Test Data sets.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["testcase_id", "description", "category", "input", "expected_output"],
+    "properties": {
+      "testcase_id": {
+        "type": "string",
+        "pattern": "^TC-\\d{3}$",
+        "description": "TestCase ID from Phase 2 (e.g. TC-001, TC-042)"
+      },
+      "data_set_id": {
+        "type": "string",
+        "pattern": "^DS-\\d{3}$",
+        "description": "Unique identifier for this specific dataset"
+      },
+      "description": {
+        "type": "string",
+        "description": "Clear description of the test scenario and data"
+      },
+      "category": {
+        "type": "string",
+        "enum": ["Normal", "Boundary", "Logic", "State", "Invalid", "Edge Case", "Combination", "Volume"],
+        "description": "TestCase category matching Phase 2"
+      },
+      "violated_constraint": {
+        "type": "string",
+        "description": "Required for NEGATIVE/Invalid test cases to specify the exact single constraint being isolated and violated."
+      },
+      "input": {
+        "type": "object",
+        "description": "Input fields and values for the test case. Can contain direct field key-values or a csv_line for file imports.",
+        "properties": {
+          "csv_line": {
+            "type": "string",
+            "description": "Raw CSV line string representing row import data"
+          },
+          "line_number": {
+            "type": "integer",
+            "minimum": 2,
+            "description": "CSV row number (header is row 1)"
+          }
+        },
+        "additionalProperties": true
+      },
+      "expected_output": {
+        "type": "object",
+        "required": ["status"],
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["SUCCESS", "ERROR", "APPROVED", "REJECTED"],
+            "description": "Expected status outcome"
+          },
+          "action": {
+            "type": "string",
+            "enum": ["INSERT_DB", "UPDATE_DB", "SKIP", "REJECT"],
+            "description": "Expected action performed by the system"
+          },
+          "error_code": {
+            "type": ["string", "null"],
+            "description": "Expected error code if status is ERROR/REJECTED"
+          },
+          "error_message": {
+            "type": ["string", "null"],
+            "description": "Expected error message details if status is ERROR/REJECTED"
+          },
+          "error_field": {
+            "type": ["string", "null"],
+            "description": "Expected field that causes the error"
+          }
+        },
+        "additionalProperties": true
+      },
+      "setup": {
+        "type": "object",
+        "description": "Database or file setup requirements prior to running this testcase"
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "dependencies": {
+      "category": {
+        "oneOf": [
+          {
+            "properties": {
+              "category": { "enum": ["Normal", "Boundary", "Logic", "State", "Edge Case", "Volume"] }
+            }
+          },
+          {
+            "properties": {
+              "category": { "enum": ["Invalid", "Combination"] }
+            },
+            "required": ["violated_constraint"]
+          }
+        ]
+      }
+    }
+  }
+}

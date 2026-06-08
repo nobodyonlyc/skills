@@ -1,0 +1,70 @@
+{
+  "known_tables": [
+    "users",
+    "accounts",
+    "transactions",
+    "merchants",
+    "exchange_rates",
+    "fee_schedule",
+    "loyalty_tiers",
+    "promotions"
+  ],
+  "fallback_fields": {
+    "users": {
+      "user_id": {"required": true, "type": "String"},
+      "status": {"required": true, "type": "String"},
+      "kyc_level": {"required": true, "type": "Number"}
+    },
+    "accounts": {
+      "account_id": {"required": true, "type": "String"},
+      "user_id": {"required": true, "type": "String"},
+      "status": {"required": true, "type": "String"}
+    },
+    "transactions": {
+      "txn_id": {"required": true, "type": "String"},
+      "account_id": {"required": true, "type": "String"},
+      "gross_amount": {"required": true, "type": "Number"},
+      "txn_type": {"required": true, "type": "String"},
+      "status": {"required": true, "type": "String"}
+    }
+  },
+  "fallback_constraints": {
+    "users": {
+      "kyc_level": {"min": 0, "max": 2}
+    },
+    "accounts": {},
+    "transactions": {
+      "gross_amount": {"min": 0.01}
+    }
+  },
+  "default_constraints": {
+    "transactions": {
+      "gross_amount": {"min": 0.01}
+    },
+    "users": {
+      "kyc_level": {"min": 0, "max": 2}
+    }
+  },
+  "logic_error_keywords": [
+    "duplicate",
+    "db_",
+    "balance",
+    "limit",
+    "rate",
+    "fee",
+    "refund",
+    "promo",
+    "encoding",
+    "empty",
+    "master",
+    "threshold",
+    "percent",
+    "fk",
+    "fk_"
+  ],
+  "combination_error_keywords": [
+    "combination",
+    "threshold",
+    "percent"
+  ]
+}

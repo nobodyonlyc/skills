@@ -1,0 +1,505 @@
+[
+  {
+    "testcase_id": "TC-001",
+    "data_set_id": "DS-001",
+    "description": "Valid record with all fields populated, role=user",
+    "category": "Normal",
+    "input": {
+      "csv_line": "1,Nguyen Van A,nguyenvana@email.com,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "SUCCESS",
+      "action": "INSERT_DB",
+      "record": {
+        "id": 1,
+        "name": "Nguyen Van A",
+        "email": "nguyenvana@email.com",
+        "age": 25,
+        "role": "user"
+      }
+    },
+    "tags": ["normal", "valid", "all-fields", "role-user"]
+  },
+  {
+    "testcase_id": "TC-002",
+    "data_set_id": "DS-002",
+    "description": "Valid record with role=admin",
+    "category": "Normal",
+    "input": {
+      "csv_line": "2,Tran Thi B,tranthib@email.com,30,admin",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "SUCCESS",
+      "action": "INSERT_DB",
+      "record": {
+        "id": 2,
+        "name": "Tran Thi B",
+        "email": "tranthib@email.com",
+        "age": 30,
+        "role": "admin"
+      }
+    },
+    "tags": ["normal", "valid", "role-admin"]
+  },
+  {
+    "testcase_id": "TC-003",
+    "data_set_id": "DS-003",
+    "description": "Valid record with role=viewer",
+    "category": "Normal",
+    "input": {
+      "csv_line": "3,Le Van C,levanc@email.com,40,viewer",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "SUCCESS",
+      "action": "INSERT_DB",
+      "record": {
+        "id": 3,
+        "name": "Le Van C",
+        "email": "levanc@email.com",
+        "age": 40,
+        "role": "viewer"
+      }
+    },
+    "tags": ["normal", "valid", "role-viewer"]
+  },
+  {
+    "testcase_id": "TC-004",
+    "data_set_id": "DS-004",
+    "description": "Valid record with blank age (optional field)",
+    "category": "Normal",
+    "input": {
+      "csv_line": "4,Pham Thi D,phamthid@email.com,,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "SUCCESS",
+      "action": "INSERT_DB",
+      "record": {
+        "id": 4,
+        "name": "Pham Thi D",
+        "email": "phamthid@email.com",
+        "age": null,
+        "role": "user"
+      }
+    },
+    "tags": ["normal", "valid", "age-empty", "optional-field"]
+  },
+  {
+    "testcase_id": "TC-006",
+    "data_set_id": "DS-006",
+    "description": "ID minimum boundary value (id=1)",
+    "category": "Boundary",
+    "input": {
+      "csv_line": "1,Boundary Min User,boundarymin@test.com,20,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "SUCCESS",
+      "action": "INSERT_DB",
+      "record": {
+        "id": 1,
+        "name": "Boundary Min User",
+        "email": "boundarymin@test.com",
+        "age": 20,
+        "role": "user"
+      }
+    },
+    "tags": ["boundary", "min-value", "id"]
+  },
+  {
+    "testcase_id": "TC-007",
+    "data_set_id": "DS-007",
+    "description": "ID maximum boundary value (id=2147483647, max INT)",
+    "category": "Boundary",
+    "input": {
+      "csv_line": "2147483647,Max Int User,maxint@test.com,25,admin",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "SUCCESS",
+      "action": "INSERT_DB",
+      "record": {
+        "id": 2147483647,
+        "name": "Max Int User",
+        "email": "maxint@test.com",
+        "age": 25,
+        "role": "admin"
+      }
+    },
+    "tags": ["boundary", "max-value", "id"]
+  },
+  {
+    "testcase_id": "TC-008",
+    "data_set_id": "DS-008",
+    "description": "Name 1 character (min length boundary)",
+    "category": "Boundary",
+    "input": {
+      "csv_line": "5,A,a@test.com,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "SUCCESS",
+      "action": "INSERT_DB",
+      "record": {
+        "id": 5,
+        "name": "A",
+        "email": "a@test.com",
+        "age": 25,
+        "role": "user"
+      }
+    },
+    "tags": ["boundary", "min-length", "name"]
+  },
+  {
+    "testcase_id": "TC-009",
+    "data_set_id": "DS-009",
+    "description": "Name exactly 100 characters (max length boundary)",
+    "category": "Boundary",
+    "input": {
+      "csv_line": "6,Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij A,long@test.com,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "SUCCESS",
+      "action": "INSERT_DB",
+      "record": {
+        "id": 6,
+        "name": "Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij A",
+        "email": "long@test.com",
+        "age": 25,
+        "role": "user"
+      }
+    },
+    "tags": ["boundary", "max-length", "name"]
+  },
+  {
+    "testcase_id": "TC-010",
+    "data_set_id": "DS-010",
+    "description": "Age minimum boundary value (age=0)",
+    "category": "Boundary",
+    "input": {
+      "csv_line": "7,Baby User,baby@test.com,0,viewer",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "SUCCESS",
+      "action": "INSERT_DB",
+      "record": {
+        "id": 7,
+        "name": "Baby User",
+        "email": "baby@test.com",
+        "age": 0,
+        "role": "viewer"
+      }
+    },
+    "tags": ["boundary", "min-value", "age"]
+  },
+  {
+    "testcase_id": "TC-011",
+    "data_set_id": "DS-011",
+    "description": "Age maximum boundary value (age=150)",
+    "category": "Boundary",
+    "input": {
+      "csv_line": "8,Old User,old@test.com,150,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "SUCCESS",
+      "action": "INSERT_DB",
+      "record": {
+        "id": 8,
+        "name": "Old User",
+        "email": "old@test.com",
+        "age": 150,
+        "role": "user"
+      }
+    },
+    "tags": ["boundary", "max-value", "age"]
+  },
+  {
+    "testcase_id": "TC-012",
+    "data_set_id": "DS-012",
+    "description": "Email minimum valid format (a@b.c)",
+    "category": "Boundary",
+    "input": {
+      "csv_line": "9,Min Email User,a@b.c,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "SUCCESS",
+      "action": "INSERT_DB",
+      "record": {
+        "id": 9,
+        "name": "Min Email User",
+        "email": "a@b.c",
+        "age": 25,
+        "role": "user"
+      }
+    },
+    "tags": ["boundary", "min-format", "email"]
+  },
+  {
+    "testcase_id": "TC-014",
+    "data_set_id": "DS-014",
+    "description": "ID null/empty - required field missing",
+    "category": "Invalid",
+    "input": {
+      "csv_line": ",Missing ID User,missing@test.com,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "ID is a required field, must not be empty",
+      "error_field": "id",
+      "error_code": "ERR_ID_REQUIRED"
+    },
+    "tags": ["invalid", "null-field", "id", "required"]
+  },
+  {
+    "testcase_id": "TC-015",
+    "data_set_id": "DS-015",
+    "description": "Negative ID (id=-1) - violates > 0 constraint",
+    "category": "Invalid",
+    "input": {
+      "csv_line": "-1,Negative ID User,neg@test.com,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "ID must be a positive integer (> 0)",
+      "error_field": "id",
+      "error_code": "ERR_ID_NOT_POSITIVE"
+    },
+    "tags": ["invalid", "negative-value", "id"]
+  },
+  {
+    "testcase_id": "TC-016",
+    "data_set_id": "DS-016",
+    "description": "ID is not an integer (id='abc')",
+    "category": "Invalid",
+    "input": {
+      "csv_line": "abc,Not Integer User,notint@test.com,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "ID must be an integer",
+      "error_field": "id",
+      "error_code": "ERR_ID_NOT_INTEGER"
+    },
+    "tags": ["invalid", "type-mismatch", "id"]
+  },
+  {
+    "testcase_id": "TC-017",
+    "data_set_id": "DS-017",
+    "description": "Name null/empty - required field missing",
+    "category": "Invalid",
+    "input": {
+      "csv_line": "10,,noname@test.com,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "Name is a required field, must not be empty",
+      "error_field": "name",
+      "error_code": "ERR_NAME_REQUIRED"
+    },
+    "tags": ["invalid", "null-field", "name", "required"]
+  },
+  {
+    "testcase_id": "TC-018",
+    "data_set_id": "DS-018",
+    "description": "Name exceeds 100 characters (101 chars)",
+    "category": "Invalid",
+    "input": {
+      "csv_line": "11,Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij Abcdefghij AB,toolong@test.com,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "Name must be between 1 and 100 characters long",
+      "error_field": "name",
+      "error_code": "ERR_NAME_LENGTH"
+    },
+    "tags": ["invalid", "over-max-length", "name"]
+  },
+  {
+    "testcase_id": "TC-019",
+    "data_set_id": "DS-019",
+    "description": "Email missing @ character - invalid format",
+    "category": "Invalid",
+    "input": {
+      "csv_line": "12,Bad Email User,bademailtest.com,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "Email format is invalid (must be in xxx@xxx.xxx format)",
+      "error_field": "email",
+      "error_code": "ERR_EMAIL_FORMAT"
+    },
+    "tags": ["invalid", "format", "email", "missing-at"]
+  },
+  {
+    "testcase_id": "TC-020",
+    "data_set_id": "DS-020",
+    "description": "Email missing domain - no dot after @",
+    "category": "Invalid",
+    "input": {
+      "csv_line": "13,No Domain User,nodomain@test,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "Email format is invalid (must be in xxx@xxx.xxx format)",
+      "error_field": "email",
+      "error_code": "ERR_EMAIL_FORMAT"
+    },
+    "tags": ["invalid", "format", "email", "missing-domain"]
+  },
+  {
+    "testcase_id": "TC-021",
+    "data_set_id": "DS-021",
+    "description": "Negative age value (age=-1) - below minimum boundary",
+    "category": "Invalid",
+    "input": {
+      "csv_line": "14,Neg Age User,negage@test.com,-1,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "Age must be between 0 and 150",
+      "error_field": "age",
+      "error_code": "ERR_AGE_RANGE"
+    },
+    "tags": ["invalid", "below-min", "age"]
+  },
+  {
+    "testcase_id": "TC-022",
+    "data_set_id": "DS-022",
+    "description": "Age exceeds limit (age=151) - above maximum boundary",
+    "category": "Invalid",
+    "input": {
+      "csv_line": "15,Over Age User,overage@test.com,151,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "Age must be between 0 and 150",
+      "error_field": "age",
+      "error_code": "ERR_AGE_RANGE"
+    },
+    "tags": ["invalid", "above-max", "age"]
+  },
+  {
+    "testcase_id": "TC-023",
+    "data_set_id": "DS-023",
+    "description": "Invalid role (role='unknown')",
+    "category": "Invalid",
+    "input": {
+      "csv_line": "16,Bad Role User,badrole@test.com,25,unknown",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "Role must be one of: admin, user, viewer",
+      "error_field": "role",
+      "error_code": "ERR_ROLE_INVALID"
+    },
+    "tags": ["invalid", "not-in-list", "role"]
+  },
+  {
+    "testcase_id": "TC-024",
+    "data_set_id": "DS-024",
+    "description": "Name contains Vietnamese accented Unicode characters",
+    "category": "Edge Case",
+    "input": {
+      "csv_line": "17,Nguyễn Văn Á,unicode@test.com,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "SUCCESS",
+      "action": "INSERT_DB",
+      "record": {
+        "id": 17,
+        "name": "Nguyễn Văn Á",
+        "email": "unicode@test.com",
+        "age": 25,
+        "role": "user"
+      }
+    },
+    "tags": ["edge-case", "unicode", "vietnamese", "name"]
+  },
+  {
+    "testcase_id": "TC-025",
+    "data_set_id": "DS-025",
+    "description": "SQL injection pattern in name field",
+    "category": "Edge Case",
+    "input": {
+      "csv_line": "18,'; DROP TABLE users;--,sqlinj@test.com,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "Name must only contain letters and spaces",
+      "error_field": "name",
+      "error_code": "ERR_NAME_INVALID_CHARS"
+    },
+    "tags": ["edge-case", "sql-injection", "security", "name"]
+  },
+  {
+    "testcase_id": "TC-027",
+    "data_set_id": "DS-027",
+    "description": "Duplicate ID in CSV file - second record has same ID as first",
+    "category": "Edge Case",
+    "input": {
+      "csv_line": "1,Duplicate User,dup@test.com,25,user",
+      "line_number": 3
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "ID already exists in file (duplicate of previous row)",
+      "error_field": "id",
+      "error_code": "ERR_ID_DUPLICATE"
+    },
+    "setup": {
+      "db_records": [],
+      "files": [],
+      "notes": "Record id=1 was already processed on line 2"
+    },
+    "tags": ["edge-case", "duplicate", "id"]
+  },
+  {
+    "testcase_id": "TC-029",
+    "data_set_id": "DS-029",
+    "description": "Multiple invalid fields simultaneously (id=abc, email invalid) - first error wins",
+    "category": "Combination",
+    "input": {
+      "csv_line": "abc,Test User,bademail,25,user",
+      "line_number": 2
+    },
+    "expected_output": {
+      "status": "ERROR",
+      "action": "SKIP",
+      "error_message": "ID must be an integer",
+      "error_field": "id",
+      "error_code": "ERR_ID_NOT_INTEGER"
+    },
+    "tags": ["combination", "multiple-errors", "first-error-wins"]
+  }
+]
