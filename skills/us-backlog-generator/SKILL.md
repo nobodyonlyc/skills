@@ -22,13 +22,20 @@ For each identified feature or bootstrapping task, formulate a structured featur
 5. **User Visible Behavior**: Detailed description of what behavior will be observed when the task is complete.
 6. **Verifications**: A list of executable shell commands that will prove the task works out of the box (e.g., `cargo test`, `pytest tests/test_auth.py`, `[ -f src/auth.rs ]`).
 
-## Step 3: Populate the Backlog
-Use the `./harness add` CLI command to register each feature:
+## Step 3: Present and Confirm Backlog with the User
+Before registering any features, you MUST present the complete proposed backlog to the user for confirmation:
+1. Format the proposed backlog as a clear Markdown table detailing the ID, Title, Area, Behavior, and Verification commands.
+2. Clearly explain the dependency order and development sequence of these stories.
+3. Explicitly ask the user for feedback or approval before proceeding.
+4. **DO NOT** run the `./harness add` command or write to the database until the user has explicitly confirmed the backlog.
+
+## Step 4: Populate the Backlog (Only After Confirmation)
+Once the user approves the backlog, use the `./harness add` CLI command to register each feature:
 ```bash
 ./harness add <id> <title> --priority <p> --area <a> --behavior <b> --verifications <cmds...>
 ```
 Ensure all verification commands are valid shell commands that can run in non-interactive environments.
 
-## Step 4: Verification (Definition of Done)
+## Step 5: Verification (Definition of Done)
 1. Run `./harness status` to confirm all features are added correctly and sorted by priority.
 2. Confirm `.harness/features.json` is updated and synced.

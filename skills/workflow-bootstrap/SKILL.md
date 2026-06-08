@@ -29,7 +29,7 @@ graph TD
 
 * **Subagent A (Backlog Generator)**:
   * **Role**: Requirements Backlog Agent
-  * **Task**: Execute the [skill us-backlog-generator/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/us-backlog-generator/SKILL.md) skill to read `docs/SYSTEM_ARCHITECTURE.md` and populate the Harness database with user stories/features via `./harness add`.
+  * **Task**: Execute the [skill us-backlog-generator/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/us-backlog-generator/SKILL.md) skill to read `docs/SYSTEM_ARCHITECTURE.md`, draft the User Stories, present them clearly in a Markdown table to the user, and obtain explicit user approval before populating the feature backlog via `./harness add`.
 * **Subagent B (Skeleton Scaffold)**:
   * **Role**: Repository Architect Agent
   * **Task**: Execute the [skill project-skeleton-generator/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/project-skeleton-generator/SKILL.md) skill to read `docs/SYSTEM_ARCHITECTURE.md` and create matching directory structures, configuration files (`docker-compose.yml`, `.gitignore`, `.env.example`), and baseline smoke tests.
@@ -41,4 +41,5 @@ Once both subagents report completion:
    ./init.sh
    ```
 2. Confirm that the workspace compiles cleanly and all baseline tests pass.
-3. Execute `./harness status` to print the backlog, leaving the project ready for coding!
+3. Execute `./harness status` to print the backlog.
+4. **STOP EXECUTION IMMEDIATELY**: Do not start any feature implementation. Prompt the user that bootstrapping is complete, display the final backlog, and ask them to select a single feature (WIP = 1) to proceed with, or invite other team members to pick up tasks.

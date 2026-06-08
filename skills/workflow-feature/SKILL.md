@@ -9,18 +9,20 @@ This is a multi-agent feature development workflow. Run the following steps to c
 
 ---
 
-## Step 1: Parallel Analysis & Planning (Subagents)
-Use the `invoke_subagent` tool to run the following tasks **IN PARALLEL**:
-* **Subagent A — Requirements Analyst**:
-  * **Role**: Technical Analyst
-  * **Task**: Read the codebase structure, existing patterns, and related code using the [skill explain/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/explain/SKILL.md) skill. Coordinate with [skill db-designer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/db-designer/SKILL.md) if DB changes are needed.
-  * **Output**: Produce (1) list of files to change, (2) questions to answer, (3) risks/constraints.
-* **Subagent B — Test Strategist**:
-  * **Role**: Test Planner
-  * **Task**: Find existing tests and identify frameworks. Plan required tests using the [skill test-gen/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/test-gen/SKILL.md) guidelines.
-  * **Output**: Produce a test plan outlining required test cases (happy path, edge cases).
+## Step 1: Feature Confirmation, Analysis & Planning (Subagents)
+1. **Confirm Target Feature**: First, inspect `.harness/features.json` (or `./harness status`) and identify the single highest-priority unfinished feature. Ask the user for explicit confirmation to work on this specific feature. You MUST only work on one feature at a time (WIP = 1).
+2. **Execute Analysis in Parallel**: Once the user approves the target feature, use the `invoke_subagent` tool to run the following tasks **IN PARALLEL**:
+   * **Subagent A — Requirements Analyst**:
+     * **Role**: Technical Analyst
+     * **Task**: Read the codebase structure, existing patterns, and related code using the [skill explain/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/explain/SKILL.md) skill. Coordinate with [skill db-designer/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/db-designer/SKILL.md) if DB changes are needed.
+     * **Output**: Produce (1) list of files to change, (2) questions to answer, (3) risks/constraints.
+   * **Subagent B — Test Strategist**:
+     * **Role**: Test Planner
+     * **Task**: Find existing tests and identify frameworks. Plan required tests using the [skill test-gen/SKILL.md](file:///home/zrik/workspace/projs/harness/.agents/skills/test-gen/SKILL.md) guidelines.
+     * **Output**: Produce a test plan outlining required test cases (happy path, edge cases).
 
-Once both subagents complete, present their findings to the user, align on open questions, draft the implementation plan, and get user approval.
+3. **Present Analysis & Approve Plan**: Once both subagents complete, present their findings to the user, align on open questions, draft the implementation plan, and get user approval.
+4. **MANDATORY UI Design Confirmation**: If the feature contains UI elements, you MUST present a layout wireframe or a visual mockup (e.g. static HTML or image) to the user first. Obtain explicit approval of the design BEFORE starting any implementation code.
 
 ---
 
@@ -64,4 +66,13 @@ Once the loop completes successfully:
    ./harness verify <feature_id>
    ```
    *Note: This automatically stages and commits a git checkpoint on success.*
-3. Summarize the session: files changed, tests added, and any deferred items.
+3. Run the session stop command:
+   ```bash
+   ./harness session stop
+   ```
+4. Run cleanup:
+   ```bash
+   ./harness clean
+   ```
+5. Summarize the session: files changed, tests added, and any deferred items.
+6. **STOP WORK IMMEDIATELY**: Do not start any other features or process new tasks in this session. Return control to the user, allowing other developers or agents to participate.
