@@ -27,5 +27,6 @@ If the fix is blocked (e.g. needs an upstream change or an undecided decision), 
 ```bash
 ./harness block <feature_id> --reason "<what is blocking>"
 ```
+For a multi-step fix, split it into child-tasks (`F<id>-T<n>`) via the [child-task convention](../../../resources/task-convention.md) so each step is tracked and verified independently.
 
 → Proceed to [Phase 2](phase-2-fix-test-review-loop.md).

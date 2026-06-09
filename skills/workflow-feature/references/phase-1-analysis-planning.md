@@ -11,6 +11,8 @@ Once confirmed, mark it active so the harness state machine reflects reality and
 ```
 This moves the feature to `in_progress`. Do not skip this — jumping straight to `verify` later leaves the lifecycle (`not_started → in_progress → passing`) broken.
 
+For a feature large enough to split, decompose it into child-tasks (`F<id>-T<n>`) and `./harness add` them up front per the [child-task convention](../../../resources/task-convention.md), then work them one at a time (WIP = 1).
+
 ## 2. Parallel analysis (spawn-subagents)
 Run both subagents **IN PARALLEL** using the **spawn-subagents** capability ([agent-tool-mapping](../../../resources/agent-tool-mapping.md); `Agent`/`Task` in Claude Code):
 
