@@ -1,26 +1,31 @@
 ---
 name: workflow-prototype
-description: Orchestrate a multi-agent workflow to rapidly prototype, test, and refine a new idea.
+description: Generate a mock UI from the FE SPEC (HTML/CSS, or Figma via an MCP connector), preview it in the browser, and iterate on feedback. UI only — no backend, DB, or business logic.
 ---
 
-Prototype request: $ARGUMENTS
+Mock UI request: $ARGUMENTS
 
-This is a multi-agent rapid prototyping workflow. Spawn the following agents IN PARALLEL:
+This workflow produces a **mock UI only**. It renders every screen and interaction described in the **frontend SPEC**, using stubbed/placeholder data. **No backend, no database, no real business logic.** Generate by one of two methods, preview in the browser, and loop on feedback until the user approves.
 
-**Agent 1 — Stack researcher**: Scan the existing codebase for languages, frameworks, and libraries already in use. Find similar existing code that could be reused or adapted. Produce: (1) recommended tech stack for the prototype, (2) existing code snippets to reuse, (3) any gotchas or constraints from the current setup.
+## Skills this workflow drives
+- [dev-fe-developer](../dev-fe-developer/SKILL.md) — styling, layout, component, and accessibility rules for the mock.
+- [core-explain](../core-explain/SKILL.md) — read existing FE patterns / design tokens to reuse (optional).
 
-**Agent 2 — Interface designer**: Based on the prototype description, define the minimal interface: inputs, outputs, and the single core interaction. If it's a UI, sketch a rough layout in ASCII. If it's an API/CLI/library, define the function signatures or commands. Produce: a concrete interface spec (not implementation).
+## Phases
+1. **FE SPEC & method** → [references/phase-1-spec-and-method.md](references/phase-1-spec-and-method.md)
+   Read the FE SPEC (`docs/spec/frontend.md`); enumerate **every screen + function**; pick the generation method with the user.
+2. **Generate the mock** → [references/phase-2-generate-mock.md](references/phase-2-generate-mock.md)
+   Produce all screens per the SPEC using the chosen method — HTML/CSS, or Figma via an MCP connector. Placeholder data only.
+3. **Preview & feedback loop** → [references/phase-3-preview-feedback.md](references/phase-3-preview-feedback.md)
+   Show it in the browser; collect feedback; regenerate or add screens per feedback; repeat until approved.
 
-After both agents complete:
+## Two generation methods
+- **A. HTML/CSS** — self-contained static files (+ minimal JS only for navigation/interaction states), served locally and opened in the browser.
+- **B. Figma (via MCP)** — build the frames in Figma using an available Figma MCP connector; share the file/frame link for review.
 
-1. Present stack recommendation + interface spec to user. Confirm or adjust.
-2. Build the prototype:
-   - Single file if possible
-   - Use the stack from Agent 1
-   - Implement the interface from Agent 2
-   - Hardcode anything that's not the core concern
-3. Run it and show real output.
-4. Handoff notes:
-   - What's hardcoded / stubbed
-   - What would need to change for production
-   - Estimated effort to productionize (S/M/L/XL)
+## Hard gates / scope
+- **UI only.** Never implement or stub a backend, database, or business logic — this is not the production build.
+- **Cover the whole FE SPEC** — every screen and every function it lists; track coverage against a checklist.
+- **Browser preview is mandatory** before asking for feedback.
+- **Iterate until approved** — each round of feedback → regenerate/extend the affected screens → re-preview. Repeat as many times as needed.
+- The approved mock guides the real FE build later (e.g. [workflow-feature](../workflow-feature/SKILL.md)); it is not itself the shipped UI.
