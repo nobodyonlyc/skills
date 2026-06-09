@@ -1,18 +1,22 @@
-# Example — UI prototype: "Kanban board drag-and-drop"
+# Example — mock UI from an FE SPEC (task tracker)
 
-Input: `/workflow-prototype a kanban board where I can drag cards between columns`
+Input: `/workflow-prototype docs/spec/frontend.md`
 
-## Phase 1 — research & interface
-- **Stack researcher ([core-explain](../../core-explain/SKILL.md))** finds the repo already uses React + Vite and has `@dnd-kit` in `package.json` → recommend reusing it.
-- **Interface designer** specifies: 3 columns (Todo/Doing/Done), a card with title, drag to move. Core interaction = drag-and-drop.
-- User confirms the spec.
+## Phase 1 — FE SPEC & method
+Read `docs/spec/frontend.md`. Coverage checklist extracted:
+- **Login** — email + password fields, inline validation, "forgot password" link, error state.
+- **Board** — 3 columns (Todo/Doing/Done), task cards, drag affordance, filter bar, empty-column state.
+- **Task detail** — title, description, assignee, status dropdown, comments list, save/cancel.
 
-## Phase 2 — UI design gate (blocking)
-- A standalone `mockup.html` is built ([dev-fe-developer](../../dev-fe-developer/SKILL.md)) with 3 styled columns and sample cards, fully static.
-- Presented to user. User: "make the columns wider and add a card count badge."
-- Mockup edited and re-presented. User: "approved." ✅ — only now does logic begin.
+Method chosen with the user → **A. HTML/CSS** (no Figma needed).
 
-## Phase 3 — build · run · handoff
-- Single-file React prototype built with `@dnd-kit` ([core-prototype](../../core-prototype/SKILL.md)), cards in local state (no backend, [dev-be-developer](../../dev-be-developer/SKILL.md) stub noted).
-- Run via `npm run dev`; screenshot/output shows dragging a card from Todo → Doing.
-- Handoff: state is in-memory (hardcoded seed cards); production needs persistence + multi-user sync. Effort: **M**.
+## Phase 2 — Generate the mock
+Built with [dev-fe-developer](../../dev-fe-developer/SKILL.md) rules: `login.html`, `board.html`, `task.html` + shared `styles.css`; cohesive palette, Inter font, responsive. All data hardcoded (sample tasks/users), navigation links wired, hover/validation/empty states shown. **No** API calls, no backend, no DB. Checklist fully crossed off.
+
+## Phase 3 — Preview & feedback loop
+- Served via `python3 -m http.server 8000`; gave the user `http://localhost:8000/login.html` and screenshotted each screen.
+- **Round 1 feedback:** "board cards need a priority badge; login needs a logo." → regenerated `board.html` + `login.html`, re-previewed.
+- **Round 2 feedback:** "add a task detail empty-comments state." → added that state, re-previewed.
+- **Round 3:** user approves all screens. ✅
+
+Handoff: approved static mock is the design reference for the real frontend (→ [workflow-feature](../../workflow-feature/SKILL.md)). It contains no backend/DB and is not the shipped UI.

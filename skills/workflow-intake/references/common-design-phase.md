@@ -6,10 +6,10 @@ Runs after analysis and **before** per-US execution. Produces two shared artifac
 From the BA and the tech-stack SPEC, drive [dev-db-designer](../../dev-db-designer/SKILL.md) to produce a **basic schema** (core entities, relationships, key constraints) under `docs/spec/database.md` / migration stubs. Keep it foundational — full per-feature schema work happens inside each US.
 
 ## 2. Mock UI
-If the project has a UI, drive [dev-fe-developer](../../dev-fe-developer/SKILL.md) to build a **mock UI**:
-- Default: standalone **HTML/CSS** the user can open.
-- Use **Figma** instead only if the SPEC explicitly requires it.
-- Iterate until the user approves (reuse dev-fe-developer's mandatory UI design gate): present → feedback → revise → re-present, repeat until explicit approval.
+If the project has a UI, generate the **mock UI** from the FE SPEC via [workflow-prototype](../../workflow-prototype/SKILL.md) (UI only — no backend/DB):
+- It renders **every screen + function** in `docs/spec/frontend.md`.
+- Method: standalone **HTML/CSS**, or **Figma via an MCP connector** if the SPEC requires it.
+- Mandatory **browser preview**, then iterate: present → feedback → regenerate/extend → re-preview, until the user approves every screen.
 
 ## Gates
 - **ask-user** approval is required for both the DB design and the mock UI before leaving this phase; on feedback, redo that artifact.

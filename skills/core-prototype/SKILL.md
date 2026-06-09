@@ -1,34 +1,29 @@
 ---
 name: core-prototype
-description: Rapidly prototype a new feature or design concept, focusing on speed and minimal functionality for feedback.
+description: Single-agent quick mock UI — render a screen or two as static HTML/CSS for fast visual feedback. UI only, no backend or DB.
 ---
 
-Prototype to build: $ARGUMENTS
+Mock UI to build: $ARGUMENTS
 
-> This is the single-agent build. For a multi-agent prototyping workflow (parallel stack research + interface design, mandatory UI design gate), use [workflow-prototype](../workflow-prototype/SKILL.md). That workflow drives this skill in its build phase.
+The lightweight, single-agent path for a **mock UI**. Use it to throw together one or a few screens as static **HTML/CSS** for quick visual feedback. **UI only** — placeholder data, no backend, no database, no business logic.
+
+> For the full, SPEC-driven mock (every screen/function from `docs/spec/frontend.md`, choice of HTML/CSS or Figma-via-MCP, mandatory browser preview + feedback loop), use [workflow-prototype](../workflow-prototype/SKILL.md).
 
 ```bash
-git log --oneline -3
 ls -la
-find . -name "package.json" -o -name "pyproject.toml" -o -name "go.mod" | head -3
+find . -name "package.json" -o -name "*.css" | head -3   # reuse existing FE stack / tokens if any
 ```
 
-Build a working prototype as fast as possible. Optimize for **speed and clarity**, not production quality.
-
 ## Ground rules
-
-- **No over-engineering** — no abstraction layers, no config systems, no plugin architectures unless the prototype itself is about those things
-- **Hardcode values** — use hardcoded URLs, credentials (non-prod), magic numbers freely; leave TODOs for the real implementation
-- **Single file preferred** — put everything in one file unless the language makes that impractical
-- **Real dependencies** — use existing libraries; don't reimplement what npm/pip/go already has
-- **No tests** — unless the prototype IS a testing tool
+- **UI only** — never build or stub a backend, DB, or real logic. Hardcode all sample data.
+- **Static HTML/CSS** (+ minimal JS for navigation/interaction states only).
+- **No placeholders text** like `[Image here]`/`TODO` — use icon libraries or placeholder images and realistic copy.
+- Follow [dev-fe-developer](../dev-fe-developer/SKILL.md) styling rules (cohesive palette, typography, spacing, responsive, accessible).
 
 ## Workflow
+1. **Confirm the screens** — which screen(s) and what each must show.
+2. **Build** — write the HTML/CSS; wire navigation and show interaction states.
+3. **Preview in the browser** — serve it (e.g. `python3 -m http.server`) and give the user a clickable URL or screenshots.
+4. **Feedback loop** — on feedback, regenerate/extend the screen and re-preview; repeat until the user is happy.
 
-1. **Confirm the goal** — one sentence: what should the prototype do? What's the success condition?
-2. **Pick the simplest stack** — plain Node/Python/bash script, not a full framework
-3. **Build it** — write the code, run it, show output
-4. **Demonstrate** — run the prototype and show real output, not just "it compiled"
-5. **Handoff notes** — bullet list of shortcuts taken that would need fixing before production
-
-If the prototype doesn't work on first run, fix it — don't hand over broken code.
+If it doesn't render correctly on first preview, fix it before handing over.

@@ -1,26 +1,31 @@
 ---
 name: workflow-prototype
-description: Orchestrate a multi-agent workflow to rapidly prototype, test, and refine a new idea.
+description: Generate a mock UI from the FE SPEC (HTML/CSS, or Figma via an MCP connector), preview it in the browser, and iterate on feedback. UI only — no backend, DB, or business logic.
 ---
 
-Prototype request: $ARGUMENTS
+Mock UI request: $ARGUMENTS
 
-Multi-agent rapid-prototyping workflow: research the stack, get the UI design approved, then build the smallest thing that demonstrates the idea. Each phase has a detailed playbook in [`references/`](references/); see [`examples/`](examples/) for a full worked run.
+This workflow produces a **mock UI only**. It renders every screen and interaction described in the **frontend SPEC**, using stubbed/placeholder data. **No backend, no database, no real business logic.** Generate by one of two methods, preview in the browser, and loop on feedback until the user approves.
 
 ## Skills this workflow drives
-- [core-explain](../core-explain/SKILL.md) — scan the existing codebase for reusable stack & code (Phase 1, Stack researcher).
-- [dev-fe-developer](../dev-fe-developer/SKILL.md) — build the viewable UI mockup and the UI of the prototype (Phase 2 & 3).
-- [dev-be-developer](../dev-be-developer/SKILL.md) — stub/implement the minimal backend or API surface (Phase 3).
-- [core-prototype](../core-prototype/SKILL.md) — single-file, speed-first build guidance for the core concept (Phase 3).
+- [dev-fe-developer](../dev-fe-developer/SKILL.md) — styling, layout, component, and accessibility rules for the mock.
+- [core-explain](../core-explain/SKILL.md) — read existing FE patterns / design tokens to reuse (optional).
 
 ## Phases
-1. **Research & Interface Spec** → [references/phase-1-research-interface.md](references/phase-1-research-interface.md)
-   Parallel: Stack researcher + Interface designer. Present and confirm with the user.
-2. **MANDATORY UI Design Gate** → [references/phase-2-ui-design-gate.md](references/phase-2-ui-design-gate.md)
-   If there is a UI, build a real viewable mockup, iterate until the user explicitly approves. Hard gate.
-3. **Build · Run · Handoff** → [references/phase-3-build-handoff.md](references/phase-3-build-handoff.md)
-   Build the smallest working prototype, run it, show real output, and write handoff notes.
+1. **FE SPEC & method** → [references/phase-1-spec-and-method.md](references/phase-1-spec-and-method.md)
+   Read the FE SPEC (`docs/spec/frontend.md`); enumerate **every screen + function**; pick the generation method with the user.
+2. **Generate the mock** → [references/phase-2-generate-mock.md](references/phase-2-generate-mock.md)
+   Produce all screens per the SPEC using the chosen method — HTML/CSS, or Figma via an MCP connector. Placeholder data only.
+3. **Preview & feedback loop** → [references/phase-3-preview-feedback.md](references/phase-3-preview-feedback.md)
+   Show it in the browser; collect feedback; regenerate or add screens per feedback; repeat until approved.
 
-## Hard gates
-- If the prototype has a UI, **do not write any prototype logic** until the user has explicitly approved the visual mockup (Phase 2). Iterate on the mockup as many times as requested.
-- Keep it a prototype — hardcode/stub everything that isn't the core concept, and say so in the handoff.
+## Two generation methods
+- **A. HTML/CSS** — self-contained static files (+ minimal JS only for navigation/interaction states), served locally and opened in the browser.
+- **B. Figma (via MCP)** — build the frames in Figma using an available Figma MCP connector; share the file/frame link for review.
+
+## Hard gates / scope
+- **UI only.** Never implement or stub a backend, database, or business logic — this is not the production build.
+- **Cover the whole FE SPEC** — every screen and every function it lists; track coverage against a checklist.
+- **Browser preview is mandatory** before asking for feedback.
+- **Iterate until approved** — each round of feedback → regenerate/extend the affected screens → re-preview. Repeat as many times as needed.
+- The approved mock guides the real FE build later (e.g. [workflow-feature](../workflow-feature/SKILL.md)); it is not itself the shipped UI.
