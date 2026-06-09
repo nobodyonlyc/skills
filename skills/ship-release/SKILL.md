@@ -8,31 +8,36 @@ Prepare a release. Version bump type: $ARGUMENTS (major / minor / patch — defa
 > This is the single-agent release path. For a multi-agent release workflow (parallel changelog + health check + dependency audit), use [workflow-release-prep](../workflow-release-prep/SKILL.md). That workflow drives this skill.
 
 Gather context:
-
 ```bash
-git log --oneline $(git describe --tags --abbrev=0)..HEAD 2>/dev/null || git log --oneline -20
+git log --oneline $(git describe --tags --abbrev=0 2>/dev/null || echo "")..HEAD 2>/dev/null || git log --oneline -20
 git tag --sort=-version:refname | head -5
 cat package.json 2>/dev/null | grep '"version"' || cat pyproject.toml 2>/dev/null | grep 'version' || cat Cargo.toml 2>/dev/null | grep 'version'
 ```
 
-Release workflow:
+## References
+Please follow the guidelines in these references carefully:
+- **[SemVer Guide](references/semver-guide.md)**: Rules for bumping Major, Minor, or Patch versions.
+- **[Changelog Format](references/changelog-format.md)**: How to convert git logs into structured release notes.
+- **[Branching Strategy](references/branching-strategy.md)**: Release vs. Hotfix branch logic.
 
-1. **Changelog** — Group commits since last tag into: `### Features`, `### Fixes`, `### Breaking Changes`. Skip chore/style/test commits.
+## Examples
+- **[Release Notes Example](examples/release-notes-example.md)**: Sample output of generated release notes.
 
-2. **Version bump** — Calculate new version from current tag + bump type. Show the new version and ask for confirmation.
+## Release Workflow
 
-3. **Apply** — Update version in package.json / pyproject.toml / Cargo.toml (whichever exists). Append changelog entry to CHANGELOG.md (create if missing).
+1. **Calculate Version**: Use `references/semver-guide.md` to analyze the commits since the last tag. Determine the appropriate bump (major/minor/patch). Propose the new version to the user.
+2. **Determine Branching Strategy**: Review `references/branching-strategy.md`. If this is a hotfix or minor release, check if a dedicated release branch needs to be created or if we are tagging directly on main.
+3. **Generate Changelog**: Parse the commits using `references/changelog-format.md`. Draft the new entry for `CHANGELOG.md`.
+4. **Update Files**: Modify `package.json`, `Cargo.toml`, or `pyproject.toml` with the new version. Append the drafted changelog to `CHANGELOG.md`.
+5. **Commit & Tag**:
+   ```bash
+   git add package.json CHANGELOG.md
+   git commit -m "chore: release v<new-version>"
+   git tag -a v<new-version> -m "Release v<new-version>"
+   ```
+6. **Push**: Ask for explicit confirmation before pushing:
+   ```bash
+   git push origin <branch> --tags
+   ```
 
-4. **Commit & tag**:
-```bash
-git add -A
-git commit -m "chore: release v<new-version>"
-git tag v<new-version>
-```
-
-5. **Push** — Ask before pushing:
-```bash
-git push && git push --tags
-```
-
-Stop before each irreversible step and confirm with the user.
+Stop before each irreversible step (Commit, Tag, Push) and confirm with the user.

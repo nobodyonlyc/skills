@@ -3,29 +3,23 @@ name: ship-deploy
 description: Perform pre-flight checks, build the project, and run the deployment workflow for a target environment.
 ---
 
-Deploy target: $ARGUMENTS (environment name, e.g. staging / production)
+Deploy target: $ARGUMENTS (environment name, e.g., staging / production)
 
-Pre-flight checks:
+This skill guides the robust deployment of code. It replaces simple "run deploy" scripts with a structured pipeline: Pre-flight → Build → Deploy → Verify → Rollback (if necessary).
 
-```bash
-git status
-git log --oneline -3
-git diff --stat HEAD
-```
+## References
+Please follow the guidelines in these references carefully:
+- **[Pre-Flight Checks](references/pre-flight-checks.md)**: Mandatory verification before any build/deploy steps.
+- **[Deployment Targets](references/deployment-targets.md)**: Standard commands and abstractions for Docker, Vercel, AWS, etc.
+- **[Rollback Runbook](references/rollback-runbook.md)**: Immediate steps to take if the deployment fails or verification fails.
 
-Follow this deployment workflow:
+## Examples
+- **[Deploy Scenario](examples/deploy-scenario.md)**: An example of a deployment execution that hits an issue and rolls back.
 
-1. **Guard rails** — Stop and warn if:
-   - There are uncommitted changes
-   - Current branch is not the expected deploy branch (main/master for prod)
-   - Tests haven't passed (check CI status if `gh` is available)
-
-2. **Build** — Run the project's build command (detect from package.json scripts, Makefile, or ask the user).
-
-3. **Deploy** — Run the deploy command for the target environment. Show the command before executing and ask for confirmation if deploying to production.
-
-4. **Verify** — After deploy, check health endpoint or run a smoke test if available.
-
-5. **Report** — Summarize: what was deployed, from which commit, to which environment, and the verification result.
-
-If no deploy script is found, ask the user for the deploy command before proceeding.
+## Workflow Phases
+1. **Pre-flight Checks**: Execute the checklist in `references/pre-flight-checks.md`. Do not proceed if any check fails.
+2. **Build**: Run the project's build command (e.g., `npm run build`, `cargo build --release`, `docker build`).
+3. **Deploy**: Identify the correct deployment abstraction from `references/deployment-targets.md` and execute it. 
+   - *Requirement*: Always show the deploy command to the user and ask for confirmation if deploying to `production`.
+4. **Verify (Post-deploy)**: Run a health check (e.g., `curl https://target-url/health`) or a smoke test.
+5. **Rollback (If needed)**: If the build, deploy, or verification steps fail, immediately trigger the procedures in `references/rollback-runbook.md`.

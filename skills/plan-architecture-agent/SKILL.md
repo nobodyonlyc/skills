@@ -46,7 +46,13 @@ Do not overwhelm the user with database models, deployment pipelines, or softwar
 3. Present these suggestions in plain language, explaining *why* they fit the business goals (e.g., "We suggest Next.js because it makes your website load fast and helps it rank well on search engines").
 4. Use the **ask-user** capability only to verify if the suggested choices are acceptable or if they have any visual/functional preferences.
 
-## Step 3: Document the System Architecture
+## Step 3: Document the System Context & Architecture
+First, generate the structured context JSON. Then, write the detailed architecture markdown.
+
+### 3A. Generate Project Context (`.harness/context.json`)
+Read the [Context JSON Schema](references/context-schema.md) and create the `.harness/context.json` file. Create the `.harness` directory if it doesn't exist. This provides a machine-readable summary for other agents.
+
+### 3B. Document the Architecture (`docs/SYSTEM_ARCHITECTURE.md`)
 Output a comprehensive `docs/SYSTEM_ARCHITECTURE.md` file containing:
 1. **System Overview**: High-level summary of the system and its goals.
 2. **Persona & Project Scale**: Summary of project size and user target.
