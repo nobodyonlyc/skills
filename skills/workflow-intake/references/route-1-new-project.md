@@ -26,10 +26,10 @@ Only generate SPECs for components that actually exist in this project. Confirm 
 Drive [plan-us-backlog-generator](../../plan-us-backlog-generator/SKILL.md) to parse the BA + SPECs into User Stories. Present the proposed backlog as a table and get explicit user approval **before** writing it via `./harness add`.
 
 ### 5. Common design phase
-Hand off to the shared **common design phase** (basic DB design + mock UI) before per-US execution. *(playbook: F25)*
+Hand off to the shared [common design phase](common-design-phase.md) (basic DB design + mock UI) before per-US execution.
 
 ### 6. Execute each US
-Run each US through **Route 2** — split into child-tasks and dispatch to the matching workflow. *(playbook: F26)*
+Run each US through [Route 2](route-2-us-execution.md) — split into child-tasks and dispatch to the matching workflow.
 
 ## Gates
 - Stop and **ask-user** after the interview, the BA, each SPEC, and the backlog. On feedback, redo that step.
