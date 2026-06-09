@@ -10,7 +10,9 @@ This route is the orchestrated front of [workflow-bootstrap](../../workflow-boot
 Drive [plan-architecture-agent](../../plan-architecture-agent/SKILL.md) to interview the user: project **size**, **user role/persona**, and the high-level **SPEC** (goals, tech stack, components). Output: `docs/SYSTEM_ARCHITECTURE.md`.
 
 ### 2. Generate the BA (business analysis)
-From the interview, write `docs/BA.md`: business goals, stakeholders/personas, core user journeys, in-scope vs out-of-scope. Confirm it with the user (**ask-user**) before continuing.
+From the interview, write `docs/BA.md`: business goals, stakeholders/personas, core user journeys, in-scope vs out-of-scope. 
+**Follow-up Interview (Crucial)**: After drafting the BA, analyze it for gaps. If the BA reveals hidden complexities, missing constraints, or edge cases, ask the user targeted follow-up questions before writing technical specs. 
+Confirm the final `docs/BA.md` and the answers with the user (**ask-user**) before continuing.
 
 ### 3. Per-component detailed SPEC
 For **each component present** in the architecture, write a detailed SPEC under `docs/spec/`:

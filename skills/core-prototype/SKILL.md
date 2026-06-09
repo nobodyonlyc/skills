@@ -14,16 +14,22 @@ ls -la
 find . -name "package.json" -o -name "*.css" | head -3   # reuse existing FE stack / tokens if any
 ```
 
-## Ground rules
+## Ground Rules
 - **UI only** — never build or stub a backend, DB, or real logic. Hardcode all sample data.
-- **Static HTML/CSS** (+ minimal JS for navigation/interaction states only).
-- **No placeholders text** like `[Image here]`/`TODO` — use icon libraries or placeholder images and realistic copy.
-- Follow [dev-fe-developer](../dev-fe-developer/SKILL.md) styling rules (cohesive palette, typography, spacing, responsive, accessible).
+- **Static HTML/CSS/JS** — generate JavaScript to handle UI events (e.g., toggling sidebars, opening modals, dropdowns).
+- **Responsive by default** — the prototype MUST support Mobile and Tablet modes seamlessly.
+- **No placeholder text** like `[Image here]` or `TODO` — use placeholder images (e.g. `https://placehold.co/600x400`) and realistic copy.
 
-## Workflow
-1. **Confirm the screens** — which screen(s) and what each must show.
-2. **Build** — write the HTML/CSS; wire navigation and show interaction states.
-3. **Preview in the browser** — serve it (e.g. `python3 -m http.server`) and give the user a clickable URL or screenshots.
-4. **Feedback loop** — on feedback, regenerate/extend the screen and re-preview; repeat until the user is happy.
+## References
+Please follow the guidelines in these references carefully:
+- **[Design System & CSS Patterns](references/design-system.md)**: Standard tokens, typography, and responsive layout guidance.
+- **[Iteration Loop](references/iteration-loop.md)**: The lifecycle for rendering, previewing, and refining the prototype.
 
-If it doesn't render correctly on first preview, fix it before handing over.
+## Examples
+- **[Sample Prototype Output](examples/sample-prototype.md)**: See an example of a well-structured prototype.
+
+## Workflow Phases
+1. **Confirm Requirements**: Clarify the screen(s) and what they must show. Set up the basic layout.
+2. **Apply Design Tokens**: Ensure your prototype adheres to `references/design-system.md`.
+3. **Build the Mock**: Write the HTML/CSS with realistic content.
+4. **Preview & Iterate**: Follow `references/iteration-loop.md` to host the files, show them to the user, and iterate on feedback.
