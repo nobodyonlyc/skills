@@ -5,18 +5,20 @@ description: Orchestrate a multi-agent workflow to prep release notes, update ve
 
 Release preparation workflow. Target version: $ARGUMENTS
 
-Run the following agents IN PARALLEL:
+Multi-agent release prep: build the changelog, run a health check, and audit dependencies in parallel, then apply the release once the user approves. Each phase has a detailed playbook in [`references/`](references/); see [`examples/`](examples/) for a full worked run.
 
-**Agent 1 — Changelog builder**: Read git log since last tag, categorize commits into Features / Fixes / Breaking Changes / Chores. Draft CHANGELOG entry.
+## Skills this workflow drives
+- [ship-release](../ship-release/SKILL.md) — the release procedure: version bump, notes, pre-release validation (Phase 1 & 2).
+- [check-security-review](../check-security-review/SKILL.md) — vet dependency advisories flagged in the audit (Phase 1).
+- [ship-commit-msg](../ship-commit-msg/SKILL.md) — write the release commit and categorize history (Phase 1 & 2).
+- [ship-deploy](../ship-deploy/SKILL.md) — staging validation / deploy once tagged (Phase 2).
 
-**Agent 2 — Release health check**: Run tests, check for uncommitted changes, verify no TODO/FIXME/HACK comments in changed files, check that version numbers are consistent across all config files (package.json, pyproject.toml, Cargo.toml, etc.).
+## Phases
+1. **Parallel Audit** → [references/phase-1-parallel-audit.md](references/phase-1-parallel-audit.md)
+   Changelog builder + Release health check + Dependency audit run in parallel; surface blockers.
+2. **Approve & Apply** → [references/phase-2-apply-release.md](references/phase-2-apply-release.md)
+   Resolve blockers, get user approval, bump version, write CHANGELOG, commit, tag, and validate on staging.
 
-**Agent 3 — Dependency audit**: Check for outdated dependencies with security advisories. Report any that should be updated before release.
-
-After all agents complete:
-
-1. Present: changelog draft, health check results, dependency audit.
-2. Resolve any blockers (failing tests, version mismatches, critical deps).
-3. Get user approval on the changelog and version number.
-4. Apply: update version, write CHANGELOG.md, commit, tag.
-5. Ask before pushing.
+## Hard gates
+- All blockers (failing tests, version mismatches, critical dependency advisories) must be resolved before applying.
+- Get explicit user approval on the changelog and version number, and **ask before pushing**.
