@@ -34,6 +34,24 @@ Review the changes and write a report to `.harness/reports/code-review.md`. Your
 ## Format each finding as:
 `[severity] file:line — description — suggested fix`
 
-Severities: 🔴 bug | 🟡 smell | 🔵 nit
+Severities (4-level, so the loop has a deterministic stop condition):
+- **Critical** 🔴 — wrong logic, data loss, or a security vulnerability. Ships a broken product.
+- **High** 🟠 — a real bug of lesser blast radius, or missing error handling on the main path.
+- **Medium** 🟡 — maintainability problem, missing edge-case test, duplicated logic.
+- **Low** 🔵 — style/nit not caught by a linter.
 
 Keep the review concise — only findings worth acting on. Skip obvious style issues handled by linters.
+
+## Exit criteria (the loop's stop condition)
+The code-test-review loop (e.g. [workflow-feature](../workflow-feature/SKILL.md) Phase 2) needs an unambiguous definition of "clean". These exit criteria are that definition:
+- **CLEAN** = zero Critical and zero High findings. Medium findings must be **recorded as a follow-up** (a new backlog item or the feature's notes) — never silently dropped. Low is optional.
+- **NOT clean** = any Critical or High remains → the loop returns to implementation and re-reviews (counts against the iteration cap).
+
+End the report with a machine-readable verdict on its own final line, so the orchestrator decides deterministically (not by re-reading prose):
+```
+VERDICT: CLEAN
+```
+or
+```
+VERDICT: ISSUES (critical: N, high: N, medium: N, low: N)
+```

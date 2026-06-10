@@ -25,9 +25,9 @@ Invoke a **Test Writer** subagent to write and run unit/integration tests via [c
 - **Any test fails** → send developers back to 2.1.
 
 ## 2.3 Code review
-Invoke a **Code Reviewer** subagent to analyze the git diff via [check-code-review](../../check-code-review/SKILL.md).
-- **Review finds issues** → send developers back to 2.1 and re-test.
-- **Clean** → proceed to [Phase 3](phase-3-verify-checkpoint.md).
+Invoke a **Code Reviewer** subagent to analyze the git diff via [check-code-review](../../check-code-review/SKILL.md). Decide by its machine-readable final-line verdict, not prose, per that skill's [exit criteria](../../check-code-review/SKILL.md):
+- **`VERDICT: ISSUES` with any Critical/High** → send developers back to 2.1 and re-test.
+- **`VERDICT: CLEAN`** (no Critical/High; any Medium recorded as follow-up) → proceed to [Phase 3](phase-3-verify-checkpoint.md).
 
 ## Phase checkpoint (every iteration)
 At the end of **each** loop iteration, update `.harness/tasks/<feature_id>.md` (iteration counter, last report paths, next step) and commit the working code plus the state file:

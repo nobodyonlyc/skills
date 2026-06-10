@@ -23,9 +23,9 @@ Run Subagent C's test against Subagent D's code.
 - **Fails** → send Subagent D back to modify the fix until it passes.
 
 ## 2.3 Code review
-Invoke a **Code Reviewer** to analyze the git diff via [check-code-review](../../check-code-review/SKILL.md).
-- **Issues found** → back to 2.1.
-- **Clean** → proceed to [Phase 3](phase-3-verify-checkpoint.md).
+Invoke a **Code Reviewer** to analyze the git diff via [check-code-review](../../check-code-review/SKILL.md). Decide by its final-line verdict per that skill's [exit criteria](../../check-code-review/SKILL.md):
+- **`VERDICT: ISSUES` with any Critical/High** → back to 2.1.
+- **`VERDICT: CLEAN`** → proceed to [Phase 3](phase-3-verify-checkpoint.md).
 
 ## Iteration cap (cost guard)
 The fix → test → review loop has a hard **iteration cap of 5** (override with `HARNESS_LOOP_MAX`); track the count in the task-state file. If the bug is not fixed-and-clean by the cap, stop looping: write `docs/design-docs/<id>/loop-report.md`, `./harness block <id> --reason "Hit loop cap (5): ..."`, surface to the user, and STOP. In `auto` mode this is a mandatory stop.
