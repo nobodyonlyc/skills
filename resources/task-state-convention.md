@@ -28,6 +28,9 @@ One committed markdown file per active feature or child-task:
 - [ ] Phase 2 — build/test/review loop (iteration: 2, last report: .harness/reports/review-2.md)
 - [ ] Phase 3 — QA + verify + handoff
 
+## Evidence
+- docs/design-docs/<id>/evidence.md  (committed QA/review/verify summary — survives `harness clean`)
+
 ## Decisions
 - <ISO timestamp> — chose X over Y because <reason> (approved by user / auto mode)
 
