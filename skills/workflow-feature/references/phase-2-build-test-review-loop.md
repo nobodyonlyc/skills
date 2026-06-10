@@ -35,6 +35,14 @@ git commit -m "phase-checkpoint: <feature_id> phase 2 iteration <n>"
 ```
 A crash mid-loop then resumes at the last finished iteration instead of restarting the phase.
 
+## Iteration cap (cost guard)
+The code → test → review loop has a hard **iteration cap of 5** (override with `HARNESS_LOOP_MAX` if a feature genuinely needs more). Track the count in the task-state file's `iteration:` field each pass.
+
+When the cap is hit without reaching a clean review, **do not keep looping** — that is how token spend runs away. Instead:
+1. Write a loop report to `docs/design-docs/<feature_id>/loop-report.md`: what each iteration tried, what tests/review still fail, and the suspected root cause.
+2. `./harness block <feature_id> --reason "Hit loop cap (5): <one-line blocker>; see docs/design-docs/<id>/loop-report.md"`.
+3. Surface to the user and STOP (in `auto` mode this is a mandatory stop — unbounded retry is never autonomous).
+
 ## Blocked?
 If the loop cannot proceed (missing dependency, undecided requirement, external breakage), record it on the feature instead of leaving it silently stuck:
 ```bash

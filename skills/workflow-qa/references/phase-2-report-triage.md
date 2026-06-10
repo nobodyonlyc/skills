@@ -16,8 +16,8 @@ For any ❌, flaky test, or high-severity finding:
 - Propose the **test** that would guard it (via [check-test-gen](../../check-test-gen/SKILL.md)).
 
 ## 3. Decide with the User
-Ask the user: fix the issues now, or document them for follow-up?
-- **Fix now** → hand off to [workflow-bugfix](../../workflow-bugfix/SKILL.md) for each blocker.
+Ask the user: fix the issues now, or document them for follow-up? (In `auto` mode, decide and log per [autonomy-mode](../../../resources/autonomy-mode.md) — default to fixing high-severity blockers and deferring low.)
+- **Fix now** → hand off to [workflow-bugfix](../../workflow-bugfix/SKILL.md) for each blocker. Each inherits that workflow's **iteration cap** (5), so a stubborn blocker blocks rather than looping unbounded.
 - **Defer** → record them so the next session can pick them up (e.g., create a task in `task.md` or `.harness/features.json`).
 
 → Once resolved or deferred, proceed to [Phase 3](phase-3-verify-checkpoint.md).
