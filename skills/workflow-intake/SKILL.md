@@ -20,7 +20,12 @@ Decide which of the 4 cases the prompt is, using the signals in [references/phas
 
 > Routes 1 & 3 share the [common design phase](references/common-design-phase.md) (basic DB design + mock UI) before per-US execution.
 
+## Phase 0.5 — Pick autonomy mode
+Determine the run's autonomy mode per [autonomy-mode](../../resources/autonomy-mode.md) and record it in the task-state file's `Mode:` field:
+- Default is **`gated`** — stop at every ask-user gate.
+- Switch to **`mode: auto`** only when the user explicitly asks for an unattended / long autonomous run. In `auto`, ask-user gates become logged decisions, but the always-stop list still halts for irreversible/outward-facing actions.
+
 ## Cross-cutting rules (every step, every route)
 - **Task tracking** — record each step as a harness task; a US splits into child-tasks per [task-convention](../../resources/task-convention.md).
 - **Full gates** — every task runs review / test / verify / handoff.
-- **Ask-user gate** — stop before/after each step and ask the user; on feedback, **redo that step** before moving on.
+- **Ask-user gate** — in `gated`, stop before/after each step and ask the user; on feedback, **redo that step**. In `mode: auto`, decide and log per [autonomy-mode](../../resources/autonomy-mode.md) instead of stopping (except the always-stop list).

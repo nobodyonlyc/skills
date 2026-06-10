@@ -24,6 +24,7 @@ Multi-agent feature development workflow that coordinates analysts, developers, 
    Run the QA suite, `./harness verify`, session stop, clean, then STOP.
 
 ## Hard gates
+- **Autonomy mode**: honor the run's mode (`gated` default / `auto`) per [autonomy-mode](../../resources/autonomy-mode.md). In `auto`, ask-user gates below become logged decisions — except the always-stop list, which always halts.
 - **Durable task state**: maintain `.harness/tasks/<id>.md` per the [task-state convention](../../resources/task-state-convention.md) — created at start, updated and committed at every phase boundary, so a crashed session can resume.
 - **Strict File-Based Communication**: Do NOT pass error logs or code snippets via chat messages. When Reviewers/Testers output files to `.harness/reports/`, send ONLY the file path to the Developer subagent.
 - Work on exactly **one** feature (WIP = 1). Confirm the target with the user before any work.
