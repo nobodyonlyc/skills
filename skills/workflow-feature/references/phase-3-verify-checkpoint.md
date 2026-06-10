@@ -6,7 +6,7 @@ Run only after the [Phase 2](phase-2-build-test-review-loop.md) loop completes c
 
 ## Steps
 1. Run the full project verification pass via the [check-qa](../../check-qa/SKILL.md) skill.
-2. Run the Harness verify check (auto-stages and commits a checkpoint on success):
+2. Final phase checkpoint: update `.harness/tasks/<feature_id>.md` (tick Phase 3, point at the QA evidence) so the state file is included in the verify commit. Then run the Harness verify check (auto-stages and commits a checkpoint on success; it skips the commit if the git index already has unrelated staged changes — commit those first):
    ```bash
    ./harness verify <feature_id>
    ```

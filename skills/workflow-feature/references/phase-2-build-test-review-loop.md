@@ -27,6 +27,14 @@ Invoke a **Code Reviewer** subagent to analyze the git diff via [check-code-revi
 - **Review finds issues** → send developers back to 2.1 and re-test.
 - **Clean** → proceed to [Phase 3](phase-3-verify-checkpoint.md).
 
+## Phase checkpoint (every iteration)
+At the end of **each** loop iteration, update `.harness/tasks/<feature_id>.md` (iteration counter, last report paths, next step) and commit the working code plus the state file:
+```bash
+git add -A
+git commit -m "phase-checkpoint: <feature_id> phase 2 iteration <n>"
+```
+A crash mid-loop then resumes at the last finished iteration instead of restarting the phase.
+
 ## Blocked?
 If the loop cannot proceed (missing dependency, undecided requirement, external breakage), record it on the feature instead of leaving it silently stuck:
 ```bash

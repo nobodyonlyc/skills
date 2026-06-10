@@ -36,4 +36,12 @@ Once approved, persist the plan where a crashed session can recover it: write it
 ## 4. MANDATORY UI Design gate (only if the feature has UI)
 If the feature includes UI, present a layout wireframe or visual mockup (static HTML or image) **first**. Obtain explicit approval of the design **before** starting any implementation code. Iterate on the mockup until approved.
 
+## 5. Phase checkpoint
+Update `.harness/tasks/<feature_id>.md` (tick Phase 1, record decisions and the plan path) and commit:
+```bash
+git add .harness/tasks/<feature_id>.md docs/design-docs/<feature_id>/
+git commit -m "phase-checkpoint: <feature_id> phase 1 (plan approved)"
+```
+A crash after this point resumes directly into Phase 2.
+
 → Proceed to [Phase 2](phase-2-build-test-review-loop.md).
