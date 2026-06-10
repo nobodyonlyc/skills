@@ -7,6 +7,8 @@ Mock UI request: $ARGUMENTS
 
 This workflow produces a **mock UI only**. It renders every screen and interaction described in the **frontend SPEC**, using stubbed/placeholder data. **No backend, no database, no real business logic.** Generate by one of two methods, preview in the browser, and loop on feedback until the user approves.
 
+> **Scale check:** this is the right skill for a **whole app / the full FE SPEC** (many screens, coverage checklist). For just **1–2 screens** — e.g. a single feature's design gate — use the lightweight [core-prototype](../core-prototype/SKILL.md) instead.
+
 ## Skills this workflow drives
 - [dev-fe-developer](../dev-fe-developer/SKILL.md) — styling, layout, component, and accessibility rules for the mock.
 - [core-explain](../core-explain/SKILL.md) — read existing FE patterns / design tokens to reuse (optional).

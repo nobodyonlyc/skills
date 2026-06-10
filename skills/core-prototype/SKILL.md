@@ -10,6 +10,8 @@ Mock UI to build: $ARGUMENTS
 
 The lightweight, single-agent path for a **mock UI**. Use it to throw together one or a few screens as static **HTML/CSS** for quick visual feedback. **UI only** — placeholder data, no backend, no database, no business logic.
 
+> **Scale check:** this is the right skill for **1–2 screens** (e.g. the UI design gate of a single feature). For a **whole app / the full FE SPEC** with many screens, use [workflow-prototype](../workflow-prototype/SKILL.md) (multi-agent, coverage checklist) instead.
+
 > For the full, SPEC-driven mock (every screen/function from `docs/spec/frontend.md`, choice of HTML/CSS or Figma-via-MCP, mandatory browser preview + feedback loop), use [workflow-prototype](../workflow-prototype/SKILL.md).
 
 ```bash

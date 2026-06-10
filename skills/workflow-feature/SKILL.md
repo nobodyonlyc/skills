@@ -9,6 +9,7 @@ Multi-agent feature development workflow that coordinates analysts, developers, 
 
 ## Skills this workflow drives
 - [core-explain](../core-explain/SKILL.md) — read and understand existing code/patterns (Phase 1).
+- [core-prototype](../core-prototype/SKILL.md) — quick 1–2 screen mock UI for the Phase 1 design gate (escalate to [workflow-prototype](../workflow-prototype/SKILL.md) for a full multi-screen flow).
 - [dev-db-designer](../dev-db-designer/SKILL.md) — schema & migration design when DB changes are needed (Phase 1 & 2).
 - [check-test-gen](../check-test-gen/SKILL.md) — plan and write the test suite (Phase 1 strategy, Phase 2 execution).
 - [dev-be-developer](../dev-be-developer/SKILL.md) / [dev-fe-developer](../dev-fe-developer/SKILL.md) / [dev-cli-tool-developer](../dev-cli-tool-developer/SKILL.md) / [dev-batch-developer](../dev-batch-developer/SKILL.md) — implementation, chosen by component type (Phase 2).
