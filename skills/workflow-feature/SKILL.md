@@ -14,6 +14,7 @@ Multi-agent feature development workflow that coordinates analysts, developers, 
 - [dev-be-developer](../dev-be-developer/SKILL.md) / [dev-fe-developer](../dev-fe-developer/SKILL.md) / [dev-cli-tool-developer](../dev-cli-tool-developer/SKILL.md) / [dev-batch-developer](../dev-batch-developer/SKILL.md) — implementation, chosen by component type (Phase 2).
 - [check-code-review](../check-code-review/SKILL.md) — review the diff each loop iteration (Phase 2).
 - [check-qa](../check-qa/SKILL.md) — full verification pass before the checkpoint (Phase 3).
+- [check-security-review](../check-security-review/SKILL.md) — mandatory security audit in Phase 3 when the change touches auth, external input, secrets, queries, shell, or crypto.
 
 ## Phases
 1. **Confirmation, Analysis & Planning** → [references/phase-1-analysis-planning.md](references/phase-1-analysis-planning.md)
