@@ -17,7 +17,9 @@ For every file `harness init` reported as skipped because the project already ha
 - Show the user the diff of what you added.
 
 ## 3. Seed the backlog
-Drive [plan-us-backlog-generator](../../plan-us-backlog-generator/SKILL.md) to create the initial backlog from two sources:
+`harness init` seeds a placeholder `F01 "Setup basic framework"` into `.harness/features.json`. For an onboarded project this is noise — **remove it** before seeding real work (otherwise your first real feature collides on the `F01` id).
+
+Then drive [plan-us-backlog-generator](../../plan-us-backlog-generator/SKILL.md) to create the initial backlog from two sources:
 1. **Current-state features** the survey revealed (so the backlog reflects what already exists, marked `passing` only where a real verification confirms it — otherwise `not_started`).
 2. **The requested work** the user named in Phase 1.
 
