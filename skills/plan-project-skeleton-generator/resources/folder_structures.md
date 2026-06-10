@@ -259,4 +259,103 @@ project-root/source/
 ├── go.mod
 ├── go.sum
 └── README.md
+
+---
+
+## 5. Java & Spring Boot Templates
+
+### A. Standard Size (Layered MVC)
+* **Target**: Enterprise REST APIs and microservices.
+* **Layout**:
+```text
+project-root/source/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/
+│   │   │       └── company/
+│   │   │           └── app/
+│   │   │               ├── config/       # Security, Beans, WebMvcConfigurer
+│   │   │               ├── controller/   # REST endpoints
+│   │   │               ├── dto/          # Data Transfer Objects
+│   │   │               ├── exception/    # Global exception handlers
+│   │   │               ├── model/        # JPA Entities
+│   │   │               ├── repository/   # Spring Data Repositories
+│   │   │               ├── service/      # Business logic
+│   │   │               └── Application.java # Main class
+│   │   └── resources/
+│   │       ├── application.yml   # Properties & profiles
+│   │       └── db/migration/     # Flyway or Liquibase scripts
+│   └── test/                     # JUnit and Mockito tests
+├── pom.xml                       # Maven (or build.gradle for Gradle)
+└── README.md
+```
+
+---
+
+## 6. C# & .NET Templates
+
+### A. Standard Web API (Clean Architecture)
+* **Target**: Enterprise Web API.
+* **Layout**:
+```text
+project-root/source/
+├── src/
+│   ├── Api/                      # ASP.NET Core Web API project (Controllers, Program.cs)
+│   ├── Application/              # Use cases, MediatR handlers, DTOs, interfaces
+│   ├── Domain/                   # Entities, Enums, Exceptions, value objects
+│   └── Infrastructure/           # EF Core DbContext, migrations, external API clients
+├── tests/
+│   ├── Api.IntegrationTests/
+│   └── Application.UnitTests/
+├── MySolution.sln
+└── README.md
+```
+
+---
+
+## 7. Frontend Templates (Standalone)
+
+### A. React / Vue (Vite)
+* **Target**: Single Page Applications (SPA).
+* **Layout**:
+```text
+project-root/source/
+├── src/
+│   ├── assets/           # Static files (images, fonts)
+│   ├── components/       # Reusable UI components
+│   ├── features/         # Feature-based modules (domain logic + UI)
+│   ├── hooks/            # Custom React/Vue hooks
+│   ├── layouts/          # Page wrappers (e.g., DashboardLayout)
+│   ├── pages/            # Routable screen components
+│   ├── store/            # Global state (Zustand, Redux, Pinia)
+│   ├── utils/            # Helper functions
+│   ├── App.tsx           # Root component
+│   └── main.tsx          # DOM mounting
+├── public/               # Favicon, robots.txt
+├── index.html            # Vite HTML entry
+├── vite.config.ts
+├── package.json
+└── README.md
+```
+
+### B. Next.js (App Router)
+* **Target**: Fullstack React apps, SSR/SSG.
+* **Layout**:
+```text
+project-root/source/
+├── src/
+│   ├── app/              # App Router (pages, layouts, api routes)
+│   │   ├── (auth)/       # Route groups
+│   │   ├── api/          # Next.js API routes
+│   │   ├── layout.tsx    # Root layout
+│   │   └── page.tsx      # Home page
+│   ├── components/       # Shared UI components
+│   ├── lib/              # Utility functions, DB clients, generic configs
+│   └── styles/           # Global CSS, Tailwind base
+├── public/               # Static assets
+├── next.config.js
+├── tailwind.config.js
+├── package.json
+└── README.md
 ```

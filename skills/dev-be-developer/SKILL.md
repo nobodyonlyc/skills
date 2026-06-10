@@ -55,7 +55,12 @@ Organize backend code clearly based on the selected architecture pattern:
 2. **Passwords**: Never store passwords in plain text. Always hash them using slow hashing functions (e.g., bcrypt, argon2).
 3. **Authorization**: Verify permissions on *every* request. Check resource ownership (e.g., ensure user A cannot update user B's profile).
 
-## Step 6: Code Conventions & Documentation
+## Step 6: Enterprise Standards & Observability
+1. **Idempotency**: All mutation endpoints (POST, PUT, DELETE) MUST support safe retries. Require an `Idempotency-Key` header and use a data store (Redis/DB) to prevent duplicate processing.
+2. **Observability**: Implement the "Three Pillars". Use structured JSON logging with Correlation IDs (Trace IDs). Track business-critical metrics (e.g., latency, error rates).
+3. **Performance (N+1 Queries)**: Never execute queries inside loops. Use database joins, eager loading, or DataLoader batching to fetch related entities in a single query.
+
+## Step 7: Code Conventions & Documentation
 Instead of hardcoded rules, you MUST apply the specific conventions based on the project's language and framework. Before writing code, consult the appropriate convention file:
 - TypeScript/Node.js (Backend): [`typescript-node.md`](../../resources/conventions/typescript-node.md)
 - TypeScript/React (Frontend): [`typescript-react.md`](../../resources/conventions/typescript-react.md)
@@ -67,7 +72,9 @@ Instead of hardcoded rules, you MUST apply the specific conventions based on the
 2. **Business Logic Comments**: Follow the 'Why over How' rule.
 3. **Module-level README**: Every newly created module must contain a local `README.md` as mandated by the convention guidelines.
 
-## Step 7: Verification (Definition of Done)
+## Step 8: Verification (Definition of Done)
+**CRITICAL RULE**: Code is NOT considered "DONE" until it is fully covered by Unit Tests. You must write and verify unit tests before reporting completion.
+
 For every backend feature implemented:
 1. Write unit tests for business logic/use cases (mocking repository adapters).
 2. Write integration tests using a test database (e.g., test routers, request/response cycles).

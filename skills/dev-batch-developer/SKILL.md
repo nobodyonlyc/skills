@@ -22,25 +22,22 @@ Design the batch processing logic following a structured flow to separate concer
    * Commit processed items in batches (e.g., bulk insert/upsert SQL statements) to optimize database network overhead.
    * Set dynamic batch size parameters (e.g., write every 500 or 1000 items).
 
-## Step 2: Fault Tolerance & Resilience
-Batch jobs must expect errors and handle them gracefully without crashing mid-way:
-1. **Record-Level Error Handling**: Wrap individual record processing in `try-catch` blocks. If one record fails validation or parsing, log the error, increment the failure counter, and continue to the next record.
-2. **Skip and DLQ (Dead Letter Queue)**: Write failed records to a separate log file, database table, or queue (DLQ) for manual auditing or re-processing.
-3. **Retry Mechanism**: Implement exponential backoff retries for transient external dependencies (e.g., fetching a profile from an external API).
-4. **Checkpointing & Restartability**: For long-running batch jobs, save progress periodically (e.g., store the last successfully processed ID). In case of crash, allow the job to resume from the last checkpoint rather than restarting from scratch.
+## Step 2: Enterprise Fault Tolerance & State Management
+Batch jobs must expect errors and handle them gracefully without crashing mid-way, and must support safe reruns (idempotency).
+1. **Idempotent Data Writes**: Use `INSERT OVERWRITE` for partitioned data, or `UPSERT`/`MERGE` for record-level updates. Never blindly append (`INSERT`) without deduplication checks.
+2. **Managed Checkpointing**: Do NOT store batch progress in local memory or temporary files. Always use an externalized Control Table (e.g., `batch_job_runs`) to record `last_processed_id` or timestamp.
+3. **Record-Level Error Handling**: Wrap individual record processing in `try-catch`. If one record fails, write it to a Dead Letter Queue (DLQ) table and continue to the next.
+4. **Retry Mechanism**: Implement exponential backoff retries for transient external API calls.
 
 ## Step 3: Performance & Resource Management
 1. **Concurrency**: Leverage multi-threading or worker pools when processing is CPU-bound (e.g., heavy file decryption or image manipulation), but limit maximum concurrent threads to prevent resource exhaustion.
 2. **Resource Cleanup**: Ensure all file handles, database connections, and network sockets are explicitly closed (e.g., using `finally` blocks, `defer`, or `using` patterns).
 3. **Transaction Scope**: Keep database transactions small. Do not wrap the entire batch job in a single transaction as it locks tables and degrades DB performance.
 
-## Step 4: Audit Trails & Telemetry
-1. **Job Summary Log**: Every execution must log a summary upon exit:
-   * Start and End timestamps.
-   * Total records read.
-   * Total records processed successfully.
-   * Total records skipped/failed.
-2. **Alerting Thresholds**: Implement check gates to fail the job or alert operators if the failure rate exceeds a certain percentage (e.g., if > 5% of records fail).
+## Step 4: Audit Trails & Data Reconciliation
+1. **Automated Reconciliation (Crucial)**: At the end of the job, the pipeline MUST compare the count of records read vs. records written. Alert immediately if `read != written + failed`.
+2. **Job Summary Log**: Every execution must log a summary upon exit with Start/End timestamps and exact row counts.
+3. **Alerting Thresholds**: Implement check gates to fail the job if the failure/DLQ rate exceeds a threshold (e.g., > 5%).
 
 ## Step 5: Code Conventions & Documentation
 Instead of hardcoded rules, you MUST apply the specific conventions based on the project's language and framework. Before writing code, consult the appropriate convention file:
@@ -55,6 +52,8 @@ Instead of hardcoded rules, you MUST apply the specific conventions based on the
 3. **Module-level README**: Every newly created module must contain a local `README.md` as mandated by the convention guidelines.
 
 ## Step 6: Verification (Definition of Done)
+**CRITICAL RULE**: Code is NOT considered "DONE" until it is fully covered by Unit Tests. You must write and verify unit tests before reporting completion.
+
 1. Write unit tests targeting the **Processor** components with mock inputs.
 2. Write integration tests executing the whole pipeline end-to-end with a limited, controlled mock dataset.
 3. Verify that the batch job handles empty inputs, malformed records, and database timeouts gracefully.

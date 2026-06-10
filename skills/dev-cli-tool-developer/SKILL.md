@@ -7,15 +7,19 @@ Develop CLI feature for: $ARGUMENTS
 
 Follow these guidelines to design, implement, and verify command-line interfaces, scripts, and automation tools.
 
-## Step 1: Design Command Interface (CLI Parser)
-Choose a reliable command-line parsing library (e.g., `clap` for Rust, `commander` or `yargs` for Node.js, `click` or `argparse` for Python).
-Structure commands and arguments logically:
-1. **Commands & Subcommands**: Use hierarchical subcommands for different operations (e.g., `tool init`, `tool status`, `tool verify <id>`).
-2. **Flags and Options**:
+## Step 1: Design POSIX-Compliant Command Interface
+Choose a reliable command-line parsing library (e.g., `clap`, `commander`, `click`).
+1. **Commands & Subcommands**: Use hierarchical subcommands for different operations (e.g., `tool init`).
+2. **Standard Flags**:
    * `-h`, `--help`: Automatically generate clear usage documentation.
    * `-v`, `--version`: Output the current tool version.
    * `-V`, `--verbose`: Enable debug logging.
-   * `--json` / `--quiet`: Control output format for automation compatibility.
+   * Always provide long-form options (`--file`) for readability in scripts, alongside short-form (`-f`).
+3. **Configuration Hierarchy**: Enforce precedence (highest to lowest):
+   1. CLI Flags (`--port 8080`)
+   2. Environment Variables (`APP_PORT=8080`)
+   3. Local Config (`./.apprc`)
+   4. User Config (`~/.config/app/config.json` via XDG Base Directory)
 
 ## Step 2: Input and Output Routing (Stdout vs. Stderr)
 Always route console outputs correctly so that the tool integrates nicely with shell scripting (piping):
@@ -32,12 +36,13 @@ Always route console outputs correctly so that the tool integrates nicely with s
 2. **Spinners & Progress Bars**: For synchronous long-running operations, display an active spinner or progress indicator in stderr. Ensure the spinner is disabled when stdout is not a TTY (interactive terminal).
 3. **Clean Tabular Data**: Format multi-row results into clean ASCII tables with well-aligned headers.
 
-## Step 4: Correct Exit Codes
-Exit codes are critical for scripts and CI/CD pipelines. Never exit with `0` if an operation failed:
-* **`0`**: Command completed successfully.
-* **`1`**: General errors (validation failed, resource not found).
-* **`2`**: Incorrect CLI usage (missing arguments, invalid flags).
-* **`127` / custom**: Specific application failure states.
+## Step 4: Exit Codes & Graceful Shutdown
+1. **Signal Trapping**: Always listen for `SIGINT` (Ctrl+C) and `SIGTERM`. If received, stop accepting new tasks, release file locks, and close network sockets cleanly before exiting. Do not leave corrupted temporary files.
+2. **Exit Codes**: Exit codes are critical for CI/CD pipelines. Never exit with `0` if an operation failed.
+   * **`0`**: Command completed successfully.
+   * **`1`**: General errors (validation failed, resource not found).
+   * **`2`**: Incorrect CLI usage (missing arguments, invalid flags).
+   * **`127` / custom**: Specific application failure states.
 
 ## Step 5: Code Conventions & Documentation
 Instead of hardcoded rules, you MUST apply the specific conventions based on the project's language and framework. Before writing code, consult the appropriate convention file:
@@ -52,6 +57,8 @@ Instead of hardcoded rules, you MUST apply the specific conventions based on the
 3. **Module-level README**: Every newly created module must contain a local `README.md` as mandated by the convention guidelines.
 
 ## Step 6: Verification (Definition of Done)
+**CRITICAL RULE**: Code is NOT considered "DONE" until it is fully covered by Unit Tests. You must write and verify unit tests before reporting completion.
+
 1. Write unit tests for business logic detached from the terminal wrapper.
 2. Write integration/end-to-end tests that run the compiled binary, pass arguments, and verify:
    * Correct exit codes.

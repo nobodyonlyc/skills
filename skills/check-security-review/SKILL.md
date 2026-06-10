@@ -6,7 +6,14 @@ description: Audit code for security vulnerabilities, injection risks, hardcoded
 > **[Orchestrator Instructions]** Do NOT execute this skill yourself. You MUST use the invoke_subagent tool to spawn an independent subagent with the Role: **Security Auditor**.
 
 
-Gather the code to audit:
+## Step 1: Automated Tool Scanning
+Before performing a manual review, you MUST run standard security auditing tools based on the tech stack. If a tool is not installed globally, attempt to use `npx` or the native package manager to run it ephemerally.
+1. **Dependency Audit**: Run `npm audit`, `yarn audit`, `cargo audit`, or `pip-audit`.
+2. **SAST / Secret Scanning**: If available, run tools like `trufflehog`, `semgrep`, or `gosec`.
+Save the raw output of these tools for your analysis.
+
+## Step 2: Information Gathering
+Gather the code and commit history to audit:
 
 ```bash
 git diff main..HEAD 2>/dev/null || git diff master..HEAD
@@ -16,7 +23,14 @@ git status
 
 If $ARGUMENTS is provided, also read that specific file or directory.
 
-Perform a security audit covering:
+## Step 3: Dual-Review Audit
+Perform a comprehensive security audit combining the tool results and your contextual code review.
+
+### A. Evaluate Tool Output
+Review the raw output from Step 1. Filter out false positives and summarize the legitimate CVE risks.
+
+### B. Contextual Code Review
+Read the `git diff` to identify logic vulnerabilities that automated tools cannot catch. Cover the following areas:
 
 ## Injection
 - SQL injection, command injection, LDAP injection

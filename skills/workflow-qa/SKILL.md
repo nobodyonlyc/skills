@@ -13,13 +13,12 @@ Multi-agent QA workflow: fan out functional, edge-case, and regression analysis 
 - [check-code-review](../check-code-review/SKILL.md) — cross-check suspect changes spotted during analysis.
 - [core-fix](../core-fix/SKILL.md) — implement the minimal fix for blocking findings.
 
-## Phases
-1. **Parallel Analysis** → [references/phase-1-parallel-analysis.md](references/phase-1-parallel-analysis.md)
-   Functional tester + Edge-case hunter + Regression analyst run in parallel against the changed code. **Includes running actual test suites.**
-2. **Report & Triage** → [references/phase-2-report-triage.md](references/phase-2-report-triage.md)
-   Merge findings into one deterministic QA report with a verdict. Propose fixes for blockers and ask the user how to proceed.
-3. **Verification & Checkpoint** → [references/phase-3-verify-checkpoint.md](references/phase-3-verify-checkpoint.md)
-   Run `./harness verify` and `./harness session stop` to sync state.
+## 5-Phase Pipeline
+1. **Phase 1: SPEC Analysis**: Extract Business Rules (BR) and Equivalence Partitions from the feature spec before analyzing the code.
+2. **Phase 2: TestCase Generation**: Build a 2D Test Matrix (Normal, Boundary, Null, Format, Volume). Classify every test into Automation Levels. Treat Level 2 (Human-in-the-loop) cases identically to Level 3 (Manual Handoff) to avoid blocking runs.
+3. **Phase 3: TestData & Scripts**: Use `check-test-gen` to generate test data enforcing the **Fault Isolation Principle**.
+4. **Phase 4: Parallel Execution**: Fan out subagents for Fully Automated (Level 1) tests. Mark Level 2/3 cases as `HANDOFF`.
+5. **Phase 5: Report Aggregation**: Output a comprehensive report (`5_final_report.md`) containing a Coverage Matrix, Pass Rate, and the detailed Manual Handoff List for testers.
 
 ## Examples
 - **[QA Report Example](examples/qa-report-example.md)**: A complete, merged report from Phase 2.

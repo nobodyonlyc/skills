@@ -28,7 +28,11 @@ Please follow the guidelines in these references carefully:
 1. **Calculate Version**: Use `references/semver-guide.md` to analyze the commits since the last tag. Determine the appropriate bump (major/minor/patch). Propose the new version to the user.
 2. **Determine Branching Strategy**: Review `references/branching-strategy.md`. If this is a hotfix or minor release, check if a dedicated release branch needs to be created or if we are tagging directly on main.
 3. **Generate Changelog**: Parse the commits using `references/changelog-format.md`. Draft the new entry for `CHANGELOG.md`.
-4. **Update Files**: Modify `package.json`, `Cargo.toml`, or `pyproject.toml` with the new version. Append the drafted changelog to `CHANGELOG.md`.
+4. **Update Version**: Do NOT edit version strings manually in files using text generation. You MUST use the native package manager command to bump the version safely:
+   * **Node.js**: `npm version <major|minor|patch> --no-git-tag-version`
+   * **Rust**: `cargo set-version <new_version>` (requires `cargo-edit`)
+   * **Python**: `bump2version <bump>` or `poetry version <bump>`
+   * After running the version command, verify the config file was updated. Then, manually append the drafted release notes to `CHANGELOG.md`.
 5. **Commit & Tag**:
    ```bash
    git add package.json CHANGELOG.md

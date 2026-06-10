@@ -28,22 +28,22 @@ Analyze the system components to identify:
 2. **Application Root (`/source/`)**: Create a dedicated `source/` wrapper directory. All application source code, workspaces, frameworks, and related configs MUST be generated inside this `source/` directory. For example, a monorepo will have `source/apps/` and `source/packages/`.
 3. Initialize global application configurations inside `source/` (e.g., `source/.gitignore`, `source/.env.example`, `source/README.md`).
 
-## Step 3: Codebase Generation Strategy
+## Step 3: Codebase Generation & Dependency Strategy
 
-### A. Frontend (FE) Source Code
-For frontend components, **do not write boilerplate files manually**. Use standard generator tools in non-interactive/silent modes. Make sure to target the `source/` directory:
-* **Vite (React, Vue, Svelte, etc.)**: 
-  ```bash
-  npx -y create-vite@latest source/<app-name> -- --template <template-name>
-  ```
-* **Next.js**: 
-  ```bash
-  npx -y create-next-app@latest source/<app-name> --ts --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm
-  ```
-* **Vue CLI / Nuxt**: Use their respective silent/non-interactive CLI flags, targeting `source/`.
-* Post-generation cleanup: Keep dependencies clean, verify scripts in `package.json`, and ensure standard build and dev environments are runnable.
+> **CRITICAL DEPENDENCY RULE**: Whenever initializing a project or adding libraries (e.g., in `package.json`, `Cargo.toml`, `requirements.txt`, `go.mod`), you MUST specify explicit and exact versions.
+> - **Prioritize LTS (Long-Term Support) or the latest Stable versions**.
+> - Do NOT use `latest`, `*`, or floating version ranges (e.g., `^1.0.0` or `~1.0`) that could cause unpredictable builds in the future.
+### A. Intelligent Scaffolding (All Frameworks)
+Do not write boilerplate files manually. You must **evaluate the tech stack** and choose the official, community-standard scaffolding tool (e.g., `npx create-next-app`, `npx create-vite`, `cargo new`, `django-admin startproject`, `spring init`).
+* Run the chosen generator tool in non-interactive/silent mode, targeting the `source/` directory.
+* Post-generation cleanup: Verify scripts in `package.json`/`Cargo.toml` and ensure standard build and dev environments are runnable.
 
-### B. Backend Server, Batch Job, CLI Tool, and others
+### B. Enterprise & Complex App Architecture
+If the application requires complex domain logic, you must **not** just rely on the default scaffold tool's flat structure.
+* You MUST overlay the chosen design pattern on top of the generated framework. Consult `resources/folder_structures.md` for the correct layout.
+* Ensure folders like `domain/`, `application/`, `infrastructure/`, and `presentation/` (for DDD) or `models/`, `views/`, `controllers/` (for MVC) are explicitly created and structured properly.
+
+### C. Architecture Specific Guidelines
 Select and apply the appropriate design pattern/architecture based on the component type and complexity:
 
 1. **Backend Server / API Server**:

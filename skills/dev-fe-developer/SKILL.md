@@ -22,14 +22,15 @@ Before writing any actual application code or merging UI features, you MUST exec
 3. **Explain design choices**: Provide a clear explanation of the layout, color palette (e.g. custom HSL themes, sleek dark/light mode), typography, spacing, and transition details.
 4. **Get confirmation**: Explicitly ask the user to confirm the design via the **ask-user** capability ([agent-tool-mapping](../../resources/agent-tool-mapping.md); `AskUserQuestion` in Claude Code). **DO NOT** write application component code or integrate the UI into the main application until the user has explicitly approved the design mockup.
 
-## Step 3: Component Architecture Rules
+## Step 3: Enterprise Component Architecture
 When writing or modifying component files, follow these practices:
-1. **Single Responsibility**: Keep components small, focused, and reusable. Split large UI files into modular subcomponents (e.g., `Button`, `Card`, `Header`).
-2. **State Management**:
-   * Use local state (`useState`, `ref`) for UI-only variables (e.g., open/close modal, active tab).
-   * Use context or state-management libraries (Redux, Zustand, Vuex) only for global domain data.
-   * Lift state up cleanly to avoid props drilling.
-3. **Props Validation**: Define clear Typescript interfaces or PropType declarations for all components to prevent runtime crashes.
+1. **Component-Driven Architecture (Atomic Design)**: Separate "dumb" presentational components (Atoms/Molecules) from "smart" business logic containers. Never put data-fetching logic inside a reusable UI button or card.
+2. **Tiered State Management**:
+   * **Tier 1 (Local)**: Use `useState` for UI-only toggles (modals, tabs).
+   * **Tier 2 (URL/Routing)**: Store shared filters, pagination, and active categories in the URL to ensure link shareability.
+   * **Tier 3 (Global/Context)**: Use Zustand/Redux only for complex, cross-cutting domain data (e.g., user session, cart).
+3. **Optimistic UI**: For frequent user interactions (e.g., "likes", moving a task), update the UI state immediately before the API responds to create a seamless feel. **Crucial**: You MUST implement a rollback mechanism to revert the UI if the background API request fails.
+4. **Props Validation**: Define clear Typescript interfaces for all components.
 
 ## Step 4: Premium Styling & Design Rules
 To prevent low-effort or "ugly" interfaces, you MUST adhere to high-end design principles:
@@ -66,6 +67,8 @@ Instead of hardcoded rules, you MUST apply the specific conventions based on the
 3. **Module-level README**: Every newly created module must contain a local `README.md` as mandated by the convention guidelines.
 
 ## Step 8: Component Verification (Definition of Done)
+**CRITICAL RULE**: Code is NOT considered "DONE" until it is fully covered by Unit Tests. You must write and verify unit tests before reporting completion.
+
 1. Write unit or component tests (e.g., using Vitest + React Testing Library) to verify component behavior.
    * Mock global context, routes, and API responses.
    * Test user click events, state changes, and edge-case rendering.
