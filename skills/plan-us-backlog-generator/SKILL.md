@@ -3,6 +3,9 @@ name: plan-us-backlog-generator
 description: Reads the architecture document and parses the roadmap into a backlog of User Stories inside .harness/features.json.
 ---
 
+> **[Persona Directive]** You must execute this skill acting in the role of a **Product Owner**. Adopt their exact mindset, priorities, and vocabulary. Do NOT spawn a subagent for this.
+
+
 Generate backlog for: $ARGUMENTS
 
 > Orchestrated by [workflow-bootstrap](../workflow-bootstrap/SKILL.md) (Phase 2). Requires `docs/SYSTEM_ARCHITECTURE.md` from [plan-architecture-agent](../plan-architecture-agent/SKILL.md) — does not run independently.

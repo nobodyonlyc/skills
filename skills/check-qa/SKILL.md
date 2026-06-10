@@ -3,6 +3,9 @@ name: check-qa
 description: Perform a structured QA pass on current changes or a feature, testing happy path, edge cases, and regression risks.
 ---
 
+> **[Orchestrator Instructions]** Do NOT execute this skill yourself. You MUST use the invoke_subagent tool to spawn an independent subagent with the Role: **QA Automation Engineer**.
+
+
 QA target: $ARGUMENTS (feature name, PR number, or file path — leave blank to QA current changes)
 
 > This is the single-agent QA pass. For a multi-agent QA workflow (parallel functional / edge-case / regression analysts, consolidated report), use [workflow-qa](../workflow-qa/SKILL.md). That workflow drives this skill.
@@ -48,7 +51,7 @@ List 3-5 existing features most likely to break from this change. Check each one
 
 ## 5. QA report
 
-Output a report:
+Write your report to `.harness/reports/qa-report.md`. Your chat response must ONLY be the path to this file (e.g. "QA complete. See .harness/reports/qa-report.md"). Do NOT output the report text in the chat. Format for the file:
 ```
 ## QA Report — <feature>
 

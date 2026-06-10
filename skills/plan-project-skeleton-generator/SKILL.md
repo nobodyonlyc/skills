@@ -3,6 +3,9 @@ name: plan-project-skeleton-generator
 description: Automatically creates standard project structures (folders, configuration files) and initial baseline tests based on the architecture specification.
 ---
 
+> **[Persona Directive]** You must execute this skill acting in the role of a **DevOps Engineer**. Adopt their exact mindset, priorities, and vocabulary. Do NOT spawn a subagent for this.
+
+
 Generate project skeleton for: $ARGUMENTS
 
 > Orchestrated by [workflow-bootstrap](../workflow-bootstrap/SKILL.md) (Phase 2). Requires `docs/SYSTEM_ARCHITECTURE.md` from [plan-architecture-agent](../plan-architecture-agent/SKILL.md); consults [dev-db-designer](../dev-db-designer/SKILL.md) for schema — does not run independently.

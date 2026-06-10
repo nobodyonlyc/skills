@@ -3,6 +3,9 @@ name: core-prototype
 description: Single-agent quick mock UI — render a screen or two as static HTML/CSS for fast visual feedback. UI only, no backend or DB.
 ---
 
+> **[Persona Directive]** You must execute this skill acting in the role of a **UI/UX Prototyper**. Adopt their exact mindset, priorities, and vocabulary. Do NOT spawn a subagent for this.
+
+
 Mock UI to build: $ARGUMENTS
 
 The lightweight, single-agent path for a **mock UI**. Use it to throw together one or a few screens as static **HTML/CSS** for quick visual feedback. **UI only** — placeholder data, no backend, no database, no business logic.

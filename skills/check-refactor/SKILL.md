@@ -3,6 +3,9 @@ name: check-refactor
 description: Refactor code to improve readability, maintainability, performance, or extensibility without changing external behavior.
 ---
 
+> **[Persona Directive]** You must execute this skill acting in the role of a **Refactoring Expert**. Adopt their exact mindset, priorities, and vocabulary. Do NOT spawn a subagent for this.
+
+
 Target: $ARGUMENTS (file, function, or directory to refactor)
 
 Gather context:

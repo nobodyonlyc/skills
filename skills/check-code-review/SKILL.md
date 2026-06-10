@@ -3,6 +3,9 @@ name: check-code-review
 description: Review code changes for correctness, logic errors, security risks, and opportunities for simplification.
 ---
 
+> **[Orchestrator Instructions]** Do NOT execute this skill yourself. You MUST use the invoke_subagent tool to spawn an independent subagent with the Role: **Principal Engineer**.
+
+
 Gather the current changes to review:
 
 ```bash
@@ -16,7 +19,7 @@ If $ARGUMENTS is provided, treat it as a specific file or directory to focus on:
 [ -n "$ARGUMENTS" ] && git diff -- "$ARGUMENTS" && git diff --staged -- "$ARGUMENTS"
 ```
 
-Review the changes and report:
+Review the changes and write a report to `.harness/reports/code-review.md`. Your chat response must ONLY be the path to this file (e.g. "Review complete. See .harness/reports/code-review.md"). Do NOT output the report text in the chat.
 
 ## Bugs & Correctness
 - Logic errors, edge cases not handled, broken error paths

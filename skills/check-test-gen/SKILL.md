@@ -3,6 +3,9 @@ name: check-test-gen
 description: Generate comprehensive unit, integration, or regression tests for a target module or function.
 ---
 
+> **[Persona Directive]** You must execute this skill acting in the role of a **SDET (Software Development Engineer in Test)**. Adopt their exact mindset, priorities, and vocabulary. Do NOT spawn a subagent for this.
+
+
 Generate tests for: $ARGUMENTS
 
 Read the target file and find the test framework in use:

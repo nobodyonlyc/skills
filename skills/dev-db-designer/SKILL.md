@@ -3,6 +3,9 @@ name: dev-db-designer
 description: Guides the agent in designing database schemas, ensuring data integrity with constraints, defining indexes, and managing migrations.
 ---
 
+> **[Persona Directive]** You must execute this skill acting in the role of a **Database Architect**. Adopt their exact mindset, priorities, and vocabulary. Do NOT spawn a subagent for this.
+
+
 Design database schema/migration for: $ARGUMENTS
 
 Follow these guidelines to plan, implement, and verify database tables, relationships, and schema migrations.

@@ -3,6 +3,9 @@ name: plan-architecture-agent
 description: Analyzes project requirements, identifies user persona and project size, prompts for clarifications, and outputs docs/SYSTEM_ARCHITECTURE.md.
 ---
 
+> **[Persona Directive]** You must execute this skill acting in the role of a **Senior System Architect**. Adopt their exact mindset, priorities, and vocabulary. Do NOT spawn a subagent for this.
+
+
 Analyze architecture requirements for: $ARGUMENTS
 
 > Orchestrated by [workflow-bootstrap](../workflow-bootstrap/SKILL.md) (Phase 1). Its output `docs/SYSTEM_ARCHITECTURE.md` is the required input for [plan-us-backlog-generator](../plan-us-backlog-generator/SKILL.md) and [plan-project-skeleton-generator](../plan-project-skeleton-generator/SKILL.md).
@@ -37,14 +40,21 @@ You must conduct a thorough, precise technical interview using the **ask-user** 
 *Do not guess these parameters. Ask for explicit developer choices to ensure the skeleton is built correctly.*
 
 ### Case B: The User is Non-Technical (Non-Tech)
-Do not overwhelm the user with database models, deployment pipelines, or software patterns. Instead:
-1. Focus on understanding the **Business Goals**, **User Journeys**, and **Core Features**.
-2. **Make Sensible Suggestions (Best Practices)**:
-   * Propose standard, robust, and cost-effective tech stacks (e.g., Next.js for web UI, Supabase/Firebase for backend-as-a-service, or PostgreSQL + Node.js for standard APIs).
-   * Propose simple architecture models (e.g., MVC or Monolithic architecture) that keep the project simple to understand.
-   * Propose easy deployment targets (e.g., Vercel, Render).
-3. Present these suggestions in plain language, explaining *why* they fit the business goals (e.g., "We suggest Next.js because it makes your website load fast and helps it rank well on search engines").
-4. Use the **ask-user** capability only to verify if the suggested choices are acceptable or if they have any visual/functional preferences.
+Do not overwhelm the user with database models or deployment pipelines. Instead, use the **4 Advanced BA Methodologies** to ensure deep, actionable requirements:
+
+1. **3-Level Drill-Down**: 
+   - *Level 1 (Epic)*: What are the high-level modules?
+   - *Level 2 (User Journey)*: What is the step-by-step flow for core features?
+   - *Level 3 (Data & Edge Cases)*: What specific data fields are required? What happens in edge cases?
+2. **RBAC Matrix**: You MUST ask the user to define roles (e.g., Admin, User, Guest) and establish a clear Role-Based Access Control matrix for actions.
+3. **Devil's Advocate**: Do not just accept basic features. Proactively invent 2-3 difficult "edge cases" (e.g., network failure, concurrent edits, user abuse) and ask the user how the system should handle them.
+4. **Schema-Driven Prompting**: Before you are allowed to write `SYSTEM_ARCHITECTURE.md`, you must have gathered enough information from the user to fully detail:
+   - Entities (All required data fields)
+   - User Roles & Permissions
+   - Business Rules (Conditional branching logic)
+   - External Integrations
+
+*Rule: Do NOT generate the final `SYSTEM_ARCHITECTURE.md` until you have iteratively interviewed the user using the above methods to get a complete, deep understanding.*
 
 ## Step 3: Document the System Context & Architecture
 First, generate the structured context JSON. Then, write the detailed architecture markdown.

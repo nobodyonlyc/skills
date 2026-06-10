@@ -18,8 +18,10 @@ Multi-agent orchestration to take a project from an idea description to a struct
 ## Phases
 1. **Requirements Analysis & Tech Discovery** → [references/phase-1-architecture.md](references/phase-1-architecture.md)
    Interview the user, evaluate project size & persona, output `docs/SYSTEM_ARCHITECTURE.md`.
+   *GATE*: After generating the document, use the [check-ba-evaluator](../check-ba-evaluator/SKILL.md) skill to spawn a Senior PM Subagent to review the architecture. If the subagent fails the document, revise it before proceeding.
 2. **Parallel Scaffold & Backlog Generation** → [references/phase-2-backlog-and-skeleton.md](references/phase-2-backlog-and-skeleton.md)
    Run the backlog generator and skeleton scaffolder as parallel subagents, then merge & verify.
+   *GATE*: After the backlog is generated, use the [check-ba-evaluator](../check-ba-evaluator/SKILL.md) skill to spawn a Senior PM Subagent to review the backlog against the architecture. Only ask the user for final approval if the PM subagent passes it.
 3. **Verification & Initial Handoff** → [references/phase-3-verify-handoff.md](references/phase-3-verify-handoff.md)
    Run `./init.sh`, confirm baseline passes, print backlog, then STOP for feature selection.
 

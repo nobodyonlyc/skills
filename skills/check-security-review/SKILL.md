@@ -3,6 +3,9 @@ name: check-security-review
 description: Audit code for security vulnerabilities, injection risks, hardcoded secrets, and proper input validation.
 ---
 
+> **[Orchestrator Instructions]** Do NOT execute this skill yourself. You MUST use the invoke_subagent tool to spawn an independent subagent with the Role: **Security Auditor**.
+
+
 Gather the code to audit:
 
 ```bash
@@ -39,3 +42,5 @@ Perform a security audit covering:
 `🔴 [OWASP category] file:line — risk — remediation`
 
 End with a risk summary: Critical / High / Medium / Low findings count and top recommendation.
+
+**CRITICAL**: Write your entire security report to `.harness/reports/security-review.md`. Your chat response must ONLY be the path to this file. Do NOT output the report text in the chat.

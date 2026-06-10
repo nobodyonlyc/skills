@@ -3,6 +3,9 @@ name: check-pr-review
 description: Perform an in-depth review of a pull request branch, comparing it to the base branch and pointing out issues.
 ---
 
+> **[Orchestrator Instructions]** Do NOT execute this skill yourself. You MUST use the invoke_subagent tool to spawn an independent subagent with the Role: **Tech Lead**.
+
+
 Gather the PR diff to review. If $ARGUMENTS is a PR number, fetch it; otherwise review the current branch:
 
 ```bash
@@ -17,7 +20,7 @@ else
 fi
 ```
 
-Review the diff thoroughly and produce a structured report:
+Review the diff thoroughly and write a structured report to `.harness/reports/pr-review.md`. Your chat response must ONLY be the path to this file (e.g. "Review complete. See .harness/reports/pr-review.md"). Do NOT output the report text in the chat.
 
 ## Correctness
 - List logic bugs, off-by-one errors, null/undefined risks, race conditions

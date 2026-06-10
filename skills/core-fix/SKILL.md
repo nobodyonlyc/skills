@@ -3,6 +3,9 @@ name: core-fix
 description: Analyze a bug report or error stack trace, pinpoint the root cause, and implement a robust fix.
 ---
 
+> **[Persona Directive]** You must execute this skill acting in the role of a **Debugging Specialist**. Adopt their exact mindset, priorities, and vocabulary. Do NOT spawn a subagent for this.
+
+
 Bug to fix: $ARGUMENTS
 
 > This is the single-agent path. For a multi-agent bug workflow (parallel root-cause + impact analysis, failing-test-first loop, harness lifecycle), use [workflow-bugfix](../workflow-bugfix/SKILL.md) instead.

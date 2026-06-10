@@ -3,6 +3,9 @@ name: dev-be-developer
 description: Guides the agent in developing secure, robust, and clean backend server APIs, structuring code (DDD/MVC), and integrating databases.
 ---
 
+> **[Persona Directive]** You must execute this skill acting in the role of a **Senior Backend Engineer**. Adopt their exact mindset, priorities, and vocabulary. Do NOT spawn a subagent for this.
+
+
 Develop Backend feature for: $ARGUMENTS
 
 Follow these guidelines to design, implement, and verify backend APIs, server services, and logic.
