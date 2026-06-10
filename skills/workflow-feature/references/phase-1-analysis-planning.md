@@ -31,6 +31,8 @@ Run both subagents **IN PARALLEL** using the **spawn-subagents** capability ([ag
 ## 3. Present analysis & approve plan
 Present both subagents' findings, align on open questions, draft the implementation plan, and get user approval.
 
+Once approved, persist the plan where a crashed session can recover it: write it to `docs/design-docs/<feature_id>/plan.md` and commit it. BA notes and per-component SPECs belong there too (`docs/design-docs/<feature_id>/{ba,spec-*}.md`). `.harness/reports/` is **transient only** (gitignored, wiped by `harness clean`) — never the sole home of an approved plan, spec, or decision.
+
 ## 4. MANDATORY UI Design gate (only if the feature has UI)
 If the feature includes UI, present a layout wireframe or visual mockup (static HTML or image) **first**. Obtain explicit approval of the design **before** starting any implementation code. Iterate on the mockup until approved.
 
