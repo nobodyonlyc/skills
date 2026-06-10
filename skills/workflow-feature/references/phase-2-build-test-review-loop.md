@@ -11,6 +11,8 @@ graph TD
     Review -->|Clean| Verify["Phase 3: Verify & Commit"]
 ```
 
+> **Model-tier:** spawn each subagent on the tier its skill group declares in [CATEGORIES.md](../../CATEGORIES.md) — `dev-*`/`check-*` run `strong`; a pure test/lint executor or commit-message step can run `fast`. When unsure, use `strong`.
+
 ## 2.1 Code / Modify
 For multi-component features, invoke **parallel subagents**:
 - **Backend Developer** — DB via [dev-db-designer](../../dev-db-designer/SKILL.md), server logic via [dev-be-developer](../../dev-be-developer/SKILL.md).
