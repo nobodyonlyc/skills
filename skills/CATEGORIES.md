@@ -4,7 +4,7 @@ Skills are stored **flat** (one directory per skill, so `/skill-name` discovery 
 
 | Group | Prefix | Skills |
 |---|---|---|
-| **Workflows** — multi-agent orchestrators (entry points) | `workflow-` | workflow-intake, workflow-bootstrap, workflow-feature, workflow-bugfix, workflow-prototype, workflow-qa, workflow-release-prep, workflow-review-deep |
+| **Workflows** — multi-agent orchestrators (entry points) | `workflow-` | workflow-intake, workflow-bootstrap, workflow-onboard, workflow-feature, workflow-bugfix, workflow-prototype, workflow-qa, workflow-release-prep, workflow-review-deep |
 | **Planning** — turn an idea into spec, backlog, and skeleton | `plan-` | plan-architecture-agent, plan-us-backlog-generator, plan-project-skeleton-generator |
 | **Development** — write the code, by component type | `dev-` | dev-be-developer, dev-fe-developer, dev-cli-tool-developer, dev-batch-developer, dev-db-designer |
 | **Quality** — review, test, and harden changes | `check-` | check-code-review, check-security-review, check-pr-review, check-qa, check-test-gen, check-refactor |

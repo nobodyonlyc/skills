@@ -16,7 +16,7 @@ Decide which of the 4 cases the prompt is, using the signals in [references/phas
 | **1. New project** | empty / greenfield repo; "build me a …" | Route 1 — new-project intake (BA → per-component SPEC → US backlog → common design), see [references/route-1-new-project.md](references/route-1-new-project.md). Drives [workflow-bootstrap](../workflow-bootstrap/SKILL.md). |
 | **2. Execute a US** | a backlog US id; "do F12" | Route 2 — analyse the US, split into child-tasks (`F<id>-T<n>`), dispatch each to [workflow-feature](../workflow-feature/SKILL.md) / [workflow-bugfix](../workflow-bugfix/SKILL.md) / [workflow-qa](../workflow-qa/SKILL.md) / [workflow-review-deep](../workflow-review-deep/SKILL.md). See [references/route-2-us-execution.md](references/route-2-us-execution.md). |
 | **3. Add feature to a harness project** | existing harness repo + new capability | Route 3 — read source via docs ([core-explain](../core-explain/SKILL.md)) → BA → SPEC → add US → update shared docs → Route 2. See [references/route-3-add-feature.md](references/route-3-add-feature.md). |
-| **4. Legacy integration** | "add harness to &lt;non-harness project&gt;" | Route 4 — not supported: notify the user and stop. See [references/route-4-legacy-guard.md](references/route-4-legacy-guard.md). |
+| **4. Legacy onboarding** | "add harness to &lt;non-harness project&gt;" | Route 4 — dispatch [workflow-onboard](../workflow-onboard/SKILL.md): survey → docs → safe `harness init` (no clobber) → seed backlog. See [references/route-4-onboarding.md](references/route-4-onboarding.md). |
 
 > Routes 1 & 3 share the [common design phase](references/common-design-phase.md) (basic DB design + mock UI) before per-US execution.
 

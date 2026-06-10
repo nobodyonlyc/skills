@@ -18,9 +18,9 @@ Decide which of the 4 cases the incoming prompt is, then confirm with the user b
 - The repo already uses the harness (`.harness/`, `AGENTS.md`, `./harness`) **and** the prompt asks for a *new* capability not yet in the backlog.
 - → Route 3 (read source → BA → SPEC → add US → Route 2).
 
-### Case 4 — Legacy integration (NOT supported)
-- The prompt asks to *add the harness itself* to an existing project that does **not** use AI/harness tooling.
-- → Route 4: notify the user that legacy integration is not yet implemented, then stop.
+### Case 4 — Legacy onboarding
+- The prompt asks to *add the harness itself* to an existing, active project that does **not** yet use harness tooling.
+- → Route 4: dispatch [workflow-onboard](../../workflow-onboard/SKILL.md) (survey → docs → safe init → seed backlog).
 
 ## Disambiguation
 - Existing harness repo + known US id → **Case 2**. Existing harness repo + brand-new capability → **Case 3**.
