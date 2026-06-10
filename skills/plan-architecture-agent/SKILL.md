@@ -22,37 +22,37 @@ Before asking technical questions, evaluate the user's prompt or conduct a quick
    * **Developer (Dev)**: Uses technical terms, specifies tech stack preferences, shows programming experience.
    * **Non-Technical (Non-Tech)**: Focuses on business goals, features, and user behavior without mentioning coding languages or database details.
 
-Use the **ask-user** capability (see [agent-tool-mapping](../../resources/agent-tool-mapping.md); `AskUserQuestion` in Claude Code) if the persona or project scope is ambiguous.
+Use the **ask-user** capability (see [agent-tool-mapping](../../resources/agent-tool-mapping.md); `AskUserQuestion` in Claude Code) to explicitly ask the user to confirm their **Role (Tech vs Non-Tech)** and the **Project Size** before proceeding. Do not assume.
 
 ## Step 2: Conduct the Contextual Interview
 
-Based on the detected persona, adapt your questioning strategy:
+Based on the explicitly confirmed persona and project size, adapt your strategy:
 
-### Case A: The User is a Developer (Dev)
-You must conduct a thorough, precise technical interview using the **ask-user** capability (multi-choice prompts or clear text fields) to cover:
-1. **Programming Languages & Frameworks**: e.g., TypeScript/Next.js vs. Rust/Axum vs. Python/FastAPI.
-2. **Software Architecture Pattern**: e.g., MVC, DDD (Domain-Driven Design), Clean Architecture, Event-Driven, Serverless.
-3. **Database & Persistence**: e.g., PostgreSQL, MongoDB, Redis, SQLite, migration tools, ORM choices (Prisma, Diesel, SQLAlchemy).
-4. **Deployment & Hosting Environment**: e.g., Docker, Kubernetes, AWS, GCP, Vercel, VPS, Serverless.
-5. **System Integrations & Protocols**: REST, GraphQL, gRPC, WebSockets, Message Queues (RabbitMQ, Kafka).
-6. **CI/CD & Testing**: GitHub Actions, GitLab CI, unit/integration test frameworks.
+### Case A: The User is Non-Technical (Non-Tech)
+Since the user is non-technical, do not overwhelm them with deep technical or BA questions. Instead:
+1. **Auto-Propose**: Spawn a subagent to automatically propose a detailed SPEC and Business Analysis (BA) tailored to the project size and their initial idea.
+2. **PM Review**: Once the subagent generates the proposal, spawn the Senior PM Evaluator subagent (via `check-ba-evaluator`) to critically review and refine the proposed SPEC and BA.
+3. **Confirm**: Present the finalized, PM-approved SPEC/BA to the non-tech user for a simple confirmation.
 
-*Do not guess these parameters. Ask for explicit developer choices to ensure the skeleton is built correctly.*
+### Case B: The User is Technical (Dev / Tech)
+If the user is technical, they often know the tech stack but may overlook business edge cases. You must temporarily shift your persona to a **Strict Business Analyst (BA)** and grill them deeply on the SPEC and BA of the project before accepting technical choices.
 
-### Case B: The User is Non-Technical (Non-Tech)
-Do not overwhelm the user with database models or deployment pipelines. Instead, use the **4 Advanced BA Methodologies** to ensure deep, actionable requirements:
-
+**Part 1: The BA Grill (MANDATORY)**
+Use the **4 Advanced BA Methodologies**:
 1. **3-Level Drill-Down**: 
    - *Level 1 (Epic)*: What are the high-level modules?
    - *Level 2 (User Journey)*: What is the step-by-step flow for core features?
    - *Level 3 (Data & Edge Cases)*: What specific data fields are required? What happens in edge cases?
 2. **RBAC Matrix**: You MUST ask the user to define roles (e.g., Admin, User, Guest) and establish a clear Role-Based Access Control matrix for actions.
-3. **Devil's Advocate**: Do not just accept basic features. Proactively invent 2-3 difficult "edge cases" (e.g., network failure, concurrent edits, user abuse) and ask the user how the system should handle them.
-4. **Schema-Driven Prompting**: Before you are allowed to write `SYSTEM_ARCHITECTURE.md`, you must have gathered enough information from the user to fully detail:
-   - Entities (All required data fields)
-   - User Roles & Permissions
-   - Business Rules (Conditional branching logic)
-   - External Integrations
+3. **Devil's Advocate**: Proactively invent 2-3 difficult "edge cases" (e.g., network failure, concurrent edits, user abuse) and ask the user how the system should handle them.
+4. **Schema-Driven Prompting**: Ensure you have gathered enough information to detail Entities, User Roles, Business Rules, and External Integrations.
+
+**Part 2: Technical Choices**
+After the BA is solid, ask for explicit developer choices to ensure the skeleton is built correctly:
+1. **Programming Languages & Frameworks**: (e.g., TypeScript/Next.js vs. Rust/Axum).
+2. **Software Architecture Pattern**: (e.g., MVC, DDD).
+3. **Database & Persistence**: (e.g., PostgreSQL, MongoDB, ORMs).
+4. **Deployment & Hosting Environment**: (e.g., Docker, AWS, Vercel).
 
 *Rule: Do NOT generate the final `SYSTEM_ARCHITECTURE.md` until you have iteratively interviewed the user using the above methods to get a complete, deep understanding.*
 
