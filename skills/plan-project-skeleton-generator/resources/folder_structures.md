@@ -10,7 +10,7 @@ Use this reference to generate the appropriate directory layout based on project
 * **Target**: Landing page, lightweight server, microservice, or simple API.
 * **Layout**:
 ```text
-project-root/
+project-root/source/
 ├── src/
 │   ├── index.ts          # Entry point
 │   ├── config.ts         # Environment variables & constants
@@ -29,7 +29,7 @@ project-root/
 * **Frameworks**: Express, NestJS (Standard), Fastify.
 * **Layout**:
 ```text
-project-root/
+project-root/source/
 ├── src/
 │   ├── config/           # Database configurations, CORS, constants
 │   ├── controllers/      # Request handlers & validators
@@ -52,7 +52,7 @@ project-root/
 * **Frameworks**: Next.js (FE), Express/NestJS (BE), npm/yarn/pnpm Workspaces, Turborepo.
 * **Layout**:
 ```text
-project-root/
+project-root/source/
 ├── apps/
 │   ├── web/              # Frontend client (Next.js/Vite)
 │   │   ├── src/
@@ -87,7 +87,7 @@ project-root/
 * **Target**: CLI utility, simple daemon, single binary.
 * **Layout**:
 ```text
-project-root/
+project-root/source/
 ├── src/
 │   ├── main.rs           # CLI Parser & Entry point
 │   ├── commands.rs       # Command handlers
@@ -102,7 +102,7 @@ project-root/
 * **Frameworks**: Axum, Actix-web, Rocket.
 * **Layout**:
 ```text
-project-root/
+project-root/source/
 ├── src/
 │   ├── config.rs         # Environment configs
 │   ├── routes/           # Router modules (users.rs, auth.rs)
@@ -123,7 +123,7 @@ project-root/
 * **Target**: Complex systems with an API server, database migrator crate, and background batch jobs.
 * **Layout**:
 ```text
-project-root/
+project-root/source/
 ├── Cargo.toml            # Root Cargo Workspace definition
 ├── Cargo.lock
 ├── crates/
@@ -159,7 +159,7 @@ project-root/
 * **Target**: Simple script, ETL, or single-file Flask/FastAPI server.
 * **Layout**:
 ```text
-project-root/
+project-root/source/
 ├── main.py               # Application entry point
 ├── config.py             # Environment configurations
 ├── requirements.txt
@@ -171,7 +171,7 @@ project-root/
 * **Target**: FastAPI application with SQL Alchemy or Tortoise ORM.
 * **Layout**:
 ```text
-project-root/
+project-root/source/
 ├── app/
 │   ├── api/              # API endpoints / routers
 │   │   ├── v1/
@@ -196,7 +196,7 @@ project-root/
 * **Target**: Enterprise applications with highly decoupled business domain.
 * **Layout**:
 ```text
-project-root/
+project-root/source/
 ├── src/
 │   ├── domain/           # Enterprise domain rules (no DB/API deps)
 │   │   ├── entities/     # Domain objects
@@ -226,7 +226,7 @@ project-root/
 * **Target**: Simple daemon, CLI command.
 * **Layout**:
 ```text
-project-root/
+project-root/source/
 ├── main.go               # Entry point
 ├── config.go             # Simple configs
 ├── go.mod
@@ -239,7 +239,7 @@ project-root/
 * **Standard**: Follows `golang-standards/project-layout`.
 * **Layout**:
 ```text
-project-root/
+project-root/source/
 ├── cmd/
 │   ├── api-server/       # Executable entrypoint for API
 │   │   └── main.go

@@ -20,22 +20,27 @@ Analyze the system components to identify:
 3. **Directory Layout**: Workspace structure (e.g., mono-repo vs. multi-repo layout).
 
 ## Step 2: Establish the Directory Layout
-1. Create a root-level workspace layout (e.g., standard Rust workspace, monorepo with `apps/` and `packages/`, or simply flat folders).
-2. Initialize global configurations (e.g., root `.gitignore`, `.env.example`, `docker-compose.yml`, `README.md`).
+1. **Repository Root (`/`)**: This environment is strictly for AI Agent control. Do NOT generate application code here. However, you MUST initialize the standard Harness documentation structure at the repository root:
+   - `docs/design-docs/`: For Architectural Decision Records (ADRs).
+   - `docs/product-specs/`: For business requirements.
+   - `docs/DOMAIN_GLOSSARY.md`: The ubiquitous language dictionary.
+   - `docs/SYSTEM_MAP.md`: High-level architecture map and domain boundaries.
+2. **Application Root (`/source/`)**: Create a dedicated `source/` wrapper directory. All application source code, workspaces, frameworks, and related configs MUST be generated inside this `source/` directory. For example, a monorepo will have `source/apps/` and `source/packages/`.
+3. Initialize global application configurations inside `source/` (e.g., `source/.gitignore`, `source/.env.example`, `source/README.md`).
 
 ## Step 3: Codebase Generation Strategy
 
 ### A. Frontend (FE) Source Code
-For frontend components, **do not write boilerplate files manually**. Use standard generator tools in non-interactive/silent modes:
+For frontend components, **do not write boilerplate files manually**. Use standard generator tools in non-interactive/silent modes. Make sure to target the `source/` directory:
 * **Vite (React, Vue, Svelte, etc.)**: 
   ```bash
-  npx -y create-vite@latest <app-name> -- --template <template-name>
+  npx -y create-vite@latest source/<app-name> -- --template <template-name>
   ```
 * **Next.js**: 
   ```bash
-  npx -y create-next-app@latest <app-name> --ts --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm
+  npx -y create-next-app@latest source/<app-name> --ts --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm
   ```
-* **Vue CLI / Nuxt**: Use their respective silent/non-interactive CLI flags.
+* **Vue CLI / Nuxt**: Use their respective silent/non-interactive CLI flags, targeting `source/`.
 * Post-generation cleanup: Keep dependencies clean, verify scripts in `package.json`, and ensure standard build and dev environments are runnable.
 
 ### B. Backend Server, Batch Job, CLI Tool, and others

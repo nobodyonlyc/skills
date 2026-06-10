@@ -42,7 +42,19 @@ Batch jobs must expect errors and handle them gracefully without crashing mid-wa
    * Total records skipped/failed.
 2. **Alerting Thresholds**: Implement check gates to fail the job or alert operators if the failure rate exceeds a certain percentage (e.g., if > 5% of records fail).
 
-## Step 5: Verification (Definition of Done)
+## Step 5: Code Conventions & Documentation
+Instead of hardcoded rules, you MUST apply the specific conventions based on the project's language and framework. Before writing code, consult the appropriate convention file:
+- TypeScript/Node.js (Backend): [`typescript-node.md`](../../resources/conventions/typescript-node.md)
+- TypeScript/React (Frontend): [`typescript-react.md`](../../resources/conventions/typescript-react.md)
+- Rust: [`rust.md`](../../resources/conventions/rust.md)
+- Python: [`python.md`](../../resources/conventions/python.md)
+- Go: [`go.md`](../../resources/conventions/go.md)
+
+1. **Naming Conventions**: Follow the file suffix rules defined in the convention file.
+2. **Business Logic Comments**: Follow the 'Why over How' rule.
+3. **Module-level README**: Every newly created module must contain a local `README.md` as mandated by the convention guidelines.
+
+## Step 6: Verification (Definition of Done)
 1. Write unit tests targeting the **Processor** components with mock inputs.
 2. Write integration tests executing the whole pipeline end-to-end with a limited, controlled mock dataset.
 3. Verify that the batch job handles empty inputs, malformed records, and database timeouts gracefully.

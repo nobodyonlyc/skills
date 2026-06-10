@@ -53,7 +53,19 @@ To prevent low-effort or "ugly" interfaces, you MUST adhere to high-end design p
 2. **Accessibility**: Add proper `alt` texts for images, specify `aria-label` or `aria-expanded` attributes on interactive components, and ensure high color contrast.
 3. **SEO**: Set dynamic meta tags (title, description, open graph tags) for each page route.
 
-## Step 7: Component Verification (Definition of Done)
+## Step 7: Code Conventions & Documentation
+Instead of hardcoded rules, you MUST apply the specific conventions based on the project's language and framework. Before writing code, consult the appropriate convention file:
+- TypeScript/Node.js (Backend): [`typescript-node.md`](../../resources/conventions/typescript-node.md)
+- TypeScript/React (Frontend): [`typescript-react.md`](../../resources/conventions/typescript-react.md)
+- Rust: [`rust.md`](../../resources/conventions/rust.md)
+- Python: [`python.md`](../../resources/conventions/python.md)
+- Go: [`go.md`](../../resources/conventions/go.md)
+
+1. **Naming Conventions**: Follow the file suffix rules defined in the convention file.
+2. **Business Logic Comments**: Follow the 'Why over How' rule.
+3. **Module-level README**: Every newly created module must contain a local `README.md` as mandated by the convention guidelines.
+
+## Step 8: Component Verification (Definition of Done)
 1. Write unit or component tests (e.g., using Vitest + React Testing Library) to verify component behavior.
    * Mock global context, routes, and API responses.
    * Test user click events, state changes, and edge-case rendering.

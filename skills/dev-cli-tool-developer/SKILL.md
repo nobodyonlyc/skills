@@ -39,7 +39,19 @@ Exit codes are critical for scripts and CI/CD pipelines. Never exit with `0` if 
 * **`2`**: Incorrect CLI usage (missing arguments, invalid flags).
 * **`127` / custom**: Specific application failure states.
 
-## Step 5: Verification (Definition of Done)
+## Step 5: Code Conventions & Documentation
+Instead of hardcoded rules, you MUST apply the specific conventions based on the project's language and framework. Before writing code, consult the appropriate convention file:
+- TypeScript/Node.js (Backend): [`typescript-node.md`](../../resources/conventions/typescript-node.md)
+- TypeScript/React (Frontend): [`typescript-react.md`](../../resources/conventions/typescript-react.md)
+- Rust: [`rust.md`](../../resources/conventions/rust.md)
+- Python: [`python.md`](../../resources/conventions/python.md)
+- Go: [`go.md`](../../resources/conventions/go.md)
+
+1. **Naming Conventions**: Follow the file suffix rules defined in the convention file.
+2. **Business Logic Comments**: Follow the 'Why over How' rule.
+3. **Module-level README**: Every newly created module must contain a local `README.md` as mandated by the convention guidelines.
+
+## Step 6: Verification (Definition of Done)
 1. Write unit tests for business logic detached from the terminal wrapper.
 2. Write integration/end-to-end tests that run the compiled binary, pass arguments, and verify:
    * Correct exit codes.
