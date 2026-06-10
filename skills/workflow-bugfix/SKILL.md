@@ -25,6 +25,7 @@ Multi-agent bug investigation workflow that coordinates diagnostic and correctio
    Run the QA suite, `./harness verify`, and report root cause + fix + test + regression risk.
 
 ## Hard gates
+- **Durable task state**: maintain `.harness/tasks/<id>.md` per the [task-state convention](../../resources/task-state-convention.md) — created at start, updated and committed at every phase boundary, so a crashed session can resume.
 - **Strict File-Based Communication**: Do NOT pass error logs or code snippets via chat messages. When Reviewers/Testers output files to `.harness/reports/`, send ONLY the file path to the Developer subagent.
 - The regression test must **fail before** the fix and **pass after** — never claim a fix without it.
 - Keep the fix minimal and within scope; a feature moves to `passing` only after `./harness verify` succeeds.
