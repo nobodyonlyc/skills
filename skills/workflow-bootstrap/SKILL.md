@@ -25,13 +25,13 @@ Multi-agent orchestration to take a project from an idea description to a struct
 2. **BA & per-component SPECs** → [workflow-intake/references/route-1-new-project.md](../workflow-intake/references/route-1-new-project.md) (steps 2–3)
    Write `docs/BA.md` (business goals, personas, journeys, in/out of scope; ask follow-ups on gaps), then a detailed SPEC under `docs/spec/` for **each component the architecture actually has** — `frontend.md`, `backend.md`, `database.md`, `cli.md`, … The per-component SPECs are independent, so **author them concurrently** (one SPEC-writer subagent per component in a single parallel batch), then run **one combined PM review** over the whole SPEC set ([check-ba-evaluator](../check-ba-evaluator/SKILL.md), single batched pass) and confirm them with the user as one packet — not a write→review→confirm cycle per file.
    *GATE*: `docs/BA.md` and the relevant `docs/spec/*` must exist before Phase 3 — the backlog generator reads them. Skipping this is what produces an architecture-only backlog.
-3. **Scaffold & Backlog Generation** → [references/phase-2-backlog-and-skeleton.md](references/phase-2-backlog-and-skeleton.md)
+3. **Scaffold & Backlog Generation** → [references/phase-3-backlog-and-skeleton.md](references/phase-3-backlog-and-skeleton.md)
    Generate the backlog (main agent) and scaffold the skeleton (subagent) from the architecture + the Phase 2 SPECs, then merge & verify.
    *GATE*: After the backlog is generated, use the [check-ba-evaluator](../check-ba-evaluator/SKILL.md) skill to spawn a Senior PM Subagent to review the backlog against the architecture and SPECs. Only ask the user for final approval if the PM subagent passes it.
 4. **Common Design Phase (UI projects)** → [workflow-intake/references/common-design-phase.md](../workflow-intake/references/common-design-phase.md)
    Basic DB design, then — if the project has a UI — establish & approve `docs/spec/design-system.md`, then drive [workflow-prototype](../workflow-prototype/SKILL.md) to render the mock UI from `docs/spec/frontend.md`. Browser preview is mandatory; iterate until approved. Commit the design-phase artifacts before any feature work.
    *GATE*: ask-user approval of the design system and the mock UI before leaving this phase. Skip the UI sub-steps only if the project genuinely has no UI.
-5. **Verification & Initial Handoff** → [references/phase-3-verify-handoff.md](references/phase-3-verify-handoff.md)
+5. **Verification & Initial Handoff** → [references/phase-5-verify-handoff.md](references/phase-5-verify-handoff.md)
    Run `./init.sh`, confirm baseline passes, print backlog, then STOP for feature selection.
 
 ## Hard gates

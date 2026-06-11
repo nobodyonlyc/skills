@@ -1,6 +1,6 @@
 # Phase 5 — Verification & Initial Handoff (final phase)
 
-> This is the **last** phase. Prerequisites: the backlog + skeleton are merged ([phase-2-backlog-and-skeleton.md](phase-2-backlog-and-skeleton.md)), and — for a project with a UI — the **common design phase** is complete: `docs/spec/design-system.md` and the mock UI/prototype are approved and committed ([SKILL.md](../SKILL.md) Phase 4 / [common-design-phase](../../workflow-intake/references/common-design-phase.md)). Do not hand off with the design phase skipped on a UI project.
+> This is the **last** phase. Prerequisites: the backlog + skeleton are merged ([phase-3-backlog-and-skeleton.md](phase-3-backlog-and-skeleton.md)), and — for a project with a UI — the **common design phase** is complete: `docs/spec/design-system.md` and the mock UI/prototype are approved and committed ([SKILL.md](../SKILL.md) Phase 4 / [common-design-phase](../../workflow-intake/references/common-design-phase.md)). Do not hand off with the design phase skipped on a UI project.
 
 ## Steps
 1. Run the environment startup script:
