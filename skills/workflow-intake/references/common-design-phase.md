@@ -8,10 +8,12 @@ From the BA and the tech-stack SPEC, drive [dev-db-designer](../../dev-db-design
 ## 2. Design system (establish FIRST, if the project has a UI)
 Before drawing any screen, decide the project's visual language once and persist it to **`docs/spec/design-system.md`** (committed). This is the single source of truth every later prototype — the initial mock **and** each per-US screen — reads and reuses, so the UI stays consistent instead of each prototype reinventing its own look.
 
-`docs/spec/design-system.md` must capture:
-- **Style direction** — a few words on the intended feel (e.g. "minimal, professional" / "playful, rounded").
-- **Color palette**, **typography** (font families + size scale), **spacing scale**, **breakpoints**, and **component conventions** (button/input/card styles, radius, shadows).
-- A copy-pasteable **`:root { … }` CSS custom-property block** holding the actual token values, so an HTML/CSS prototype can drop it straight in.
+**Offer concrete directions, don't default.** Present **2–3 distinct style directions** (e.g. *minimal/editorial* · *warm/friendly* · *bold/high-contrast* · *data-heavy/dashboard*), each with a one-line feel and a **sample `:root` token preview** (accent hue, font pairing, radius/shadow), and let the user pick via **ask-user** (click-select). Defaulting to "generic blue + Inter" is the main cause of bland prototypes — see the [design-system reference](../../core-prototype/references/design-system.md).
+
+`docs/spec/design-system.md` must capture (tuned to the chosen direction):
+- **Style direction** — the chosen feel, in a sentence.
+- **Color palette** incl. **semantic roles** (success/warning/danger/info) and a focus-ring color; **typography** — a heading+body **font pairing** and a real **type scale** (not two sizes); **spacing scale** (4/8pt); **breakpoints**; **radius/elevation** scale; **motion** tokens; and **component conventions** (button/input/card styles).
+- A copy-pasteable **`:root { … }` CSS custom-property block** holding the actual token values (all categories above), so an HTML/CSS prototype can drop it straight in.
 
 Get explicit **ask-user** approval of the design system **before** generating screens.
 

@@ -12,14 +12,17 @@ This workflow produces a **mock UI only**. It renders every screen and interacti
 ## Skills this workflow drives
 - [dev-fe-developer](../dev-fe-developer/SKILL.md) — styling, layout, component, and accessibility rules for the mock.
 - [core-explain](../core-explain/SKILL.md) — read existing FE patterns / design tokens to reuse (optional).
+- **Senior Product Designer critic** (Phase 3) — scores the rendered screens against the [quality rubric](../core-prototype/references/quality-rubric.md) before the user sees them.
+
+> **Quality bar:** every screen must pass the [quality rubric](../core-prototype/references/quality-rubric.md) (8 dimensions), styled from the approved `docs/spec/design-system.md` tokens. Coverage (all screens exist) is necessary but not sufficient — a rendered-but-ugly screen is not done.
 
 ## Phases
 1. **FE SPEC & method** → [references/phase-1-spec-and-method.md](references/phase-1-spec-and-method.md)
    Read the FE SPEC (`docs/spec/frontend.md`); enumerate **every screen + function**; pick the generation method with the user.
 2. **Generate the mock** → [references/phase-2-generate-mock.md](references/phase-2-generate-mock.md)
    Produce all screens per the SPEC using the chosen method — HTML/CSS, or Figma via an MCP connector. Placeholder data only.
-3. **Preview & feedback loop** → [references/phase-3-preview-feedback.md](references/phase-3-preview-feedback.md)
-   Show it in the browser; collect feedback; regenerate or add screens per feedback; repeat until approved.
+3. **Critic review, preview & feedback loop** → [references/phase-3-preview-feedback.md](references/phase-3-preview-feedback.md)
+   Screenshot + design-critic review against the rubric and batch-fix **before** the user sees it; then show it in the browser, collect feedback, regenerate or add screens, repeat until approved.
 
 ## Two generation methods
 - **A. HTML/CSS** — self-contained static files (+ minimal JS only for navigation/interaction states), served locally and opened in the browser.
@@ -28,6 +31,8 @@ This workflow produces a **mock UI only**. It renders every screen and interacti
 ## Hard gates / scope
 - **UI only.** Never implement or stub a backend, database, or business logic — this is not the production build.
 - **Cover the whole FE SPEC** — every screen and every function it lists; track coverage against a checklist.
+- **Pass the quality rubric** — each screen must clear all 8 dimensions of the [quality rubric](../core-prototype/references/quality-rubric.md), styled from the approved design-system tokens.
+- **Design-critic review before the user** — screenshot + critique against the rubric and batch-fix before any user preview (Phase 3 step 0).
 - **Browser preview is mandatory** before asking for feedback.
 - **Iterate until approved** — each round of feedback → regenerate/extend the affected screens → re-preview. Repeat as many times as needed.
 - The approved mock guides the real FE build later (e.g. [workflow-feature](../workflow-feature/SKILL.md)); it is not itself the shipped UI.

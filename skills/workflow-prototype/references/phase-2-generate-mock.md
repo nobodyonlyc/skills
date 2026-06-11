@@ -18,6 +18,6 @@ If `docs/spec/design-system.md` exists, it is the **source of truth** for palett
 - Apply the same design rules; link components/states where the connector supports it.
 
 ## Done criteria
-Every screen and every function on the checklist is rendered. Cross off the checklist as you go; if the SPEC implies a state you cannot show statically, mock it visually and note it.
+Every screen and every function on the checklist is rendered **and** each screen passes the [quality rubric](../../core-prototype/references/quality-rubric.md) (visual hierarchy, spacing rhythm, AA contrast, typography, component states, realistic content, empty/loading/error, responsive polish). Coverage is necessary but not sufficient — a rendered-but-ugly screen is not done. Cross off the checklist as you go; if the SPEC implies a state you cannot show statically, mock it visually and note it.
 
-→ Proceed to [Phase 3](phase-3-preview-feedback.md).
+→ Proceed to [Phase 3](phase-3-preview-feedback.md), which runs a design-critic review before the user sees the mock.

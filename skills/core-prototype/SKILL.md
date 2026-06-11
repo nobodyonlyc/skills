@@ -29,14 +29,16 @@ find . -name "package.json" -o -name "*.css" | head -3   # reuse existing FE sta
 
 ## References
 Please follow the guidelines in these references carefully:
-- **[Design System & CSS Patterns](references/design-system.md)**: Standard tokens, typography, and responsive layout guidance.
-- **[Iteration Loop](references/iteration-loop.md)**: The lifecycle for rendering, previewing, and refining the prototype.
+- **[Design System & CSS Patterns](references/design-system.md)**: Pick a style direction, then standard tokens, typography, and responsive layout guidance.
+- **[Quality Rubric](references/quality-rubric.md)**: The 8-dimension bar each screen must pass — self-check against it before every preview.
+- **[Iteration Loop](references/iteration-loop.md)**: The lifecycle for rendering, self-reviewing (screenshot + rubric), previewing, and refining the prototype.
 
 ## Examples
 - **[Sample Prototype Output](examples/sample-prototype.md)**: See an example of a well-structured prototype.
 
 ## Workflow Phases
 1. **Confirm Requirements**: Clarify the screen(s) and what they must show. Set up the basic layout.
-2. **Apply Design Tokens**: Ensure your prototype adheres to `references/design-system.md`.
-3. **Build the Mock**: Write the HTML/CSS with realistic content.
-4. **Preview & Iterate**: Follow `references/iteration-loop.md` to host the files, show them to the user, and iterate on feedback.
+2. **Choose direction & apply tokens**: Commit to a concrete style direction (don't default to generic blue + Inter), then apply the full token set per `references/design-system.md`.
+3. **Build the Mock**: Write the HTML/CSS with realistic content and complete interaction states.
+4. **Self-review before preview**: Screenshot your own output and score it against `references/quality-rubric.md`; fix every Fail **before** the user sees it.
+5. **Preview & Iterate**: Follow `references/iteration-loop.md` to host the files, show them to the user, and iterate on feedback.

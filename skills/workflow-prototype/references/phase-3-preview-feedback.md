@@ -1,6 +1,13 @@
 # Phase 3 — Preview & feedback loop
 
-The mock is not done until the user has **seen it in the browser** and **approved every screen**.
+The mock is not done until it has passed a **design-critic review**, the user has **seen it in the browser**, and **approved every screen**.
+
+## 0. Design-critic review BEFORE the user sees it (mandatory)
+Don't offload quality to the user. Run an internal review pass first, then fix, then present:
+
+1. **Screenshot every screen.** Use the Preview MCP (`preview_start` → `preview_screenshot`) or a browser/screenshot tool to capture each screen at **mobile and desktop** widths. (Method B/Figma: export frame images.)
+2. **Spawn a design critic.** Spawn a subagent with `Role: Senior Product Designer` whose prompt is: *"Score each attached screen against the [quality rubric](../../core-prototype/references/quality-rubric.md) (8 dimensions + quick gate). For every screen, list each dimension's verdict and a concrete, actionable fix for any Fail. Write the report to `.harness/reports/prototype-critique.md`; your chat response is ONLY that path."* Pass the screenshots and the rubric path. (This is the same single-pass, batched review used for BA — one report covering all screens, not one critic per screen.)
+3. **Batch-fix.** Apply **all** of the critique's fixes in a single revision pass (update tokens/CSS/HTML), then re-screenshot the changed screens. Re-run the critic **at most once** to confirm. Only then proceed to show the user.
 
 ## 1. Show it in the browser (mandatory)
 - **Method A (HTML/CSS):** serve the files with a local static server (e.g. `python3 -m http.server` or a dev server) and give the user a **clickable URL**, or open it in the browser. If your runtime has a browser/preview capability, use it to render and screenshot each screen.
