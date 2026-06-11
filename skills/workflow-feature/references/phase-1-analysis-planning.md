@@ -19,9 +19,9 @@ For a feature large enough to split, decompose it into child-tasks (`F<id>-T<n>`
 Run both subagents **IN PARALLEL** using the **spawn-subagents** capability ([agent-tool-mapping](../../../resources/agent-tool-mapping.md); `Agent`/`Task` in Claude Code):
 
 ### Subagent A — Requirements Analyst
-- **Skill:** [core-explain](../../core-explain/SKILL.md); consult [dev-db-designer](../../dev-db-designer/SKILL.md) if DB changes are needed.
-- **Task:** Read the codebase structure, existing patterns, and related code.
-- **Output:** (1) list of files to change, (2) open questions, (3) risks/constraints.
+- **Skill:** [core-explain](../../core-explain/SKILL.md) for a single known file/function; **[core-explore](../../core-explore/SKILL.md) for a large or unfamiliar codebase** (map-first + fan-out readers that return compact summaries, so the analyst never reads the whole tree into context). Consult [dev-db-designer](../../dev-db-designer/SKILL.md) if DB changes are needed.
+- **Task:** Understand the codebase structure, existing patterns, and related code — **scoped to this feature**, not the whole repo.
+- **Output:** (1) list of files to change, (2) how they connect, (3) open questions, (4) risks/constraints.
 
 ### Subagent B — Test Strategist
 - **Skill:** [check-test-gen](../../check-test-gen/SKILL.md)

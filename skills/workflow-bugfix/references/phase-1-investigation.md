@@ -1,12 +1,12 @@
 # Phase 1 — Parallel Investigation & Analysis
 
-**Skills used:** [core-explain](../../core-explain/SKILL.md), [dev-db-designer](../../dev-db-designer/SKILL.md)
+**Skills used:** [core-explain](../../core-explain/SKILL.md), [core-explore](../../core-explore/SKILL.md) (for a large/unfamiliar codebase), [dev-db-designer](../../dev-db-designer/SKILL.md)
 
 Run both subagents **IN PARALLEL** using the **spawn-subagents** capability ([agent-tool-mapping](../../../resources/agent-tool-mapping.md); `Agent`/`Task` in Claude Code).
 
 ## Subagent A — Root Cause Investigator
 - **Role:** Codebase Debugger
-- **Skill:** [core-explain](../../core-explain/SKILL.md)
+- **Skill:** [core-explain](../../core-explain/SKILL.md) for a known file; **[core-explore](../../core-explore/SKILL.md) for a large/unfamiliar codebase** (map-first + fan-out so it locates the bug without reading the whole tree).
 - **Task:** Search all code paths related to the reported bug and trace the data flow.
 - **Output:** the exact line(s) where the bug originates, plus a diagnostic context.
 

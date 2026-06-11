@@ -9,7 +9,7 @@ Skills are stored **flat** (one directory per skill, so `/skill-name` discovery 
 | **Development** — write the code, by component type | `dev-` | strong | dev-be-developer, dev-fe-developer, dev-cli-tool-developer, dev-batch-developer, dev-db-designer |
 | **Quality** — review, test, and harden changes | `check-` | strong | check-code-review, check-security-review, check-pr-review, check-qa, check-test-gen, check-refactor |
 | **Delivery** — commit, PR, release, deploy, package | `ship-` | **fast** (except ship-release/ship-deploy → strong) | ship-commit-msg, ship-pr-create, ship-deploy, ship-release, ship-mcp-build |
-| **Core** — everyday single-agent dev tasks | `core-` | **fast** for core-file-ops; strong for core-explain/core-fix/core-feature/core-prototype | core-explain, core-fix, core-feature, core-prototype, core-file-ops |
+| **Core** — everyday single-agent dev tasks | `core-` | **fast** for core-file-ops; strong for core-explain/core-explore/core-fix/core-feature/core-prototype | core-explain, core-explore, core-fix, core-feature, core-prototype, core-file-ops |
 
 ## Notes
 - The prefix is **classification only** — every skill still runs independently via `/skill-name`.

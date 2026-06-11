@@ -5,6 +5,8 @@ description: Explain a specific file, class, function, or block of code in depth
 
 Code to explain: $ARGUMENTS
 
+> Scope: this skill explains **one known** file/function/block. To understand a **large or unfamiliar codebase** without running out of context, use [core-explore](../core-explore/SKILL.md) (map-first + fan-out summaries) instead.
+
 If $ARGUMENTS is a file path, read it. If it's a function or concept name, search for it:
 
 ```bash
