@@ -28,4 +28,4 @@ Determine the run's autonomy mode per [autonomy-mode](../../resources/autonomy-m
 ## Cross-cutting rules (every step, every route)
 - **Task tracking** — record each step as a harness task; a US splits into child-tasks per [task-convention](../../resources/task-convention.md).
 - **Full gates** — every task runs review / test / verify / handoff.
-- **Ask-user gate** — in `gated`, stop before/after each step and ask the user; on feedback, **redo that step**. In `mode: auto`, decide and log per [autonomy-mode](../../resources/autonomy-mode.md) instead of stopping (except the always-stop list).
+- **Ask-user gate** — in `gated`, stop before/after each step and ask the user; on feedback, **redo that step**. In `mode: auto`, decide and log per [autonomy-mode](../../resources/autonomy-mode.md) instead of stopping (except the always-stop list). When the question is a **choice** (confirm classification, pick a route/method, approve/revise), present **click-select options**, not a free-text prompt — see [agent-tool-mapping](../../resources/agent-tool-mapping.md).

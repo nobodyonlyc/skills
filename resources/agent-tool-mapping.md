@@ -4,7 +4,12 @@ This repo is driven by multiple agents (Claude Code, Codex, Antigravity). Skills
 
 | Canonical capability | What it does | Claude Code | Codex / others |
 |---|---|---|---|
-| **ask-user** | Ask the user a question / get explicit confirmation before a gated step | `AskUserQuestion` | interactive prompt / `ask_question` |
+| **ask-user** | Ask the user a question / get explicit confirmation before a gated step | `AskUserQuestion` (use its **options** for choices) | interactive prompt / `ask_question` with choices |
+
+### ask-user: prefer click-select options
+Whenever a question has a **discrete set of answers** — a yes/no confirmation, "which approach", "which method (HTML vs Figma)", "approve / revise the backlog", picking from a list — present them as **selectable options the user clicks**, using the runtime's structured option capability (in Claude Code, `AskUserQuestion` with an `options` array; mark the recommended one and label it `(recommended)`). Do **not** make the user type a free-text answer to a question that is really a choice.
+
+Use free text only when the answer is genuinely open-ended (e.g. "describe your project idea", "what should this screen show"). When in doubt, offer the likely options **plus** an implicit "something else" — the runtime already lets the user type their own answer past the options.
 | **spawn-subagents** | Run independent sub-tasks in parallel | `Agent` / `Task` tool | sub-agent / `invoke_subagent` |
 | **generate-image** | Produce a mockup/asset image (optional) | image tool if available, else build a static HTML/CSS mockup | same fallback |
 
