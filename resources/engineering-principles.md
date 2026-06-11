@@ -39,5 +39,17 @@ Assume the code will change. Make the likely changes cheap and the risky ones co
 - **No dead code, no commented-out code, no leftover TODOs** that are really unfinished work (raise a US instead).
 - **Comments explain "why", never "what"** — the code shows what (see the convention files).
 
+## 6. Paradigm & style (FP vs OOP — right tool for the job)
+Do not be dogmatic about one paradigm. Pick per problem, and follow the language's idiom.
+- **Logic & data transformation** → prefer **pure functions and immutable data**: no hidden state, trivial to test, safe under the concurrency a team workflow implies. Default for parsers, calculators, mappers, validators, reducers.
+- **Entities with identity, lifecycle, and invariants** (User, Order, Cart) → use **OOP/encapsulation**: bundle the state with the rules that protect its invariants behind a boundary, so nothing can put it in an illegal state.
+- **Composition over inheritance** by default — compose small pieces (functions, traits/interfaces, components). Reach for inheritance only for a genuine, stable "is-a" relationship; never to share code.
+- **Push side effects to the edges** — keep I/O, DB, network, and clock in the infrastructure/presentation layer; keep the domain core pure and deterministic. (This is the same boundary the layered architecture in §2 already draws.)
+- **Follow the language idiom, don't import a foreign paradigm:**
+  - Rust → data + traits + iterators, immutability by default, `Result`/`Option` over exceptions.
+  - TypeScript / Python → mixed; pure functions for transforms, classes for entities and stateful services.
+  - Go → structs + small interfaces, composition; avoid faux-OOP class hierarchies.
+- **Anti-dogma guard:** no class with a single method that should be a function; no deep inheritance tree; no "everything immutable" that fights the language. Optimize for clarity and testability, not paradigm purity.
+
 ## How a `dev-*` skill applies this
 1. Trace to requirement (§1) → 2. Set architecture & boundary (§2) → implement, choosing patterns deliberately (§3) and designing for the changes you expect (§4), keeping it clean (§5) → then the skill's own verification/Definition-of-Done.

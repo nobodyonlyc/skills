@@ -14,3 +14,8 @@
 ## 3. Module-level README
 - Every major crate or significant module directory MUST contain a local `README.md` (or detailed module-level `//!` doc comments at the top of `lib.rs` / `mod.rs`).
 - Explain the module's boundaries, trait implementations, and lifetime guarantees.
+
+## 4. Paradigm lean (see [engineering-principles §6](../engineering-principles.md))
+- Data + behavior via **traits**, not inheritance; **immutability by default** (`let`, not `let mut`, unless needed).
+- Prefer **iterators / combinators** over manual mutable loops for transforms; pure functions for logic.
+- `Result`/`Option` + `?` over panics/exceptions; push side effects to the edges.

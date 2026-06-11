@@ -16,3 +16,8 @@
 ## 3. Module-level README
 - Every newly created or significantly modified module (e.g., `domain/users/` or `application/billing/`) MUST contain a local `README.md`.
 - This `README.md` should explain the internal logic, module boundaries, external dependencies, and data flow.
+
+## 4. Paradigm lean (see [engineering-principles §6](../engineering-principles.md))
+- **Mixed**: pure functions for transforms/use-cases; classes for entities and stateful services (repositories, gateways).
+- Favor `readonly` / immutable data and `const`; composition over inheritance; depend on interfaces at boundaries.
+- Keep side effects (DB, HTTP) in the infrastructure layer; domain stays pure and unit-testable.

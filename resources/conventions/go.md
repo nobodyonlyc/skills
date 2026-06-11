@@ -14,3 +14,8 @@
 ## 3. Module-level README
 - Every significant package (especially inside `internal/` or `pkg/`) MUST contain a local `README.md` or a robust `doc.go` file.
 - Explain what the package does, its public API, and concurrency guarantees.
+
+## 4. Paradigm lean (see [engineering-principles §6](../engineering-principles.md))
+- **Structs + small interfaces + composition** (embedding) — never faux-OOP class hierarchies.
+- Accept interfaces, return structs; keep functions pure where practical; explicit `error` returns over panics.
+- Side effects (I/O, DB) behind interfaces at the package boundary; domain logic stays testable.

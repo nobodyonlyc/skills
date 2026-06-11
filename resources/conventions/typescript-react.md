@@ -15,3 +15,8 @@
 ## 3. Module-level README
 - Every major feature module or complex component folder (e.g., `features/checkout/`) MUST contain a local `README.md`.
 - Explain the layout, local state management, props API, and interactions with global stores.
+
+## 4. Paradigm lean (see [engineering-principles §6](../engineering-principles.md))
+- **Functional components + hooks**; pure render from props/state, no class components.
+- Treat state as **immutable** (return new objects/arrays); derive don't duplicate; keep components composable.
+- Push side effects into `useEffect`/data-fetching hooks; keep presentational components pure (props in, UI out).
