@@ -7,6 +7,8 @@ Develop CLI feature for: $ARGUMENTS
 
 Follow these guidelines to design, implement, and verify command-line interfaces, scripts, and automation tools.
 
+> **Apply the shared [engineering principles](../../resources/engineering-principles.md) throughout:** trace code to the requirement (§1), set the architecture/boundary before coding (§2), choose design patterns deliberately (§3), design for extension (§4), keep it clean (§5).
+
 ## Step 1: Design POSIX-Compliant Command Interface
 Choose a reliable command-line parsing library (e.g., `clap`, `commander`, `click`).
 1. **Commands & Subcommands**: Use hierarchical subcommands for different operations (e.g., `tool init`).

@@ -10,6 +10,8 @@ Design database schema/migration for: $ARGUMENTS
 
 Follow these guidelines to plan, implement, and verify database tables, relationships, and schema migrations.
 
+> **Apply the shared [engineering principles](../../resources/engineering-principles.md) throughout:** trace schema to the requirement (§1), fit the overall architecture (§2), design for extension/migration (§4), keep it clean (§5).
+
 ## Step 1: Relational Schema Design
 1. **Identify Entities & Relationships**: Define tables and establish clear mappings:
    * **One-to-One (1:1)**: Link using a shared primary key or a unique foreign key constraint.

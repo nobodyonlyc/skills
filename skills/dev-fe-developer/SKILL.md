@@ -10,6 +10,8 @@ Develop Frontend feature for: $ARGUMENTS
 
 Follow these guidelines to plan, implement, and verify frontend user interfaces, pages, or components.
 
+> **Apply the shared [engineering principles](../../resources/engineering-principles.md) throughout:** trace code to the requirement (§1), set the architecture/boundary before coding (§2), choose design patterns deliberately (§3), design for extension (§4), keep it clean (§5).
+
 ## Step 1: Analyze UI Requirements & Setup
 1. **Review system specs**: Understand user flows, required pages, and interactions.
 2. **Examine framework & configurations**: Check whether the project uses Next.js, Vite (React/Vue), Tailwind CSS, or Vanilla CSS.

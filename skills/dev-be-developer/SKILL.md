@@ -10,6 +10,8 @@ Develop Backend feature for: $ARGUMENTS
 
 Follow these guidelines to design, implement, and verify backend APIs, server services, and logic.
 
+> **Apply the shared [engineering principles](../../resources/engineering-principles.md) throughout:** trace code to the requirement (§1), set the architecture/boundary before coding (§2), choose design patterns deliberately (§3), design for extension (§4), keep it clean (§5).
+
 ## Step 1: Design API Contract
 Before writing endpoint code, establish the API contract:
 1. **HTTP Methods & URIs**: Use standard REST conventions (e.g., `GET /api/v1/users` to fetch, `POST /api/v1/users` to create).

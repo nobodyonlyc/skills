@@ -10,6 +10,8 @@ Develop Batch feature for: $ARGUMENTS
 
 Follow these guidelines to design, implement, and verify batch processors, ETL pipelines, and recurring cron tasks.
 
+> **Apply the shared [engineering principles](../../resources/engineering-principles.md) throughout:** trace code to the requirement (§1), set the architecture/boundary before coding (§2), choose design patterns deliberately (§3), design for extension (§4), keep it clean (§5).
+
 ## Step 1: Establish Pipeline Architecture (Reader-Processor-Writer)
 Design the batch processing logic following a structured flow to separate concerns:
 1. **Reader (Input)**:
