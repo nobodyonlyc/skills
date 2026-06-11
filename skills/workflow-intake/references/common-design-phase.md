@@ -24,5 +24,6 @@ If the project has a UI, generate the **mock UI** from the FE SPEC via [workflow
 ## Gates
 - **ask-user** approval is required for the DB design, the **design system**, and the mock UI before leaving this phase; on feedback, redo that artifact.
 - Record each artifact as a harness task where useful ([task-convention](../../../resources/task-convention.md)).
+- **Commit the design-phase artifacts before starting the first US** (a phase checkpoint: `git add docs/spec docs/SYSTEM_ARCHITECTURE.md prototype && git commit -m "design phase"`). Otherwise the first US's `harness verify` checkpoint sweeps these shared artifacts into a commit labelled for that single feature.
 
-→ Once all are approved, proceed to per-US execution via [Route 2](route-2-us-execution.md).
+→ Once all are approved and committed, proceed to per-US execution via [Route 2](route-2-us-execution.md).
