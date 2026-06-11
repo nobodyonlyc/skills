@@ -2,16 +2,19 @@
 
 This repo is driven by multiple agents (Claude Code, Codex, Antigravity). Skills and workflows refer to **capabilities** by a canonical name; each agent maps them to its own concrete tool. When a skill says "use the *ask-user* capability", use whichever of these your runtime exposes.
 
-| Canonical capability | What it does | Claude Code | Codex / others |
-|---|---|---|---|
-| **ask-user** | Ask the user a question / get explicit confirmation before a gated step | `AskUserQuestion` (use its **options** for choices) | interactive prompt / `ask_question` with choices |
+| Canonical capability | What it does | Claude Code | Codex | Antigravity |
+|---|---|---|---|---|
+| **ask-user** | Ask the user a question / get explicit confirmation before a gated step | `AskUserQuestion` (use its **options** for choices) | `ask_question` with choices | interactive choice prompt |
+| **spawn-subagents** | Run independent sub-tasks in parallel | `Agent` / `Task` tool | `invoke_subagent` | sub-agent / task spawn |
+| **generate-image** | Produce a mockup/asset image (optional) | image tool if available, else build a static HTML/CSS mockup | same fallback | same fallback |
 
-### ask-user: prefer click-select options
-Whenever a question has a **discrete set of answers** — a yes/no confirmation, "which approach", "which method (HTML vs Figma)", "approve / revise the backlog", picking from a list — present them as **selectable options the user clicks**, using the runtime's structured option capability (in Claude Code, `AskUserQuestion` with an `options` array; mark the recommended one and label it `(recommended)`). Do **not** make the user type a free-text answer to a question that is really a choice.
+### ask-user: prefer click-select options (all three agents)
+Whenever a question has a **discrete set of answers** — a yes/no confirmation, "which approach", "which method (HTML vs Figma)", "approve / revise the backlog", picking from a list — present them as **selectable options the user clicks**, never a free-text prompt. Each runtime has this:
+- **Claude Code** — `AskUserQuestion` with an `options` array (mark the recommended one and label it `(recommended)`).
+- **Codex** — `ask_question` with the choices passed as selectable options.
+- **Antigravity** — its interactive choice prompt with the options listed.
 
-Use free text only when the answer is genuinely open-ended (e.g. "describe your project idea", "what should this screen show"). When in doubt, offer the likely options **plus** an implicit "something else" — the runtime already lets the user type their own answer past the options.
-| **spawn-subagents** | Run independent sub-tasks in parallel | `Agent` / `Task` tool | sub-agent / `invoke_subagent` |
-| **generate-image** | Produce a mockup/asset image (optional) | image tool if available, else build a static HTML/CSS mockup | same fallback |
+Use free text only when the answer is genuinely open-ended (e.g. "describe your project idea", "what should this screen show"). When in doubt, offer the likely options **plus** an implicit "something else" — every runtime lets the user type their own answer past the options.
 
 ## Model-tier hint (cost optimization)
 When spawning a subagent, pass a **model-tier** so mechanical work doesn't burn a strong model. Tiers are abstract (not model names, so they don't go stale and map across runtimes):
