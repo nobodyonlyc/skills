@@ -1,4 +1,4 @@
-# Phase 2 — Scaffold & Backlog Generation
+# Phase 3 — Scaffold & Backlog Generation
 
 **Skills used:** [plan-us-backlog-generator](../../plan-us-backlog-generator/SKILL.md), [plan-project-skeleton-generator](../../plan-project-skeleton-generator/SKILL.md), [dev-db-designer](../../dev-db-designer/SKILL.md)
 
@@ -39,4 +39,4 @@ drives backlog generation. Only B is delegated ([agent-tool-mapping](../../../re
 
 ## Merge & Verify
 - Confirm `.harness/features.json` actually contains the approved stories (`./harness status` shows more than the placeholder) **and** the scaffold exists on disk.
-- Resolve any conflicts (e.g. a story with no corresponding scaffold) before Phase 3.
+- Resolve any conflicts (e.g. a story with no corresponding scaffold) before Phase 5 (verification & handoff).
