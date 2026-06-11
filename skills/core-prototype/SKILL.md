@@ -12,6 +12,8 @@ The lightweight, single-agent path for a **mock UI**. Use it to throw together o
 
 > **Scale check:** this is the right skill for **1–2 screens** (e.g. the UI design gate of a single feature). For a **whole app / the full FE SPEC** with many screens, use [workflow-prototype](../workflow-prototype/SKILL.md) (multi-agent, coverage checklist) instead.
 
+> **Reuse the design system:** if `docs/spec/design-system.md` exists, it is the source of truth — link its `:root` token block (palette, typography, spacing, components) so a new per-US screen matches the look already approved for the project. Do not invent a fresh palette/font; if the screen genuinely needs a new token, add it back to `docs/spec/design-system.md`. See [design-system](references/design-system.md).
+
 > For the full, SPEC-driven mock (every screen/function from `docs/spec/frontend.md`, choice of HTML/CSS or Figma-via-MCP, mandatory browser preview + feedback loop), use [workflow-prototype](../workflow-prototype/SKILL.md).
 
 ```bash

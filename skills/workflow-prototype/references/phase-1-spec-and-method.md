@@ -6,7 +6,9 @@ Goal: know exactly **what** to mock (every screen + function) and **how** (which
 Read the frontend SPEC at `docs/spec/frontend.md` (produced by the intake router's Route 1). If it does not exist, ask the user for the screens and behaviours, or draft a short screen list and confirm it before proceeding.
 
 ## 2. Enumerate full coverage
-From the SPEC, build a **coverage checklist** — list **every screen** and, under each, **every function/interaction** the SPEC requires (e.g. Login: email/password fields, validation states, "forgot password" link; Board: columns, cards, drag, filter, empty state). The mock is not done until every item is rendered. Reuse existing design tokens/components via [core-explain](../../core-explain/SKILL.md) if the repo already has a frontend.
+From the SPEC, build a **coverage checklist** — list **every screen** and, under each, **every function/interaction** the SPEC requires (e.g. Login: email/password fields, validation states, "forgot password" link; Board: columns, cards, drag, filter, empty state). The mock is not done until every item is rendered.
+
+Also read `docs/spec/design-system.md` if it exists — it defines the palette, typography, spacing, and component styles every screen must use (Phase 2 applies it). If the repo already has a frontend, reuse its existing tokens/components via [core-explain](../../core-explain/SKILL.md).
 
 ## 3. Pick the method (ask-user)
 Confirm with the user which method to use ([agent-tool-mapping](../../../resources/agent-tool-mapping.md) for the ask-user capability):

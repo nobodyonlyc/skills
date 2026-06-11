@@ -38,7 +38,7 @@ If the feature includes UI, produce and get approval of a mock **before** writin
 - **1–2 screens** (the common case for a single feature) → drive [core-prototype](../../core-prototype/SKILL.md) — the lightweight single-agent path, static HTML/CSS for fast feedback.
 - **Many screens / a whole flow** → drive [workflow-prototype](../../workflow-prototype/SKILL.md) instead (multi-agent, covers the full FE SPEC with a browser-preview loop).
 
-Either way: browser-preview the mock, then iterate (present → feedback → regenerate → re-preview) until the user explicitly approves. Only then start implementation.
+Reuse `docs/spec/design-system.md` (the project's approved palette/typography/spacing/components) so the new screen matches the established look; extend that file if the screen needs a genuinely new token. Either way: preview the mock — **browser** for HTML/CSS/JS, **MCP tool** for Figma — then iterate (present → feedback → regenerate → re-preview) until the user explicitly approves. Only then start implementation.
 
 ## 5. Phase checkpoint
 Update `.harness/tasks/<feature_id>.md` (tick Phase 1, record decisions and the plan path) and commit:
