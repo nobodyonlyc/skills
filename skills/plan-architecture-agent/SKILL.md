@@ -22,7 +22,12 @@ Before asking technical questions, evaluate the user's prompt or conduct a quick
    * **Developer (Dev)**: Uses technical terms, specifies tech stack preferences, shows programming experience.
    * **Non-Technical (Non-Tech)**: Focuses on business goals, features, and user behavior without mentioning coding languages or database details.
 
-Use the **ask-user** capability (see [agent-tool-mapping](../../resources/agent-tool-mapping.md); `AskUserQuestion` in Claude Code) to explicitly ask the user to confirm their **Role (Tech vs Non-Tech)** and the **Project Size** before proceeding. Do not assume.
+Ask the user to confirm these via the **ask-user** capability — and **present them as click-select options, never free-text prompts** (per the [ask-user click-select rule](../../resources/agent-tool-mapping.md#ask-user-prefer-click-select-options-all-three-agents)). In Claude Code, one `AskUserQuestion` call with these as separate questions, each with an `options` array:
+- **Your role** → options: `Developer / Technical` (you pick the stack) · `Non-technical` (propose the optimal solution for me).
+- **Project size** → options: `Small` (CLI / simple local app) · `Medium` (full web app FE+BE) · `Large / Enterprise` (multi-service).
+- **Application type** → options: `Web Application` · `CLI Tool` · `API / Backend service` · `Batch / Data pipeline`.
+
+Do not assume; do not make the user type these out. The runtime always lets them type a custom answer past the options if none fit.
 
 ## Step 2: Conduct the Contextual Interview
 
@@ -48,11 +53,13 @@ Use the **4 Advanced BA Methodologies**:
 4. **Schema-Driven Prompting**: Ensure you have gathered enough information to detail Entities, User Roles, Business Rules, and External Integrations.
 
 **Part 2: Technical Choices**
-After the BA is solid, ask for explicit developer choices to ensure the skeleton is built correctly:
-1. **Programming Languages & Frameworks**: (e.g., TypeScript/Next.js vs. Rust/Axum).
-2. **Software Architecture Pattern**: (e.g., MVC, DDD).
-3. **Database & Persistence**: (e.g., PostgreSQL, MongoDB, ORMs).
-4. **Deployment & Hosting Environment**: (e.g., Docker, AWS, Vercel).
+After the BA is solid, ask for explicit developer choices. **Present each as click-select options** (a few common choices relevant to the app type) plus the implicit free-text escape for a custom answer — do not make the user type from scratch:
+1. **Programming Language & Framework**: e.g. `TypeScript / Next.js` · `Node.js / NestJS` · `Python / FastAPI` · `Go` · `Rust / Axum`.
+2. **Software Architecture Pattern**: e.g. `MVC` · `DDD / Clean Architecture` · `Layered` · `Hexagonal`.
+3. **Database & Persistence**: e.g. `PostgreSQL` · `MySQL` · `MongoDB` · `SQLite` · `Redis (cache)`.
+4. **Deployment & Hosting**: e.g. `Docker / docker-compose` · `Vercel` · `AWS` · `Local only`.
+
+Tailor the offered options to the chosen app type and project size; offer 3–4 sensible defaults per question, never an open prompt with no options.
 
 *Rule: Do NOT generate the final `SYSTEM_ARCHITECTURE.md` until you have iteratively interviewed the user using the above methods to get a complete, deep understanding.*
 
