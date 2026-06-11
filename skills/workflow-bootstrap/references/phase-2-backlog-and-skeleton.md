@@ -18,7 +18,8 @@ Run both subagents **IN PARALLEL** using the **spawn-subagents** capability ([ag
 ## Subagent A — Backlog Generator
 - **Role:** Requirements Backlog Agent
 - **Skill:** [plan-us-backlog-generator](../../plan-us-backlog-generator/SKILL.md)
-- **Task:** Read `docs/SYSTEM_ARCHITECTURE.md`, draft the User Stories, present them in a Markdown table.
+- **Task:** Read `docs/SYSTEM_ARCHITECTURE.md` **and every detailed `docs/spec/*` SPEC**, draft the User Stories, present them in a Markdown table.
+- **Coverage gate:** Run the generator's Step 2.5 coverage check — a PM subagent ([check-ba-evaluator](../../check-ba-evaluator/SKILL.md) Mode B) confirms every SPEC item (screen / endpoint / entity / business rule) maps to a US; fill any gaps before presenting.
 - **Gate:** Obtain explicit user approval **before** populating the backlog via `./harness add`.
 
 ## Subagent B — Skeleton Scaffold

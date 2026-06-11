@@ -25,7 +25,7 @@ For **each component present** in the architecture, write a detailed SPEC under 
 Only generate SPECs for components that actually exist in this project. Confirm each SPEC with the user.
 
 ### 4. Create the US backlog
-Drive [plan-us-backlog-generator](../../plan-us-backlog-generator/SKILL.md) to parse the BA + SPECs into User Stories. Present the proposed backlog as a table and get explicit user approval **before** writing it via `./harness add`.
+Drive [plan-us-backlog-generator](../../plan-us-backlog-generator/SKILL.md) to parse the BA **and the detailed `docs/spec/*` SPECs** into User Stories. Before presenting, run its **coverage check** (Step 2.5): a PM subagent ([check-ba-evaluator](../../check-ba-evaluator/SKILL.md) Mode B) verifies every SPEC item — screen, endpoint, entity, business rule — maps to a US, and the gaps are filled. Then present the proposed backlog as a table (click-select approve/revise) and get explicit user approval **before** writing it via `./harness add`.
 
 ### 5. Common design phase
 Hand off to the shared [common design phase](common-design-phase.md) (basic DB design + mock UI) before per-US execution.

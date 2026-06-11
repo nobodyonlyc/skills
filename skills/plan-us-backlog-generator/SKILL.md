@@ -12,11 +12,15 @@ Generate backlog for: $ARGUMENTS
 
 Follow these guidelines to read a system architecture specification and populate the Harness feature backlog.
 
-## Step 1: Read the System Architecture
-Open and read the system design document (e.g., `docs/SYSTEM_ARCHITECTURE.md`). Identify:
-1. **Core Components**: Web server, UI frontend, DB schema, background workers.
-2. **Setup Dependencies**: Which components need to be bootstrapped first (typically Database -> Backend API -> Frontend UI).
-3. **Key Features**: List the core business functions (e.g., user login, product catalog, checkout, email dispatch).
+## Step 1: Read the architecture AND the detailed SPECs
+Read the high-level design (`docs/SYSTEM_ARCHITECTURE.md`) for structure, **and every detailed SPEC** under `docs/spec/` — `frontend.md`, `backend.md`, `database.md`, `cli.md`, and any tool SPEC. The architecture is high-level; the **work items live in the detailed SPECs**. Reading only the architecture is the #1 cause of a backlog that misses User Stories.
+
+Build an explicit **inventory of every work item** the SPECs define — you will check the backlog against it in Step 2.5:
+1. **Core Components & dependencies**: bootstrap order (typically Database → Backend API → Frontend UI).
+2. **FE** — every **screen** and major interaction in `docs/spec/frontend.md`.
+3. **BE** — every **endpoint / service function** in `docs/spec/backend.md`.
+4. **DB** — every **entity / migration** in `docs/spec/database.md`.
+5. **Business functions** named in the BA / architecture (login, catalog, checkout, email dispatch, …).
 
 ## Step 2: Formulate User Stories (Features)
 For each identified feature or bootstrapping task, formulate a structured feature payload containing:
@@ -26,6 +30,11 @@ For each identified feature or bootstrapping task, formulate a structured featur
 4. **Area**: Category of work (e.g., `core`, `db`, `api`, `ui`, `batch`, `security`).
 5. **User Visible Behavior**: Detailed description of what behavior will be observed when the task is complete.
 6. **Verifications**: A list of executable shell commands that will prove the task works out of the box (e.g., `cargo test`, `pytest tests/test_auth.py`, `[ -f src/auth.rs ]`).
+
+## Step 2.5: Coverage check (mandatory — before showing the user)
+Verify the drafted backlog **covers every item in the Step 1 inventory**. Build a coverage table: each SPEC item → the US that covers it. Any item with **no US is a gap** — add the missing User Story before proceeding.
+
+Then run an **independent PM coverage review**: spawn a subagent via [check-ba-evaluator](../check-ba-evaluator/SKILL.md) in **backlog-coverage mode** — a Senior PM who reads the SPECs and the drafted backlog and reports any SPEC item (screen / endpoint / entity / business rule) that no US covers. If the PM finds gaps, add the missing US and re-run the check until coverage is complete. Only a backlog that passes coverage goes to Step 3.
 
 ## Step 3: Present and Confirm Backlog with the User
 Before registering any features, you MUST present the complete proposed backlog to the user for confirmation:
