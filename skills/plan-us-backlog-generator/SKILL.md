@@ -34,7 +34,7 @@ For each identified feature or bootstrapping task, formulate a structured featur
 ## Step 2.5: Coverage check (mandatory — before showing the user)
 Verify the drafted backlog **covers every item in the Step 1 inventory**. Build a coverage table: each SPEC item → the US that covers it. Any item with **no US is a gap** — add the missing User Story before proceeding.
 
-Then run an **independent PM coverage review**: spawn a subagent via [check-ba-evaluator](../check-ba-evaluator/SKILL.md) in **backlog-coverage mode** — a Senior PM who reads the SPECs and the drafted backlog and reports any SPEC item (screen / endpoint / entity / business rule) that no US covers. If the PM finds gaps, add the missing US and re-run the check until coverage is complete. Only a backlog that passes coverage goes to Step 3.
+Then run an **independent PM coverage review**: spawn a subagent via [check-ba-evaluator](../check-ba-evaluator/SKILL.md) in **backlog-coverage mode** — a Senior PM who reads the SPECs and the drafted backlog and reports any SPEC item (screen / endpoint / entity / business rule) that no US covers. The review returns the **full gap list in one report**: add **all** the missing User Stories in a single pass, then re-run the coverage review **at most once** to confirm. Do not add one story and re-spawn per gap — that cold-starts the reviewer repeatedly. Only a backlog that passes coverage goes to Step 3.
 
 ## Step 3: Present and Confirm Backlog with the User
 Before registering any features, you MUST present the complete proposed backlog to the user for confirmation:

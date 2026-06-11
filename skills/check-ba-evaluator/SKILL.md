@@ -5,6 +5,8 @@ description: Instructions for invoking a Senior PM Evaluator subagent to review 
 
 Use this skill when you need to verify the quality of Business Analysis artifacts like `SYSTEM_ARCHITECTURE.md` or `.harness/features.json` before presenting them to the user.
 
+> **Batched, single-pass review (performance).** This evaluator reviews the **whole artifact (or section) in one shot** and reports **every** finding together. Never review a fragment, fix one finding, then re-spawn for the next — each spawn is a cold subagent that re-reads the files, and per-finding round-trips are the dominant cost. The loop is: **one review → apply all fixes in a single revision pass → at most one confirmation re-review.** When several independent artifacts are ready at once (e.g. multiple `docs/spec/*` files), evaluate them in **one** subagent pass covering all of them rather than one spawn per file.
+
 **Instructions for the Orchestrating Agent:**
 To perform the evaluation, you MUST spawn a dedicated subagent using your `invoke_subagent` tool.
 
@@ -21,7 +23,7 @@ Check for the following:
 
 Write a strict, detailed markdown report to `.harness/reports/ba-evaluation.md`. Your chat response must ONLY be the path to this file. Do NOT output the report text in the chat. If the documents lack depth or fail any of the above checks, FAIL them in the report and list explicitly what the main agent must ask the user or revise."
 
-Wait for the subagent to return its report. If the subagent fails the document, you MUST revise the document (and interrogate the user further if needed) before moving to the next phase.
+Wait for the subagent to return its report. If the subagent fails the document, apply **all** of its findings in a **single revision pass** (bundle any clarifying questions to the user into one ask-user round), then re-spawn the evaluator **at most once** to confirm before moving to the next phase. Do not fix one finding and re-review per finding. If the single confirmation still fails on substantive points, surface the remainder to the user instead of looping further.
 
 ## Mode B — Backlog coverage review (SPEC → US)
 
@@ -34,4 +36,4 @@ Build a **coverage matrix**: every screen in the FE SPEC, every endpoint/functio
 List explicitly **every SPEC item that NO User Story covers** — these are the gaps. For each gap, propose the missing User Story (title, area, behavior, a verification command).
 Write the coverage matrix and the gap list to `.harness/reports/backlog-coverage.md`. Your chat response must ONLY be the path to this file. If any SPEC item is uncovered, FAIL the backlog and list the missing stories the main agent must add."
 
-Wait for the report. If it fails, **add the missing User Stories** and re-run this coverage review until every SPEC item is covered, before presenting the backlog to the user.
+Wait for the report. If it fails, add **all** of the missing User Stories in a **single pass**, then re-run this coverage review **at most once** to confirm full coverage before presenting the backlog to the user. Do not add one story and re-run the coverage review per gap — collect the full gap list from the one report and close it in a single revision.
