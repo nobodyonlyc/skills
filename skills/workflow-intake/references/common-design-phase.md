@@ -25,6 +25,7 @@ If the project has a UI, generate the **mock UI** from the FE SPEC via [workflow
 
 ## Gates
 - **ask-user** approval is required for the DB design, the **design system**, and the mock UI before leaving this phase; on feedback, redo that artifact.
+- **Hook-enforced:** for a UI project (`docs/spec/frontend.md` exists), `hooks/harness-phase-guard.sh` blocks `./harness start` and app-code edits until **both** `docs/spec/design-system.md` and `prototype/*.html` exist. This is the mechanical backstop for the common failure where the agent jumps from the backlog straight to US execution and skips the prototype. The backlog itself (`./harness add`) is *not* blocked — only US execution.
 - Record each artifact as a harness task where useful ([task-convention](../../../resources/task-convention.md)).
 - **Commit the design-phase artifacts before starting the first US** (a phase checkpoint: `git add docs/spec docs/SYSTEM_ARCHITECTURE.md prototype && git commit -m "design phase"`). Otherwise the first US's `harness verify` checkpoint sweeps these shared artifacts into a commit labelled for that single feature.
 

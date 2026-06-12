@@ -37,5 +37,5 @@ Multi-agent orchestration to take a project from an idea description to a struct
 ## Hard gates
 - `docs/BA.md` and the per-component `docs/spec/*` exist **before** the backlog is generated (Phase 2 → Phase 3).
 - The user must approve the User-Story backlog before it is written via `./harness add`.
-- For a project with a UI, the design system and the mock UI/prototype are approved and committed **before** any feature implementation (Phase 4).
+- For a project with a UI, the design system and the mock UI/prototype are approved and committed **before** any feature implementation (Phase 4). This is now **hook-enforced**: once `docs/spec/frontend.md` exists, `hooks/harness-phase-guard.sh` blocks `./harness start` and any app-code edit until `docs/spec/design-system.md` **and** `prototype/*.html` exist. The backlog (`./harness add`, Phase 3) is still allowed before the prototype — only US *execution* is gated. If you see `HARNESS PHASE GUARD: ... design phase is not finished`, you skipped Phase 4: build the prototype before starting any US.
 - After Phase 5, **STOP** — do not start any feature implementation. Hand control back so the user (or another agent) picks one feature (WIP = 1).

@@ -38,4 +38,4 @@ Run each US through [Route 2](route-2-us-execution.md) — split into child-task
 ## Gates
 - Stop and **ask-user** after the interview, the BA, the **SPEC set** (all per-component SPECs presented together as one packet, not one gate per file), and the backlog. On feedback, redo that step.
 - Record each step as a harness task where useful ([task-convention](../../../resources/task-convention.md)).
-- After the backlog is approved, follow the harness rule: **STOP** and let the user pick one US (WIP = 1) — execution is Route 2, not part of this route.
+- After the backlog is approved, follow the harness rule: **STOP** and let the user pick one US (WIP = 1) — execution is Route 2, not part of this route. **Exception — auto-advance ON** (default for `user_role == "Non-Technical"`; see [route-2](route-2-us-execution.md)): once the design phase is approved and committed, flow straight into the first US and keep chaining, instead of stopping for the user to pick. The mandatory design-phase approvals (design system, prototype) are still required first.
