@@ -5,6 +5,11 @@
 > run here**. YOU are the only enforcement. Self-check every gate below *before*
 > the relevant action — nothing will stop you if you skip it.
 
+## How every gate must be presented (ask-user = interactive choice, not a dead-end message)
+A "gate" / "stop" / "confirm with the user" below means: **pause and ask the user with an interactive choice prompt**, then wait for their answer and **continue in the same session** when they respond. It does **NOT** mean end the turn with a plain "let me know when you're ready" message and go idle.
+- Present each gate as an **interactive choice prompt with selectable options** — e.g. **[Proceed to next phase]** / **[I want changes]** (mark the recommended option). Whenever the answer is a discrete set (yes/no, approve/revise, pick a method), use clickable options, never a free-text "reply to continue".
+- The chat is **not** finished at a gate — you are paused awaiting the user's click/answer, and you resume the next step as soon as they respond.
+
 ## 0. Intake routing (never skip to code)
 ALL requests route through classification first. Classify intent into one case, then follow that flow — never jump straight to writing code or features:
 - **Case 1 — New project** → run `/harness-bootstrap`.

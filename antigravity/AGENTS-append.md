@@ -3,6 +3,7 @@
 
 Claude Code enforces the gates below via hooks. Agents **without** a hook mechanism (e.g. Antigravity) get **no automatic enforcement** — so you MUST self-check these before the relevant action. Full rules: `.agent/rules/harness.md`. Self-contained playbooks (run via `/`): `.agent/workflows/harness-bootstrap.md`, `harness-backlog.md`, `harness-prototype.md`, `harness-execute-us.md`.
 
+- **Gates are interactive prompts, not dead-ends.** Every "confirm / approve / stop for the user" below means: ask with an **interactive choice prompt** (selectable options like **[Proceed]** / **[I want changes]**, mark the recommended) and **wait for the answer in the same session** — never end the turn with a plain "let me know" message and go idle. The chat is paused awaiting a click, not finished.
 - **Route first.** Classify every request (new project / add-feature / execute-US / bugfix) before writing any code. New project → `/harness-bootstrap`.
 - **Bootstrap gate.** Do not run `./harness add`/`./harness start` or create/edit app code until `docs/SYSTEM_ARCHITECTURE.md`, `docs/BA.md`, and at least one `docs/spec/*.md` exist.
 - **Design-phase gate.** If `docs/spec/frontend.md` exists (UI project), do not run `./harness start` or write app code until **both** `docs/spec/design-system.md` and `prototype/*.html` exist, are browser-previewed, and user-approved. `./harness add` (backlog) is allowed before the prototype; only US *execution* is gated. The prototype must produce **real files** under `prototype/` — a verbal "done" with no files is a failure.
