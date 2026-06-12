@@ -34,10 +34,19 @@ Do not assume; do not make the user type these out. The runtime always lets them
 Based on the explicitly confirmed persona and project size, adapt your strategy:
 
 ### Case A: The User is Non-Technical (Non-Tech)
-Since the user is non-technical, do not overwhelm them with deep technical or BA questions. Instead:
-1. **Auto-Propose**: Spawn a subagent to automatically propose a detailed SPEC and Business Analysis (BA) tailored to the project size and their initial idea.
-2. **PM Review**: Once the subagent generates the proposal, spawn the Senior PM Evaluator subagent (via `check-ba-evaluator`) to critically review and refine the proposed SPEC and BA.
-3. **Confirm**: Present the finalized, PM-approved SPEC/BA to the non-tech user for a simple confirmation.
+A non-tech user still holds all the domain knowledge — they just think in **business/product** terms, not tech. So **interview them deeply, but ask focused *product* questions in plain language (never tech jargon), and attach a proposed answer to every question as click-select options** so they confirm or adjust with a click instead of typing. Do **not** silently auto-propose the whole BA and ask for one blanket "looks good?" — that is the main cause of a shallow, wrong BA. Surface the real decisions as questions.
+
+**Run a structured BA discovery** — group related questions into a few batched **ask-user** rounds (click-select, each with a recommended default you propose). Cover **every** dimension below, and ask a focused follow-up whenever an answer opens a new question (don't move on while something is vague):
+1. **Users & roles** — who uses it; what each role may do (propose a roles list to confirm/extend).
+2. **Core jobs / journeys** — the main thing each user wants to accomplish, step by step (propose the top 3–5 flows).
+3. **Scope line (v1 vs later)** — which features are must-have now vs nice-to-have (propose a must/should/later split to confirm).
+4. **Key business rules** — limits, approvals, pricing, statuses, ownership, who-can-see-what (propose, confirm).
+5. **Edge cases in plain terms** — "what should happen if two people grab the last item / a payment fails / someone tries something they're not allowed to?" (propose handling, confirm).
+6. **Key things tracked (data)** — the core entities in plain words and their important fields (propose, confirm).
+7. **Outside connections** — payments, email/SMS, login-with-Google, maps, file/photo storage, etc. (propose, confirm).
+8. **Success & scale** — who and roughly how many users, anything about speed, privacy, or compliance.
+
+After the rounds, spawn the **Senior PM Evaluator** (via `check-ba-evaluator`) to critique the gathered BA/SPEC for gaps and contradictions, then **bring any remaining gaps back to the user as more focused questions** rather than guessing. Only once the picture is complete, present the finalized, PM-approved SPEC/BA for confirmation. Aim for **breadth over brevity** here — more focused questions now save a wrong build later. The PM review refines; it does not replace asking the user.
 
 ### Case B: The User is Technical (Dev / Tech)
 If the user is technical, they often know the tech stack but may overlook business edge cases. You must temporarily shift your persona to a **Strict Business Analyst (BA)** and grill them deeply on the SPEC and BA of the project before accepting technical choices.

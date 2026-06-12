@@ -7,13 +7,22 @@ Take a new project from an idea to a structured, restartable, backlog-tracked co
 ## Phase 1 — Architecture & persona
 Interview the user:
 1. **Persona & size:** classify the user as **Developer** (names tech/stack) or **Non-Technical** (talks goals/features). Pick **size** (Small / Medium / Enterprise). Ask the user to confirm their role.
-2. **Non-tech:** don't overwhelm with stack questions — propose the optimal solution and confirm. **Dev:** grill them on business edge cases before accepting tech choices.
+2. **Non-tech:** don't ask tech/stack jargon — but DO interview deeply on the *product* (see the structured BA discovery in Phase 2): propose the stack yourself, and put every product decision to them as a question with a proposed answer. **Dev:** grill them on business edge cases before accepting tech choices.
 3. Write `docs/SYSTEM_ARCHITECTURE.md` (goals, components, tech stack + rationale, architecture pattern).
 4. Write `.harness/context.json` (machine-readable): `project_name`, `user_role` (Developer|Non-Technical), `auto_advance` (optional bool — defaults ON for Non-Technical), `size`, `platform[]`, `techstack{}`, `architecture_pattern`.
 5. **GATE:** spawn a Senior PM subagent to review the architecture; revise on fail. Then confirm with the user.
 
 ## Phase 2 — BA + per-component SPECs
-1. Write `docs/BA.md`: business goals, personas, core user journeys, in-scope vs out-of-scope. After drafting, analyse for gaps and ask targeted follow-ups. Confirm `docs/BA.md` with the user.
+1. **Structured BA discovery — ask many focused questions, not few.** Before writing `docs/BA.md`, interview the user in a few batched **ask-user** rounds (click-select, each question carrying a proposed default in plain language — never tech jargon for a non-tech user). Cover **every** dimension, asking a focused follow-up on anything vague:
+   1. **Users & roles** — who uses it; what each role may do.
+   2. **Core jobs / journeys** — the main step-by-step flow each user wants.
+   3. **Scope line** — must-have-for-v1 vs later.
+   4. **Business rules** — limits, approvals, pricing, statuses, ownership, who-sees-what.
+   5. **Edge cases (plain terms)** — concurrent actions, payment fails, unauthorized attempts, etc.
+   6. **Key data** — the core entities + important fields.
+   7. **Outside connections** — payments, email/SMS, social login, maps, file storage.
+   8. **Success & scale** — how many users, speed, privacy/compliance.
+   Then write `docs/BA.md` (goals, personas, journeys, in/out of scope), spawn a PM-evaluator subagent for gaps, bring remaining gaps back as **more** focused questions, and confirm `docs/BA.md` with the user. Breadth over brevity — more questions now save a wrong build later.
 2. For **each component the architecture actually has**, write a detailed SPEC under `docs/spec/` — author them **concurrently** with one subagent per component:
    - FE → `docs/spec/frontend.md` (every screen, flow, component)
    - BE → `docs/spec/backend.md` (every endpoint/service, API contract, layers)
