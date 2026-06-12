@@ -32,6 +32,7 @@ A drafted backlog that was never written is a silent failure. After the user app
 
 ## 4. WIP = 1 + auto-advance
 - **WIP = 1:** one feature/US at a time; one active feature at a time.
+- **Scope of auto-advance — read carefully.** Auto-advance applies **only to US execution** (the stops *between* User Stories, after the backlog exists). It does **NOT** skip the bootstrap design gates: the architecture, BA, SPEC-set, and backlog approvals **always stop for the user's confirmation, even for a Non-Technical user**. Those early gates catch a wrong direction cheaply; the PM-evaluator subagent review plus the user's confirmation are the two divergence guards. Stopping after the architecture for confirmation is correct, not a bug.
 - **Auto-advance:** read `.harness/context.json`. Effective `auto_advance` = the field if present, else **defaults ON when `user_role == "Non-Technical"`**, OFF for `Developer`.
   - **ON:** after a US reaches `passing`, do **not** stop to ask the user to start the next one — immediately pick the next-highest-priority unfinished US and continue, chaining until the backlog is exhausted. A non-tech user finds stop-and-wait-per-US confusing (it looks stuck), so keep moving.
   - **OFF:** stop after each US and hand back for selection.
