@@ -29,14 +29,16 @@ Read the US from `.harness/features.json` and its SPEC. Identify the components 
 Split the US into child-tasks (`F<id>-T<n>`) and `./harness add` them up front per the [task-convention](../../../resources/task-convention.md), so the breakdown is durable. Small US may stay a single item.
 
 ### 3. Dispatch each task to the matching workflow
-Per task, pick the workflow by task type:
-- New behaviour / feature work → [workflow-feature](../../workflow-feature/SKILL.md).
-- A defect → [workflow-bugfix](../../workflow-bugfix/SKILL.md).
-- A QA pass → [workflow-qa](../../workflow-qa/SKILL.md).
+Per task, pick the workflow by the US `area` / task type:
+- New behaviour / feature work (`core`/`api`/`ui`/`db`/…) → [workflow-feature](../../workflow-feature/SKILL.md). Its Code·Test·Review loop means the feature's **Unit Tests** are written and pass before it is `passing`.
+- A defect (`bugfix`) → [workflow-bugfix](../../workflow-bugfix/SKILL.md): reproduce → failing regression test → minimal fix → test passes → re-run the broader suite.
+- A test / QA story (`test`/`qa` — IT/E2E/regression/perf/security) → [workflow-qa](../../workflow-qa/SKILL.md).
 - A pre-merge deep review → [workflow-review-deep](../../workflow-review-deep/SKILL.md).
 
-### 4. Full gates per task
+### 4. Full gates per task — testing is a loop, not a checkpoint
 Each task runs review / test / `./harness verify` / handoff before it is `passing`. Work tasks one at a time (WIP = 1).
+
+A **`test`/`qa` US is only `passing` when its suite is green**, so it drives the **outer loop**: a failure does not just get reported — it **spawns a `bugfix` story** (`./harness add … --area bugfix`), which is executed via [workflow-bugfix](../../workflow-bugfix/SKILL.md), after which the **suite is re-run**. Repeat until green (or the user explicitly defers a finding). Bugs surfaced by `./harness verify` or by the user enter the backlog the same way. Never close a test US by silencing/skipping the failing assertion.
 
 ### 5. Close the US
 The parent US moves to `passing` only after all its child-tasks are `passing`. Then:

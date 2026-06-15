@@ -31,4 +31,5 @@ Multi-agent feature development workflow that coordinates analysts, developers, 
 - **Strict File-Based Communication**: Do NOT pass error logs or code snippets via chat messages. When Reviewers/Testers output files to `.harness/reports/`, send ONLY the file path to the Developer subagent.
 - Work on exactly **one** feature (WIP = 1). Confirm the target with the user before any work.
 - If the feature has UI, get explicit approval of a visual mockup **before** writing implementation code (see Phase 1).
+- **Unit tests are mandatory:** the feature ships with UT covering its logic and edge cases, written and passing inside the Phase 2 Code·Test·Review loop. A failing UT loops back through fix → re-run, never gets silenced. A feature with no UT (or existence-check-only "tests") is not done.
 - A feature only moves to `passing` after `./harness verify <id>` succeeds with evidence.
