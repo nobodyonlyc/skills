@@ -72,6 +72,20 @@ Tailor the offered options to the chosen app type and project size; offer 3–4 
 
 *Rule: Do NOT generate the final `SYSTEM_ARCHITECTURE.md` until you have iteratively interviewed the user using the above methods to get a complete, deep understanding.*
 
+## Step 2.5: Pin versions from the web — latest stable + mutually compatible (MANDATORY)
+**Do NOT emit version numbers from memory.** Model recall lags real releases and drifts to old defaults (e.g. proposing Node 20 / PostgreSQL 16 when newer stable exists). Once the stack is chosen, before documenting it:
+
+1. **Search the web first** (Claude Code: `WebSearch` / `WebFetch`; Codex / Antigravity: that tool's web search) for the **current stable / active-LTS** of *every* chosen piece — language & runtime, framework, database, key libraries, and container base images. Prefer the latest **stable** (active LTS for runtimes), not bleeding-edge pre-releases.
+2. **Evaluate cross-compatibility — the latest of each is useless if they don't work together.** Verify the seams before pinning:
+   - runtime ↔ framework (does that framework version support the runtime / language edition?),
+   - framework ↔ major libraries (peer-dependency ranges),
+   - ORM / driver ↔ database version,
+   - build toolchain ↔ language edition,
+   - container base image ↔ runtime version.
+   If the newest of two pieces conflict, **step down to the newest mutually-compatible pair** and record why.
+3. **Record** the pinned versions, the **date verified**, the source, and a one-line compatibility note — these exact versions flow into the skeleton, Dockerfiles, and manifests.
+4. **No web tool available** (headless / cron run): use the project's existing manifests / lockfiles if any; otherwise **ask the user** or mark the versions **UNVERIFIED** — never silently ship remembered defaults.
+
 ## Step 3: Document the System Context & Architecture
 First, generate the structured context JSON. Then, write the detailed architecture markdown.
 
@@ -83,7 +97,7 @@ Output a comprehensive `docs/SYSTEM_ARCHITECTURE.md` file containing:
 1. **System Overview**: High-level summary of the system and its goals.
 2. **Persona & Project Scale**: Summary of project size and user target.
 3. **Component Breakdown**: Visual diagram (Mermaid) and description of each component.
-4. **Tech Stack & Rationale**: Detail the selected languages, databases, and hosting choices with justification (especially for non-tech users).
+4. **Tech Stack & Rationale**: The selected languages, databases, and hosting with justification (especially for non-tech users), and the **web-verified pinned versions** from Step 2.5 — a small table of `component → version`, the **date verified**, the source, and a one-line **compatibility note** (which versions were stepped down for compatibility and why). No un-pinned or memory-default versions.
 5. **Architecture Design**: Detail how the code is structured (DDD layers, MVC components, Pipeline blocks) based on the choices in Step 2.
 6. **Data Models**: Essential database entities, fields, and relationships.
 7. **Infrastructure & Deployment**: Deployment steps, container configurations (Dockerfile/docker-compose), and environment variables list.
