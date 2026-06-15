@@ -85,3 +85,18 @@ For every skeleton component generated:
    * **Backend/Rust**: e.g., `cargo test`
    * **Python**: e.g., `pytest`
 3. Document how to run and verify the generated skeleton in a component-specific `README.md`.
+
+## Step 5: Generate `run.sh` (run the app to check it live)
+Create an executable **`run.sh`** at the repo root that launches the actual app for the chosen stack, so after each US the user can run the project and see the result immediately. It wraps the project's real dev/run command — do not invent one:
+- Frontend / Node: `pnpm dev` / `npm run dev`
+- Backend: `cargo run`, `uvicorn app:app --reload`, `go run ./cmd/...`, `pnpm start:dev`
+- Multi-service: `docker compose up` (or start each service)
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")/source"   # or wherever the app root is
+exec <the stack's real run command>   # e.g. pnpm dev
+```
+
+Make it `chmod +x`. Keep it thin — one obvious way to start the app. Document the run command in the component README and in `.harness/context.json` if a run field exists. (`init.sh` = sync + verify; `run.sh` = start the app for manual checking — they are different.)

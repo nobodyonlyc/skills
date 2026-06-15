@@ -41,9 +41,13 @@ Each task runs review / test / `./harness verify` / handoff before it is `passin
 A **`test`/`qa` US is only `passing` when its suite is green**, so it drives the **outer loop**: a failure does not just get reported — it **spawns a `bugfix` story** (`./harness add … --area bugfix`), which is executed via [workflow-bugfix](../../workflow-bugfix/SKILL.md), after which the **suite is re-run**. Repeat until green (or the user explicitly defers a finding). Bugs surfaced by `./harness verify` or by the user enter the backlog the same way. Never close a test US by silencing/skipping the failing assertion.
 
 ### 5. Close the US
-The parent US moves to `passing` only after all its child-tasks are `passing`. Then:
+The parent US moves to `passing` only after all its child-tasks are `passing`. Then **print `./harness report`** — which now shows the US's **test/verify results** (the UT pass/fail summary), so the user sees the outcome, not just a flag.
+
+**Offer to run the app** so the user can check the result live: if `run.sh` exists, point them at `./run.sh` (or the project's run command). In **gated** mode, ask-user whether to run it now (click-select **[Run it]** / **[Skip]**); if yes and it's a long-running dev server, start it and report how to view (URL/port). In **auto** mode, don't block — note that `./run.sh` is available and keep going. Running the app is a manual check, never a substitute for the UT/verify gate.
+
+Then:
 - **Auto-advance OFF:** **STOP** and hand back for the next US selection.
-- **Auto-advance ON:** print `./harness report`, then immediately select the next-highest-priority unfinished US and return to Step 1 — no wait — unless a hard stop applies (backlog exhausted, next US `blocked`, verify failing, or sign-off needed).
+- **Auto-advance ON:** immediately select the next-highest-priority unfinished US and return to Step 1 — no wait — unless a hard stop applies (backlog exhausted, next US `blocked`, verify failing, or sign-off needed).
 
 ## Gates
 - **ask-user** before/after each task; on feedback, redo that task. **Under auto-advance**, suppress the *routine* "shall I proceed / is this OK" confirmations between tasks and stories — but still ask when a genuine requirement ambiguity or an irreversible/outward-facing action arises.
