@@ -15,6 +15,9 @@ Create (or merge into) `init.sh` so the standard startup path runs the project's
 
 If `init.sh` already exists, do not overwrite it — append the harness verification step and tell the user.
 
+## 2b. Write run.sh using the project's OWN run command
+Create an executable **`run.sh`** at the repo root that starts the existing app using the project's **real run command confirmed in Phase 1** (e.g. `npm run dev`, `cargo run`, `uvicorn app:app --reload`, `docker compose up`) — so after each US the user can run the project and check it live. `init.sh` = sync + verify; `run.sh` = start the app. If `run.sh` already exists, do not overwrite it. If the installer left an auto-detect stub, replace its body with the confirmed command.
+
 ## 3. Capture the baseline test state (honesty gate)
 Run the project's test command once and record the result in `docs/design-docs/onboard/baseline.md`:
 - **Green** → record it as the clean baseline; future features must keep it green.
@@ -23,7 +26,7 @@ Run the project's test command once and record the result in `docs/design-docs/o
 ## 4. Phase checkpoint
 Commit the docs and `init.sh`:
 ```bash
-git add docs/SYSTEM_MAP.md docs/DOMAIN_GLOSSARY.md docs/design-docs/onboard/ init.sh
+git add docs/SYSTEM_MAP.md docs/DOMAIN_GLOSSARY.md docs/design-docs/onboard/ init.sh run.sh
 git commit -m "phase-checkpoint: onboard phase 2 (docs + baseline)"
 ```
 

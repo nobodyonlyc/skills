@@ -16,7 +16,7 @@ Multi-agent workflow that brings an **existing codebase under harness control** 
 1. **Survey & discovery** → [references/phase-1-survey.md](references/phase-1-survey.md)
    Fan-out readers map the repo: languages, frameworks, entry points, and the project's **own** build/test/run commands. Output a survey report.
 2. **Documentation & baseline** → [references/phase-2-docs-and-baseline.md](references/phase-2-docs-and-baseline.md)
-   Generate `docs/SYSTEM_MAP.md` + glossary, write `init.sh` using the project's real commands, and capture the **baseline test state** (green or known-failing) before any harness work.
+   Generate `docs/SYSTEM_MAP.md` + glossary, write `init.sh` (sync + verify) **and `run.sh` (start the app)** using the project's real commands, and capture the **baseline test state** (green or known-failing) before any harness work.
 3. **Safe init & seed** → [references/phase-3-init-and-seed.md](references/phase-3-init-and-seed.md)
    Run `harness init` without clobbering existing files, merge the harness operating rules into the project's existing CLAUDE.md/AGENTS.md, seed the backlog, then hand off to [Route 2](../workflow-intake/references/route-2-us-execution.md).
 
