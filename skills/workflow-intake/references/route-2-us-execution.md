@@ -4,9 +4,10 @@ The shared execution core. Reached to implement a single User Story (directly in
 
 ## Auto-advance — read first
 Before executing, read `.harness/context.json` and compute the **auto-advance** mode (see [context-schema.md](../../plan-architecture-agent/references/context-schema.md)):
-- Use `auto_advance` if present; otherwise it **defaults ON for `user_role == "Non-Technical"`** and OFF for `Developer`.
-- **OFF (default for dev):** after each US reaches `passing`, **STOP** and hand back so the user picks the next US — the classic behaviour in Step 5.
-- **ON (default for non-tech):** do **not** stop between stories. After a US is `passing`, immediately select the next-highest-priority unfinished US (`./harness resume` / `./harness status`) and start it, chaining until the backlog is exhausted. Non-tech users find a stop-and-wait-per-US flow confusing — it looks stuck — so keep moving.
+- Use `auto_advance` if present; otherwise it **defaults to ASK for `Developer`** and **ON for `user_role == "Non-Technical"`**.
+- **ASK (default for dev):** after each US reaches `passing`, do **not** go idle waiting for a prompt — present an **interactive choice** (ask-user) for what to do next (see Step 5). The user picks one US, a continuous run of several, or stop. This is the default so the session never stalls silently between stories.
+- **ON (default for non-tech):** do **not** stop or ask between stories. After a US is `passing`, immediately select the next-highest-priority unfinished US (`./harness resume` / `./harness status`) and start it, chaining until the backlog is exhausted. Non-tech users find a stop-and-wait-per-US flow confusing — it looks stuck — so keep moving.
+- **OFF (opt-in):** hard stop and hand back after each US (only if the user explicitly wants a manual handoff every time).
 
 Auto-advance changes **only the human handoff between stories**. It does **not** relax **WIP = 1** (still one US at a time), the full per-task gates (review / test / `./harness verify`), or approval of any irreversible action. **Hard stops that always return control even when ON:** backlog exhausted, a US/task `blocked`, `./harness verify` fails and can't be auto-resolved, or a deploy/release/destructive action needs sign-off. Print `./harness report` at each US boundary so the user can watch progress.
 
@@ -45,9 +46,16 @@ The parent US moves to `passing` only after all its child-tasks are `passing`. T
 
 **Offer to run the app** so the user can check the result live: if `run.sh` exists, point them at `./run.sh` (or the project's run command). In **gated** mode, ask-user whether to run it now (click-select **[Run it]** / **[Skip]**); if yes and it's a long-running dev server, start it and report how to view (URL/port). In **auto** mode, don't block — note that `./run.sh` is available and keep going. Running the app is a manual check, never a substitute for the UT/verify gate.
 
-Then:
-- **Auto-advance OFF:** **STOP** and hand back for the next US selection.
-- **Auto-advance ON:** immediately select the next-highest-priority unfinished US and return to Step 1 — no wait — unless a hard stop applies (backlog exhausted, next US `blocked`, verify failing, or sign-off needed).
+Then continue per the auto-advance mode:
+- **ASK (default for dev):** do **not** go idle. Present an **interactive choice** (ask-user; Claude Code `AskUserQuestion`) — show the just-finished US and the next-up one — with options:
+  - **[Run next US]** — start the next-highest-priority unfinished US (return to Step 1), then ask again at its close.
+  - **[Run several / all remaining]** — switch to continuous chaining (behave as ON) for the rest of this session: keep starting the next US without asking, until the backlog is exhausted or a hard stop hits. (Optionally persist by setting `auto_advance: true` in `.harness/context.json` if the user wants it to stick.)
+  - **[Stop here]** — hand back.
+  Never replace this with a plain "let me know when you want the next one" idle message — that is the stall this mode exists to prevent.
+- **ON (non-tech / chosen "run several"):** immediately select the next-highest-priority unfinished US and return to Step 1 — no wait — unless a hard stop applies (backlog exhausted, next US `blocked`, verify failing, or sign-off needed).
+- **OFF (opt-in):** **STOP** and hand back for the next US selection.
+
+**Hard stops always interrupt continuous runs** (ON or "run several") and return control regardless: backlog exhausted, a US `blocked`, `./harness verify` failing and not auto-resolvable, or a deploy/release/destructive action needing sign-off.
 
 ## Gates
 - **ask-user** before/after each task; on feedback, redo that task. **Under auto-advance**, suppress the *routine* "shall I proceed / is this OK" confirmations between tasks and stories — but still ask when a genuine requirement ambiguity or an irreversible/outward-facing action arises.

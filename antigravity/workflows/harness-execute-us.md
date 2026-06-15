@@ -5,7 +5,7 @@ Implement User Stories one at a time (WIP = 1), each with **full review + test +
 > Hard gate first: if `docs/spec/frontend.md` exists, do NOT start a US until `docs/spec/design-system.md` and `prototype/*.html` exist and are approved (run `/harness-prototype`). Do not write app code or run `./harness start` before bootstrap artifacts exist.
 
 ## Step 0 — Compute auto-advance
-Read `.harness/context.json`. Effective `auto_advance` = the field if present, else **ON for `user_role == "Non-Technical"`**, OFF for `Developer`. Remember it for Step 6.
+Read `.harness/context.json`. Effective `auto_advance` = `true`→ON, `false`→OFF, else (absent) **ON for `user_role == "Non-Technical"`, ASK for `Developer`**. Remember it for Step 6.
 
 ## Step 1 — Select & analyse the US
 Pick the highest-priority unfinished US (`./harness resume` / `./harness status`). Read it from `.harness/features.json` and its SPEC. Identify the components it touches and its acceptance criteria. `./harness start <id>`.
@@ -24,8 +24,9 @@ Work tasks **one at a time**. For **each** task run the full gate set before it 
 Each of review and test is **mandatory** — a task with code but no review and no passing tests is **not** done.
 
 ## Step 6 — Close the US & advance
-The parent US moves to `passing` only after **all** child-tasks are `passing` (each verified). Then print `./harness report`, and:
+The parent US moves to `passing` only after **all** child-tasks are `passing` (each verified). Then print `./harness report` (shows the US's test/verify results), offer to run the app (`./run.sh`), and:
 - **Auto-advance ON:** immediately return to Step 1 for the next-highest-priority unfinished US — **no waiting** — unless a hard stop applies.
+- **ASK (dev default):** do **not** go idle — show an interactive choice prompt: **[Run next US]** / **[Run several / all remaining]** (then chain like ON) / **[Stop here]**.
 - **Auto-advance OFF:** STOP and hand back for the next US selection.
 
 **Hard stops (always return control, even when auto-advance is ON):** backlog exhausted, a US/task `blocked`, `./harness verify` failing and not auto-resolvable, or a deploy/release/destructive action needing sign-off.
