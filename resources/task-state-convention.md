@@ -16,6 +16,8 @@ One committed markdown file per active feature or child-task:
 
 ## Template
 
+Checkbox markers: `[ ]` not started · `[/]` in progress · `[x]` done. Tick `[x]` **only** when that exact step is genuinely finished — never tick ahead.
+
 ```markdown
 # Task State — <feature_id>: <title>
 
@@ -24,10 +26,27 @@ One committed markdown file per active feature or child-task:
 - Workflow: workflow-feature | workflow-bugfix | ...
 - Started: <ISO timestamp>
 
-## Phase checklist
-- [x] Phase 1 — analysis & plan approved (plan: docs/design-docs/<id>/plan.md)
-- [ ] Phase 2 — build/test/review loop (iteration: 2, last report: .harness/reports/review-2.md)
-- [ ] Phase 3 — QA + verify + handoff
+## Acceptance criteria (from the US — each ends [x], mapped to its proof)
+- [ ] <criterion 1> → code: <path> · test: <test name/path>
+- [ ] <criterion 2> → code: <path> · test: <test name/path>
+
+## Phase checklist (Definition of Done — one box per mandatory step, not per phase)
+### Phase 1 — Analysis & plan
+- [ ] Acceptance criteria listed (above)
+- [ ] Plan approved (docs/design-docs/<id>/plan.md)
+- [ ] (UI only) mockup approved
+
+### Phase 2 — Build · Test · Review loop (iteration: N)
+- [ ] Implementation complete
+- [ ] Unit tests written AND passing (not existence checks)
+- [ ] Code review clean (last report: .harness/reports/review-N.md)
+- [ ] Security review done (if it touches auth / external input / secrets / queries / shell / crypto)
+
+### Phase 3 — Verify & handoff
+- [ ] Integration / regression tests pass (or the covering test US is green)
+- [ ] `./harness verify <id>` succeeded
+- [ ] Evidence written to docs/design-docs/<id>/evidence.md (non-empty — hook-enforced before `passing`)
+- [ ] Progress / handoff updated
 
 ## Evidence
 - docs/design-docs/<id>/evidence.md  (committed QA/review/verify summary — survives `harness clean`)
@@ -40,7 +59,10 @@ One committed markdown file per active feature or child-task:
 ```
 
 Rules:
-- **Phase checklist** mirrors the workflow's phases exactly; the line for the active phase carries enough detail (iteration counter, artifact pointers) to resume mid-phase.
+- **Granular checklist:** one checkbox **per mandatory step** of the Definition of Done (above), not one per phase. A reader must be able to see, step by step, exactly what was done — the coarse 3-phase form hid skipped work.
+- **Acceptance criteria:** one box per criterion of the US, each mapped to the code + the test that proves it. **All criteria must be `[x]` before the feature can be `passing`.**
+- **Keep it in sync — including `auto` mode:** update **and commit** the file at **every phase boundary AND before setting `passing`**. `auto` mode only suppresses ask-user gates; it does **NOT** suspend state-keeping. A task file frozen at an early step while the feature is already `passing` is a process failure — the #1 reason you can't tell from the file whether the work was done.
+- **Evidence is gated:** `docs/design-docs/<id>/evidence.md` must be non-empty before `./harness verify <id>` is allowed to mark the feature `passing` — enforced by `hooks/harness-phase-guard.sh` (Gate 3).
 - **Decisions** records every ask-user answer or auto-mode decision — a recovering session must not re-ask settled questions.
 - **Next step** is always present and always concrete ("re-run `cargo test`, fix the 2 failures in commands.rs", not "continue").
 - Artifact pointers follow the file-based communication rule: paths only, no content.
