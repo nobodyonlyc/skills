@@ -39,3 +39,9 @@ Generate tests following these principles:
 4. **No mocking unless necessary** — Prefer real implementations. Only mock external I/O (network, filesystem, time).
 
 Write the tests to the appropriate file. Ask before creating a new test file if unsure of the convention.
+
+## Run them — writing is not enough
+A test that is never executed proves nothing. After writing:
+1. **Run the tests** with the project's real runner and **report the actual result** (N passed / M failed), not "tests written".
+2. Use **runner-correct selection syntax**, and confirm the command really runs *these* tests (e.g. jest: `jest <pathOrRegex>` or `-t <name>` — **not** `--grep`, which jest treats as a path regex; vitest/mocha: `-t` / `--grep`; pytest: `pytest path::node`; cargo: `cargo test <mod>::`). A command that matches **zero** tests but still exits 0 is a false green — verify it actually selected the intended tests.
+3. New/regression tests in a TDD or bugfix flow legitimately **fail first**; then they must **pass after** the fix. A suite left red is not done.
