@@ -23,6 +23,6 @@ Run only after the [Phase 2](phase-2-build-test-review-loop.md) loop completes c
 6. Summarize: files changed, tests added, and any deferred items.
 
 ## Hard gate — STOP
-Before returning control, **run `./harness report` and show it in the chat** so the user gets a progress report (counts, percent done, last completed, next up, blocked) after this US or task (per [AGENTS.md](../../../../AGENTS.md) End-Of-Session rule).
+Before returning control, **run `./harness report` and show it in the chat** so the user gets a progress report (counts, percent done, last completed, next up, blocked) after this US or task (per `AGENTS.md` End-Of-Session rule).
 
 **Do not start any other feature or new task in this session.** Return control to the user so other developers or agents can participate. For a deeper review before merge, hand off to [workflow-review-deep](../../workflow-review-deep/SKILL.md).

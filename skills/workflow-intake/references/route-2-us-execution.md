@@ -18,7 +18,7 @@ Honor the `Collab:` mode chosen in [workflow-intake Phase 0.6](../SKILL.md) (`so
   1. **Claim on a branch:** `./harness start <id> --assignee <name> --branch` → creates/checks out `feat/<id>` and records the owner. **WIP = 1 is per assignee**, so teammates each hold one active feature; do **not** auto-advance into another assignee's stories.
   2. **Work + verify on that branch:** `./harness verify <id>` checkpoint-commits onto `feat/<id>` and skips the commit if the index holds unrelated staged changes, so it never sweeps a teammate's work in.
   3. **Integrate via review, never direct-to-main:** when the US is `passing`, push `feat/<id>` and open a PR with [ship-pr-create](../../ship-pr-create/SKILL.md) → review ([workflow-review-deep](../../workflow-review-deep/SKILL.md)) → merge. Do **not** merge directly to `master`/`main`.
-  4. **Resolve `features.json` conflicts** by the union rule in [state-merge-convention](../../../resources/state-merge-convention.md) (keep both sides' features; for same-id status edits keep the more-advanced status). Conventions: [branch-convention](../../../resources/branch-convention.md); full walkthrough: [docs/team-workflow.md](../../../../docs/team-workflow.md).
+  4. **Resolve `features.json` conflicts** by the union rule in [state-merge-convention](../../../resources/state-merge-convention.md) (keep both sides' features; for same-id status edits keep the more-advanced status). Conventions: [branch-convention](../../../resources/branch-convention.md); full walkthrough: `docs/team-workflow.md`.
 
 ## Steps
 

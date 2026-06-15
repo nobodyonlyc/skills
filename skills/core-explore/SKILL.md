@@ -13,7 +13,7 @@ Use this when you must understand a **large or unfamiliar codebase** to plan or 
 **Never read the whole codebase into one agent's context.** Read a *map* and *summaries*, not raw source, at the orchestrator level. Raw source is read only by short-lived sub-readers that return a compact summary and are then discarded.
 
 ## Phase 1 — Map first (cheap, before any source)
-1. Read the compressed indexes if they exist: `docs/SYSTEM_MAP.md`, `docs/DOMAIN_GLOSSARY.md`, and the **local `README.md`/`RULES.md`** of the directories in scope (progressive disclosure, per [AGENTS.md](../../../AGENTS.md)).
+1. Read the compressed indexes if they exist: `docs/SYSTEM_MAP.md`, `docs/DOMAIN_GLOSSARY.md`, and the **local `README.md`/`RULES.md`** of the directories in scope (progressive disclosure, per `AGENTS.md`).
 2. If no map exists, build a lightweight one **without reading file bodies** — structure only:
    ```bash
    git ls-files | sed 's#/[^/]*$##' | sort -u | head -60      # directory map

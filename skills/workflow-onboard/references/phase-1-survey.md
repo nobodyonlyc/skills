@@ -10,7 +10,7 @@ Confirm with the user that this is a **legacy onboard**: an existing, active cod
 ## 2. Fan-out survey (spawn-subagents)
 Run independent readers in parallel ([agent-tool-mapping](../../../resources/agent-tool-mapping.md)), each blind to the others, so one search angle does not miss what another would find:
 
-- **Structure reader** — top-level layout, module/package boundaries, where source vs tests vs config live. Respect [progressive disclosure](../../../../AGENTS.md): read existing `README.md`/`RULES.md` per directory rather than scanning blindly.
+- **Structure reader** — top-level layout, module/package boundaries, where source vs tests vs config live. Respect progressive disclosure (`AGENTS.md`): read existing `README.md`/`RULES.md` per directory rather than scanning blindly.
 - **Toolchain reader** — language(s), framework(s), and the project's **own commands** from its manifests: `package.json` scripts, `Cargo.toml`, `Makefile`, `pyproject.toml`, `go.mod`, `pom.xml`, plus CI config (`.github/workflows`, `.gitlab-ci.yml`) — CI is the most reliable source of the real build/test/lint commands.
 - **Entry-point reader** — how the app is built, run, and tested today; main entry files; how it is deployed if visible.
 - **Data reader** (only if a database is present) — schema/migrations; consult [dev-db-designer](../../dev-db-designer/SKILL.md) to describe it.

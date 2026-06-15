@@ -5,7 +5,7 @@
 Goal: leave durable navigation docs and a wired-up, honest startup path — still without changing the project's own source.
 
 ## 1. Generate the system map
-From the Phase 1 survey, write `docs/SYSTEM_MAP.md` (committed): the module map, entry points, and how the pieces fit. This is the "progressive disclosure" entry point future sessions read before touching a domain (per [AGENTS.md](../../../../AGENTS.md)). Seed `docs/DOMAIN_GLOSSARY.md` with the project's ubiquitous language if it has none.
+From the Phase 1 survey, write `docs/SYSTEM_MAP.md` (committed): the module map, entry points, and how the pieces fit. This is the "progressive disclosure" entry point future sessions read before touching a domain (per `AGENTS.md`). Seed `docs/DOMAIN_GLOSSARY.md` with the project's ubiquitous language if it has none.
 
 ## 2. Write init.sh using the project's OWN commands
 Create (or merge into) `init.sh` so the standard startup path runs the project's real dependency sync + build + test — **the commands confirmed by the user in Phase 1**, not harness defaults. Examples:
