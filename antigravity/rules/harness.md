@@ -10,6 +10,9 @@ A "gate" / "stop" / "confirm with the user" below means: **pause and ask the use
 - Present each gate as an **interactive choice prompt with selectable options** — e.g. **[Proceed to next phase]** / **[I want changes]** (mark the recommended option). Whenever the answer is a discrete set (yes/no, approve/revise, pick a method), use clickable options, never a free-text "reply to continue".
 - The chat is **not** finished at a gate — you are paused awaiting the user's click/answer, and you resume the next step as soon as they respond.
 
+## 0a. Language
+Write every durable artifact in **English** — code, comments, commit/branch names, docs, SPECs, BA, design docs, glossary, backlog (`.harness/features.json`), task-state, reports. **Only the chat reply to the user** uses the **user's language**. Once content is persisted to a file or the backlog, it is English.
+
 ## 0. Intake routing (never skip to code)
 **Empty-request guard first:** if the user's message is not an actionable request — `.`, `ok`, `hi`, `continue`, a greeting, or blank — do NOT classify or route, and do NOT launch `/harness-bootstrap` just because the repo is empty/bootstrap-state. Report current project state (`./harness status` / `./harness resume`, else `claude-progress.md`) and ask the user what they want to do (interactive choice prompt). Project state is never a request.
 

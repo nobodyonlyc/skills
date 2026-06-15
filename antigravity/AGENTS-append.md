@@ -3,6 +3,9 @@
 
 These rules apply to **all three agents**. Where they differ is only the concrete tool each one uses.
 
+### Universal — language (ALL agents)
+**Write every durable artifact in English** — code, identifiers, comments, commit/branch names, docs, SPECs, BA, design docs, glossary, backlog (`.harness/features.json`), task-state, reports. **Only the chat reply to the user** uses the **user's language**. Persisted ≠ chat: the moment something is written to a file or the backlog, it is English.
+
 ### Universal — gates are interactive choice prompts (ALL agents)
 Every "confirm / approve / stop for the user" gate below means: **pause and ask the user with an interactive choice prompt**, present **selectable options** (e.g. **[Proceed]** / **[I want changes]**, mark the recommended), and **wait for the answer in the same session**. Do **NOT** end the turn with a plain "let me know when you're ready" message and go idle — the chat is paused awaiting a click, not finished. Use your runtime's tool:
 - **Claude Code** → `AskUserQuestion` with an `options` array.
