@@ -87,3 +87,9 @@ Output a comprehensive `docs/SYSTEM_ARCHITECTURE.md` file containing:
 5. **Architecture Design**: Detail how the code is structured (DDD layers, MVC components, Pipeline blocks) based on the choices in Step 2.
 6. **Data Models**: Essential database entities, fields, and relationships.
 7. **Infrastructure & Deployment**: Deployment steps, container configurations (Dockerfile/docker-compose), and environment variables list.
+8. **Testing & Quality Strategy** (MANDATORY): how quality is enforced across the flow — it is a first-class part of the plan, not an afterthought:
+   * **Unit tests (UT)**: every feature ships with UT covering its logic/branches — this is part of each feature's Definition of Done.
+   * **Integration tests (IT)**: name the cross-component seams that must be IT-tested (API↔DB, service↔service, FE↔API) once the relevant features exist.
+   * **End-to-end / regression**: the critical user journeys (from the BA) that need E2E coverage, and the regression suite that must stay green before release.
+   * **Non-functional tests**: performance/load, security, and any compliance checks the NFRs imply, with rough targets.
+   * **Test tooling**: the frameworks/runners per component (e.g. `cargo test`, `pytest`, `vitest`, Playwright) so the backlog's verification commands are concrete.
