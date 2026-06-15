@@ -1,0 +1,9 @@
+{
+  "name": "harness",
+  "description": "Long-running coding-agent harness: intake routing, planning (architecture/backlog/skeleton), per-component development, design, QA/review/security, and delivery skills & workflows.",
+  "version": "0.1.0",
+  "author": {
+    "name": "nobodyonlyc"
+  },
+  "homepage": "https://github.com/nobodyonlyc/skills"
+}

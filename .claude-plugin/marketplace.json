@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "harness-skills",
+  "description": "Harness coding-agent skills and workflows — the skill set that powers the harness operating loop.",
+  "owner": {
+    "name": "nobodyonlyc"
+  },
+  "plugins": [
+    {
+      "name": "harness",
+      "source": "./",
+      "description": "Long-running coding-agent harness skills & workflows: intake routing, planning, per-component development, design, QA/review/security, and delivery.",
+      "category": "workflow"
+    }
+  ]
+}
