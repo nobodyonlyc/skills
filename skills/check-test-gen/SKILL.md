@@ -42,6 +42,7 @@ Write the tests to the appropriate file. Ask before creating a new test file if 
 
 ## Run them — writing is not enough
 A test that is never executed proves nothing. After writing:
-1. **Run the tests** with the project's real runner and **report the actual result** (N passed / M failed), not "tests written".
-2. Use **runner-correct selection syntax**, and confirm the command really runs *these* tests (e.g. jest: `jest <pathOrRegex>` or `-t <name>` — **not** `--grep`, which jest treats as a path regex; vitest/mocha: `-t` / `--grep`; pytest: `pytest path::node`; cargo: `cargo test <mod>::`). A command that matches **zero** tests but still exits 0 is a false green — verify it actually selected the intended tests.
-3. New/regression tests in a TDD or bugfix flow legitimately **fail first**; then they must **pass after** the fix. A suite left red is not done.
+1. **Determine the runner from the project's tech stack** — never assume one. Detect it from the manifest (`Cargo.toml` → `cargo test`; `go.mod` → `go test`; `pyproject.toml`/`requirements.txt` → `pytest`/`unittest`; `package.json` `scripts.test` → jest/vitest/mocha/node:test; etc.) and the matching convention file in [`conventions/`](../../resources/conventions/) (`go.md`, `rust.md`, `typescript-node.md`, `python.md`). Use **that** runner and **its own** selection syntax.
+2. **Run the tests** with that runner and **report the actual result** (N passed / M failed), not "tests written".
+3. **Make the selection non-vacuous.** Confirm the command actually runs *these* tests — a command that matches **zero** tests but still exits 0 is a false green. Use each runner's correct selector (e.g. `cargo test <module>::`, `go test ./pkg -run TestName`, `pytest path::node`, jest `jest <pathRegex>` / `-t <name>`). **Pitfall:** a selector flag from one runner is wrong in another — e.g. `--grep` is mocha/vitest, **not** jest (jest reads it as a path regex). Use what your stack's runner expects.
+4. New/regression tests in a TDD or bugfix flow legitimately **fail first**, then must **pass after** the fix. A suite left red is not done.
