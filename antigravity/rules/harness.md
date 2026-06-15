@@ -11,7 +11,9 @@ A "gate" / "stop" / "confirm with the user" below means: **pause and ask the use
 - The chat is **not** finished at a gate — you are paused awaiting the user's click/answer, and you resume the next step as soon as they respond.
 
 ## 0. Intake routing (never skip to code)
-ALL requests route through classification first. Classify intent into one case, then follow that flow — never jump straight to writing code or features:
+**Empty-request guard first:** if the user's message is not an actionable request — `.`, `ok`, `hi`, `continue`, a greeting, or blank — do NOT classify or route, and do NOT launch `/harness-bootstrap` just because the repo is empty/bootstrap-state. Report current project state (`./harness status` / `./harness resume`, else `claude-progress.md`) and ask the user what they want to do (interactive choice prompt). Project state is never a request.
+
+Once there is a real request, ALL requests route through classification first. Classify intent into one case, then follow that flow — never jump straight to writing code or features:
 - **Case 1 — New project** → run `/harness-bootstrap`.
 - **Case 2 — Add feature / execute a US** → run `/harness-execute-us`.
 - **Case 3 — Bugfix** → reproduce → root-cause → fix → regression test.
