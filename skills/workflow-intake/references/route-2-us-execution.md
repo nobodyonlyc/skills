@@ -10,6 +10,16 @@ Before executing, read `.harness/context.json` and compute the **auto-advance** 
 
 Auto-advance changes **only the human handoff between stories**. It does **not** relax **WIP = 1** (still one US at a time), the full per-task gates (review / test / `./harness verify`), or approval of any irreversible action. **Hard stops that always return control even when ON:** backlog exhausted, a US/task `blocked`, `./harness verify` fails and can't be auto-resolved, or a deploy/release/destructive action needs sign-off. Print `./harness report` at each US boundary so the user can watch progress.
 
+## Collaboration mode — read alongside auto-advance
+Honor the `Collab:` mode chosen in [workflow-intake Phase 0.6](../SKILL.md) (`solo` default / `team`). It controls **how a feature is claimed and integrated**:
+
+- **`solo`** — start with `./harness start <id>`; checkpoints land on the current branch; the US merges/commits directly. Auto-advance may chain the next US as described above.
+- **`team`** — each feature is owned and isolated so concurrent agents/people don't collide:
+  1. **Claim on a branch:** `./harness start <id> --assignee <name> --branch` → creates/checks out `feat/<id>` and records the owner. **WIP = 1 is per assignee**, so teammates each hold one active feature; do **not** auto-advance into another assignee's stories.
+  2. **Work + verify on that branch:** `./harness verify <id>` checkpoint-commits onto `feat/<id>` and skips the commit if the index holds unrelated staged changes, so it never sweeps a teammate's work in.
+  3. **Integrate via review, never direct-to-main:** when the US is `passing`, push `feat/<id>` and open a PR with [ship-pr-create](../../ship-pr-create/SKILL.md) → review ([workflow-review-deep](../../workflow-review-deep/SKILL.md)) → merge. Do **not** merge directly to `master`/`main`.
+  4. **Resolve `features.json` conflicts** by the union rule in [state-merge-convention](../../../resources/state-merge-convention.md) (keep both sides' features; for same-id status edits keep the more-advanced status). Conventions: [branch-convention](../../../resources/branch-convention.md); full walkthrough: [docs/team-workflow.md](../../../../docs/team-workflow.md).
+
 ## Steps
 
 ### 1. Analyse the US

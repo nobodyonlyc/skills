@@ -20,6 +20,7 @@ One committed markdown file per active feature or child-task:
 # Task State — <feature_id>: <title>
 
 - Mode: gated | auto
+- Collab: solo | team (when team: also `Assignee: <name>` and `Branch: feat/<id>`)
 - Workflow: workflow-feature | workflow-bugfix | ...
 - Started: <ISO timestamp>
 

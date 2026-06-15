@@ -25,6 +25,13 @@ Determine the run's autonomy mode per [autonomy-mode](../../resources/autonomy-m
 - Default is **`gated`** — stop at every ask-user gate.
 - Switch to **`mode: auto`** only when the user explicitly asks for an unattended / long autonomous run. In `auto`, ask-user gates become logged decisions, but the always-stop list still halts for irreversible/outward-facing actions.
 
+## Phase 0.6 — Pick collaboration mode (solo vs team)
+Decide whether the repo is worked **solo** or by a **team**, and record it in the task-state file's `Collab:` field. This changes how Route 2 claims and integrates each feature (see [route-2 "Collaboration mode"](references/route-2-us-execution.md#collaboration-mode--read-alongside-auto-advance)).
+- **`solo`** (default) — one agent/person at a time. Global **WIP = 1**; checkpoints land on the current branch; no `--assignee`/`--branch`.
+- **`team`** — multiple people/agents share the repo concurrently. Each feature is claimed per-person on its own branch and integrated through a PR review gate: `./harness start <id> --assignee <name> --branch`, **WIP = 1 enforced per assignee**. Follow [branch-convention](../../resources/branch-convention.md) + [state-merge-convention](../../resources/state-merge-convention.md); full end-to-end flow in [docs/team-workflow.md](../../../docs/team-workflow.md).
+
+**Detect team mode** when: the user says multiple people/agents share the repo, asks for an assignee/branch, **or** `.harness/features.json` already has any feature with a non-empty `assignee`/`branch`. When the signal is ambiguous, **ask-user** (click-select `solo` vs `team`). Auto-advance (Route 2) is a **solo-only** convenience — in `team` mode each assignee holds their own single feature, so do not auto-chain another assignee's stories.
+
 ## Cross-cutting rules (every step, every route)
 - **Task tracking** — record each step as a harness task; a US splits into child-tasks per [task-convention](../../resources/task-convention.md).
 - **Full gates** — every task runs review / test / verify / handoff.
