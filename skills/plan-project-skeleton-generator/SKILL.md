@@ -27,6 +27,46 @@ Analyze the system components to identify:
    - `docs/SYSTEM_MAP.md`: High-level architecture map and domain boundaries.
 2. **Application Root (`/source/`)**: Create a dedicated `source/` wrapper directory. All application source code, workspaces, frameworks, and related configs MUST be generated inside this `source/` directory. For example, a monorepo will have `source/apps/` and `source/packages/`.
 3. Initialize global application configurations inside `source/` (e.g., `source/.gitignore`, `source/.env.example`, `source/README.md`).
+4. **Project structure diagram (MANDATORY GATE — confirm before creating any file or folder)**: Output the full proposed directory tree and present it via ask-user. Do NOT create any file, run any scaffold tool, or write any code until the user approves the structure. This is the earliest and cheapest point to catch structural mistakes — wrong choices here propagate into every User Story.
+
+   Example format:
+   ```
+   /                          ← harness root (no app code here)
+     docs/
+       SYSTEM_ARCHITECTURE.md
+       BA.md
+       spec/
+         frontend.md
+         backend.md
+         database.md
+     source/                  ← all application code lives here
+       apps/
+         web/                 ← Next.js (React)
+           src/
+             components/
+               atoms/         ← Button, Input, Badge
+               molecules/     ← FormField, CardHeader
+               organisms/     ← NavBar, DataTable
+               templates/     ← DashboardLayout
+               pages/         ← route containers
+             hooks/
+             utils/
+             types/
+         api/                 ← Node.js / Express
+           src/
+             common/
+               dto/
+               errors/
+               utils/
+             base/
+               base.repository.ts
+               base.service.ts
+             modules/
+               [feature]/
+       packages/
+         shared-types/        ← types shared across apps
+   ```
+   Annotate each major folder with its responsibility. For FE components, show the `atoms/molecules/organisms` tiers. For BE, show the `common/base/modules` tiers. For any folder that does not map to the convention, explain why.
 
 ## Step 3: Codebase Generation & Dependency Strategy
 
@@ -42,6 +82,10 @@ Do not write boilerplate files manually. You must **evaluate the tech stack** an
 If the application requires complex domain logic, you must **not** just rely on the default scaffold tool's flat structure.
 * You MUST overlay the chosen design pattern on top of the generated framework. Consult `resources/folder_structures.md` for the correct layout.
 * Ensure folders like `domain/`, `application/`, `infrastructure/`, and `presentation/` (for DDD) or `models/`, `views/`, `controllers/` (for MVC) are explicitly created and structured properly.
+* **Pre-create the reuse tiers from the start** — do not wait until duplication appears to add them:
+  - **FE**: create `components/atoms/`, `components/molecules/`, `components/organisms/`, `components/templates/`, `components/pages/`, `hooks/`, `utils/`, `types/` (see [`typescript-react.md`](../../resources/conventions/typescript-react.md) §4).
+  - **BE (Node/TS)**: create `common/dto/`, `common/errors/`, `common/utils/`, `base/` with `base.repository.ts` and `base.service.ts` stubs (see [`typescript-node.md`](../../resources/conventions/typescript-node.md) §4).
+  - These folders must exist (even as empty dirs with a `.gitkeep`) so agents writing the first US know the structure and place code in the right tier from the beginning.
 
 ### C. Architecture Specific Guidelines
 Select and apply the appropriate design pattern/architecture based on the component type and complexity:

@@ -17,6 +17,19 @@ Before writing code, establish the module shape:
 2. **Dependency direction**: Domain packages must NOT import infrastructure packages. Use interfaces at the boundary.
 3. **Naming**: Follow the Go convention file — snake_case files, lowercase single-word packages, `er`-suffix interfaces.
 4. Read [`go.md`](../../resources/conventions/go.md) before writing a single line.
+5. **Package graph (MANDATORY — confirm before coding)**: Output a package diagram and present it via ask-user. Do NOT write implementation code until the user approves.
+   ```
+   cmd/server          ← main (thin, wires everything)
+     internal/order
+       handler.go      ← HTTP adapter (imports domain interface)
+       service.go      ← domain logic (no infra imports)
+       repo.go         ← implements Storer interface
+     internal/payment
+       client.go       ← external adapter (new)
+     pkg/db
+       postgres.go     ← shared DB pool (reuse existing)
+   ```
+   Show import direction with `→`. Flag any proposed import that violates the domain→infra boundary as `⚠ boundary violation`.
 
 ## Step 2: Idiomatic Go Patterns
 Write Go the Go way — do not import patterns from other languages:

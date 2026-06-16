@@ -23,6 +23,19 @@ Design the batch processing logic following a structured flow to separate concer
 3. **Writer (Output)**:
    * Commit processed items in batches (e.g., bulk insert/upsert SQL statements) to optimize database network overhead.
    * Set dynamic batch size parameters (e.g., write every 500 or 1000 items).
+4. **Pipeline topology diagram (MANDATORY — confirm before coding)**: Output the full pipeline map and present it via ask-user. Do NOT write implementation code until the user approves.
+   ```
+   [Source: orders DB]
+     → OrderReader       (new)     chunk_size=500, cursor: last_id
+         data shape: { id, user_id, total, status }
+     → FilterProcessor   (new)     drop status != 'paid'
+     → EnrichProcessor   (reuse UserEnricher from billing-job)
+         data shape: + { user_email, plan_tier }
+     → InvoiceWriter     (new)     bulk upsert into invoices table
+   [DLQ: failed_invoice_records]
+   [Control table: batch_job_runs — reuse existing]
+   ```
+   Mark reused components as `(reuse from [job-name])`. Shared utilities (retry, DLQ writer, checkpointing) must reference the existing implementation, not duplicate it.
 
 ## Step 2: Enterprise Fault Tolerance & State Management
 Batch jobs must expect errors and handle them gracefully without crashing mid-way, and must support safe reruns (idempotency).

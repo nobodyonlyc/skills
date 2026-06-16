@@ -11,10 +11,23 @@ Follow these guidelines to design, implement, and verify JavaScript and TypeScri
 
 > **Apply the shared [engineering principles](../../resources/engineering-principles.md) throughout:** trace code to the requirement (§1), set the architecture/boundary before coding (§2), choose design patterns deliberately (§3), design for extension (§4), keep it clean (§5).
 
-## Step 0: Choose the Right Convention File
-Before writing code, identify the runtime context and read the matching convention:
-- Backend (Node.js, Bun, Deno): [`typescript-node.md`](../../resources/conventions/typescript-node.md)
-- Frontend (React, Vue, Svelte): [`typescript-react.md`](../../resources/conventions/typescript-react.md)
+## Step 0: Choose the Right Convention File + Module Boundary Diagram
+Before writing code:
+1. Identify the runtime context and read the matching convention:
+   - Backend (Node.js, Bun, Deno): [`typescript-node.md`](../../resources/conventions/typescript-node.md)
+   - Frontend (React, Vue, Svelte): [`typescript-react.md`](../../resources/conventions/typescript-react.md)
+2. **Module boundary diagram (MANDATORY — confirm before coding)**: Output a module map and present it via ask-user. Do NOT write implementation code until the user approves.
+   ```
+   feature/notification/
+     index.ts              ← public API surface (only export point)
+     notification.service.ts   (new) → depends on: IEmailSender, ITemplateEngine
+     notification.dto.ts       (new) → shared type, move to common/ if reused elsewhere
+   common/
+     email.interface.ts    (reuse existing)
+   infra/
+     sendgrid.adapter.ts   (reuse existing — implements IEmailSender)
+   ```
+   Mark each module as `(new)`, `(reuse)`, or `(extend)`. Flag any cross-boundary import violation as `⚠ boundary violation`.
 
 ## Step 1: TypeScript Strictness
 Always enable and respect strict mode:

@@ -13,6 +13,7 @@ Implement exactly what the User Story asks — no more (gold-plating), no less (
 Decide the module's shape before typing implementation:
 - Restate the **overall architecture** the feature fits into (from `docs/SYSTEM_ARCHITECTURE.md`) and the **layer/boundary** this change belongs in (domain / application / infrastructure / presentation, or the component's equivalent).
 - Define the **module boundary**: its responsibility, its public interface, what it depends on (depend on interfaces, not concretions), and what must NOT leak across the boundary.
+- **Output a structure diagram and get user confirmation before writing code.** The diagram format is skill-specific (component tree for FE, module dependency map for BE, package graph for Go, pipeline topology for Batch, ERD for DB, command hierarchy for CLI) but the gate is universal: present the diagram via ask-user, do not write implementation code until the user approves. This is the earliest point at which duplication and boundary violations can be caught at zero cost.
 - Sketch data flow in / out. Only then implement.
 
 ## 3. Design patterns (use the right one, don't over-engineer)
@@ -35,7 +36,7 @@ Assume the code will change. Make the likely changes cheap and the risky ones co
 ## 5. Clean code (named, not implied)
 - **Single Responsibility** per function/module; small functions that do one thing.
 - **Meaningful names**; no abbreviations that need a decoder. Names follow [conventions/](conventions/).
-- **DRY** within reason — extract real duplication, tolerate incidental similarity.
+- **DRY with a scan gate**: before creating any new component, service, repository, or utility — grep the codebase for it first. If ≥2 existing callsites share the same pattern and it is not yet extracted, extract it before adding a third. "Incidental similarity" is ≤1 occurrence; ≥2 occurrences are real duplication.
 - **No dead code, no commented-out code, no leftover TODOs** that are really unfinished work (raise a US instead).
 - **Comments explain "why", never "what"** — the code shows what (see the convention files).
 

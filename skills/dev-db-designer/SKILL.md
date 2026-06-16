@@ -13,6 +13,27 @@ Follow these guidelines to plan, implement, and verify database tables, relation
 > **Apply the shared [engineering principles](../../resources/engineering-principles.md) throughout:** trace schema to the requirement (§1), fit the overall architecture (§2), design for extension/migration (§4), keep it clean (§5).
 
 ## Step 1: Relational Schema Design
+**ERD sketch (MANDATORY — confirm before writing any SQL or migration)**: Before defining any column, output a table-relationship sketch and present it via ask-user. Do NOT write DDL or migration files until the user approves.
+```
+users (existing)
+  │ 1
+  │ N
+orders (new)
+  ├─ id          uuid PK
+  ├─ user_id     uuid FK → users.id  ON DELETE CASCADE
+  ├─ status      enum('pending','paid','cancelled')  CHECK constraint
+  ├─ total_cents int  NOT NULL  CHECK(total_cents >= 0)
+  └─ created_at  timestamptz NOT NULL DEFAULT now()
+  │ 1
+  │ N
+order_items (new)
+  ├─ id          uuid PK
+  ├─ order_id    uuid FK → orders.id  ON DELETE CASCADE
+  ├─ product_id  uuid FK → products.id  ON DELETE RESTRICT
+  └─ quantity    int  NOT NULL  CHECK(quantity > 0)
+```
+Show: table name (new/existing), columns with types and constraints, FK relationships with ON DELETE behavior. Flag any column that duplicates data already in an existing table as `⚠ denormalization — justify or remove`.
+
 1. **Identify Entities & Relationships**: Define tables and establish clear mappings:
    * **One-to-One (1:1)**: Link using a shared primary key or a unique foreign key constraint.
    * **One-to-Many (1:N)**: Include a foreign key in the child table.

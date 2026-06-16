@@ -22,6 +22,22 @@ Choose a reliable command-line parsing library (e.g., `clap`, `commander`, `clic
    2. Environment Variables (`APP_PORT=8080`)
    3. Local Config (`./.apprc`)
    4. User Config (`~/.config/app/config.json` via XDG Base Directory)
+4. **Command hierarchy tree (MANDATORY — confirm before coding)**: Output the full command tree and present it via ask-user. Do NOT write implementation code until the user approves.
+   ```
+   tool
+     init                     ← new
+       --template <name>
+       --force
+     deploy                   ← new
+       staging                ← new
+         --dry-run
+       production             ← new
+         --confirm (required)
+     config
+       set <key> <value>      ← reuse existing ConfigService
+       get <key>              ← reuse existing ConfigService
+   ```
+   Mark shared services (e.g., `ConfigService`, `Logger`) as `← reuse` so duplication is visible before code is written.
 
 ## Step 2: Input and Output Routing (Stdout vs. Stderr)
 Always route console outputs correctly so that the tool integrates nicely with shell scripting (piping):
